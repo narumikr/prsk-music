@@ -1,0 +1,229 @@
+#api/api-specs/mgt-user.yaml
+openapi: 3.0.3
+info:
+  title: User Master API
+  description: ユーザマスタ管理API - Management user master api
+  version: 0.0.0
+  license:
+    name: MIT
+tags:
+  - name: users
+    description: |
+      ユーザマスタのデータを管理するAPI - Management data of user master API
+      ## Features
+      - ユーザ情報の登録 - Register user information
+      - ユーザ一覧取得 - Get users list
+      - ユーザ情報の更新 - Update user information
+      - ユーザ情報の削除 - Delete user information
+paths:
+  '/users':
+    get:
+      tags:
+        - users
+      summary: ユーザー一覧取得 - Get users list
+      description: ユーザー一覧が取得できます - You can get users list
+      operationId: getUsersList
+      parameters:
+        - $ref: './common.yaml#/components/parameters/PageParameter'
+        - $ref: './common.yaml#/components/parameters/LimitParameter'
+      responses:
+        '200':
+          description: Get list successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: '#/components/schemas/UserResponse'
+                        - type: object
+                          properties:
+                            auditInfo:
+                              $ref: './common.yaml#/components/schemas/AuditInfo'
+                          required:
+                            - auditInfo
+                  meta:
+                    $ref: './common.yaml#/components/schemas/Metadata'
+                required:
+                  - items
+                  - meta
+        '400':
+          $ref: './common.yaml#/components/responses/BadRequest'
+        '500':
+          $ref: './common.yaml#/components/responses/InternalServerError'
+        '503':
+          $ref: './common.yaml#/components/responses/ServiceUnavailable'
+    post:
+      tags:
+        - users
+      summary: ユーザー情報の登録 - Register user information
+      description: |
+        ユーザー情報を登録できます - You can register user information
+
+        ### Conflict Conditions
+        以下の条件に該当する場合、409 Conflictを返します
+        - 同じuserNameが既に存在するとき
+        ### Note
+        1つのユーザー名につき1レコードのみ登録可能です。
+      operationId: createUser
+      requestBody:
+        description: ユーザー情報 - User information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequest'
+      responses:
+        '201':
+          description: Created successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/UserResponse'
+                  - type: object
+                    properties:
+                      auditInfo:
+                        $ref: './common.yaml#/components/schemas/AuditInfo'
+                    required:
+                      - auditInfo
+        '400':
+          $ref: './common.yaml#/components/responses/BadRequest'
+        '409':
+          $ref: './common.yaml#/components/responses/Conflict'
+        '500':
+          $ref: './common.yaml#/components/responses/InternalServerError'
+        '503':
+          $ref: './common.yaml#/components/responses/ServiceUnavailable'
+  '/users/{id}':
+    put:
+      tags:
+        - users
+      summary: ユーザー情報の更新 - Update user information
+      description: |
+        ユーザー情報を更新できます - You can update user information
+
+        ### Not Found Conditions
+        指定したIDのユーザーが存在しない場合、404 Not Foundを返します
+
+        ### Authentication error
+        ユーザーに紐づくパスワードが間違っている場合、401 Unauthorizedを返します
+
+        ### Conflict Conditions
+        他のユーザーと同じuserNameに更新しようとしたとき409を返します
+      operationId: updateUser
+      parameters:
+        - name: id
+          in: path
+          description: ユーザーID - User ID
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+      requestBody:
+        description: ユーザー情報 - User information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequest'
+      responses:
+        '200':
+          description: Updated successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/UserResponse'
+                  - type: object
+                    properties:
+                      auditInfo:
+                        $ref: './common.yaml#/components/schemas/AuditInfo'
+                    required:
+                      - auditInfo
+        '400':
+          $ref: './common.yaml#/components/responses/BadRequest'
+        '401':
+          $ref: './common.yaml#/components/responses/Unauthorized'
+        '404':
+          $ref: './common.yaml#/components/responses/NotFound'
+        '409':
+          $ref: './common.yaml#/components/responses/Conflict'
+        '500':
+          $ref: './common.yaml#/components/responses/InternalServerError'
+        '503':
+          $ref: './common.yaml#/components/responses/ServiceUnavailable'
+    delete:
+      tags:
+        - users
+      summary: ユーザー情報の削除 - Delete user information
+      description: |
+        ユーザー情報を削除できます - Delete user information
+
+        ### Not Found Conditions
+        指定したIDのユーザーが存在しない場合、404 Not Foundを返します
+
+        ### Implementation Note
+        論理削除を使用します
+
+        物理的なデータは削除されません
+      operationId: deleteUser
+      parameters:
+        - name: id
+          in: path
+          description: ユーザーID - User ID
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+      responses:
+        '204':
+          description: Deleted successfully
+        '400':
+          $ref: './common.yaml#/components/responses/BadRequest'
+        '404':
+          $ref: './common.yaml#/components/responses/NotFound'
+        '500':
+          $ref: './common.yaml#/components/responses/InternalServerError'
+        '503':
+          $ref: './common.yaml#/components/responses/ServiceUnavailable'
+
+components:
+  schemas:
+    UserRequest:
+      type: object
+      properties:
+        userName:
+          type: string
+          nullable: false
+          example: 天馬 咲希
+          description: ユーザ名 - User Name
+        password:
+          type: string
+          nullable: false
+          example: p@ssw0rd
+          description: パスワード - Password
+      required:
+        - userName
+        - password
+    UserResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          nullable: false
+          example: 1
+          description: ユーザID - User ID
+        userName:
+          type: string
+          nullable: false
+          example: 天馬 咲希
+          description: ユーザ名 - User Name
+      required:
+        - id
+        - userName

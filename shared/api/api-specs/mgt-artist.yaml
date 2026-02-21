@@ -1,0 +1,272 @@
+#api/api-specs/mgt-artist
+openapi: 3.0.3
+info:
+  title: Artist Master API
+  description: アーティストマスタ管理API - Management artist master api
+  version: 0.0.0
+  license:
+    name: MIT
+tags:
+  - name: artists
+    description: |
+      アーティストマスタのデータを管理するAPI - Management data of artist master API
+      ## Features
+      - アーティスト情報の登録 - Register artist information
+      - アーティスト一覧取得 - Get artists list
+      - アーティスト情報の更新 - Update artist information
+      - アーティスト情報の削除 - Delete artist information
+paths:
+  '/artists':
+    get:
+      tags:
+        - artists
+      summary: アーティスト一覧取得 - Get artists list
+      description: アーティスト一覧が取得できます - You can get artists list
+      operationId: getArtistsList
+      parameters:
+        - $ref: './common.yaml#/components/parameters/PageParameter'
+        - $ref: './common.yaml#/components/parameters/LimitParameter'
+      responses:
+        '200':
+          description: Get list successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: '#/components/schemas/ArtistResponse'
+                        - type: object
+                          properties:
+                            auditInfo:
+                              $ref: './common.yaml#/components/schemas/AuditInfo'
+                          required:
+                            - auditInfo
+                  meta:
+                    $ref: './common.yaml#/components/schemas/Metadata'
+                required:
+                  - items
+                  - meta
+        '400':
+          $ref: './common.yaml#/components/responses/BadRequest'
+        '500':
+          $ref: './common.yaml#/components/responses/InternalServerError'
+        '503':
+          $ref: './common.yaml#/components/responses/ServiceUnavailable'
+    post:
+      tags:
+        - artists
+      summary: アーティスト情報の登録 - Register artist information
+      description: |
+        アーティスト情報を登録できます - You can register artist information
+
+        ### Conflict Conditions
+        以下の条件に該当する場合、409 Conflictを返します
+        - 同じartistNameが既に存在するとき
+      operationId: registerArtist
+      requestBody:
+        description: アーティスト情報 - Artist information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArtistRequest'
+      responses:
+        '201':
+          description: Created successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ArtistResponse'
+                  - type: object
+                    properties:
+                      auditInfo:
+                        $ref: './common.yaml#/components/schemas/AuditInfo'
+                    required:
+                      - auditInfo
+        '400':
+          $ref: './common.yaml#/components/responses/BadRequest'
+        '409':
+          $ref: './common.yaml#/components/responses/Conflict'
+        '500':
+          $ref: './common.yaml#/components/responses/InternalServerError'
+        '503':
+          $ref: './common.yaml#/components/responses/ServiceUnavailable'
+  '/artists/{id}':
+    put:
+      tags:
+        - artists
+      summary: アーティスト情報の更新 - Update artist information
+      description: |
+        アーティスト情報を更新できます - You can update artist information
+
+        ### Not Found Conditions
+        指定したIDのユーザーが存在しない場合、404 Not Foundを返します
+
+        ### Conflict Conditions
+        他のアーティストと同じartistNameに更新しようとしたとき409を返します
+      operationId: updateArtist
+      parameters:
+        - name: id
+          in: path
+          description: アーティストID - Artist ID
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+      requestBody:
+        description: アーティスト情報 - Artist information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OptionalArtistRequest'
+      responses:
+        '200':
+          description: Updated successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ArtistResponse'
+                  - type: object
+                    properties:
+                      auditInfo:
+                        $ref: './common.yaml#/components/schemas/AuditInfo'
+                    required:
+                      - auditInfo
+        '400':
+          $ref: './common.yaml#/components/responses/BadRequest'
+        '404':
+          $ref: './common.yaml#/components/responses/NotFound'
+        '409':
+          $ref: './common.yaml#/components/responses/Conflict'
+        '500':
+          $ref: './common.yaml#/components/responses/InternalServerError'
+        '503':
+          $ref: './common.yaml#/components/responses/ServiceUnavailable'
+    delete:
+      tags:
+        - artists
+      summary: アーティスト情報の削除 - Delete artist information
+      description: |
+        アーティスト情報を削除できます - You can delete artist information
+
+        ### Not Found Conditions
+        指定したIDのユーザーが存在しない場合、404 Not Foundを返します
+
+        ### Implementation Note
+        論理削除を使用します
+
+        物理的なデータは削除されません
+
+        ### Related Data
+        楽曲データは削除されません
+
+        楽曲から参照されているアーティストは不明なアーティストとして扱われるようになります
+      operationId: deleteArtist
+      parameters:
+        - name: id
+          in: path
+          description: アーティストID - Artist ID
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+      responses:
+        '204':
+          description: Deleted successfully
+        '400':
+          $ref: './common.yaml#/components/responses/BadRequest'
+        '404':
+          $ref: './common.yaml#/components/responses/NotFound'
+        '500':
+          $ref: './common.yaml#/components/responses/InternalServerError'
+        '503':
+          $ref: './common.yaml#/components/responses/ServiceUnavailable'
+
+components:
+  schemas:
+    ArtistRequest:
+      type: object
+      properties:
+        artistName:
+          type: string
+          nullable: false
+          minLength: 1
+          maxLength: 50
+          example: Leo/need
+          description: アーティスト名 - Artist Name
+        unitName:
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 25
+          example: Leo/need
+          description: ユニット名 - Unit Name
+        content:
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 20
+          example: プロセカ
+          description: コンテンツ名 - Content Name
+      required:
+        - artistName
+    OptionalArtistRequest:
+      type: object
+      minProperties: 1
+      properties:
+        artistName:
+          type: string
+          nullable: false
+          minLength: 1
+          maxLength: 50
+          example: Leo/need
+          description: アーティスト名 - Artist Name
+        unitName:
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 25
+          example: Leo/need
+          description: ユニット名 - Unit Name
+        content:
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 20
+          example: プロセカ
+          description: コンテンツ名 - Content Name
+    ArtistResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          nullable: false
+          example: 1
+          description: アーティストID - Artist ID
+        artistName:
+          type: string
+          nullable: false
+          example: Leo/need
+          description: アーティスト名 - Artist Name
+        unitName:
+          type: string
+          nullable: true
+          example: Leo/need
+          description: ユニット名 - Unit Name
+        content:
+          type: string
+          nullable: true
+          example: プロセカ
+          description: コンテンツ名 - Content Name
+      required:
+        - id
+        - artistName

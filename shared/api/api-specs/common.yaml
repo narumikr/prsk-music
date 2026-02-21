@@ -1,0 +1,215 @@
+# api/api-specs/common.yaml
+openapi: 3.0.3
+info:
+  title: Common API Definitions
+  version: 0.0.0
+
+paths: {} # This is a dummy path to resolve the 'Missing property paths' error.
+
+components:
+  # ===== Common schemas ======================================================== #
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          example: 400
+          description: HTTPステータスコード - HTTP Status Code
+        error:
+          type: string
+          example: Bad Request
+          description: エラータイプ - Type of Error
+        message:
+          type: string
+          example: Invalid request parameters.
+          description: エラーメッセージ - Error message
+      required:
+        - statusCode
+        - error
+        - message
+    ErrorResponseWithDetails:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          example: 400
+          description: HTTPステータスコード - HTTP Status Code
+        error:
+          type: string
+          example: Bad Request
+          description: エラータイプ - Type of Error
+        message:
+          type: string
+          example: Invalid request parameters.
+          description: エラーメッセージ - Error message
+        details:
+          type: array
+          description: エラー詳細情報 - Error details information
+          items:
+            $ref: '#/components/schemas/ErrorDetail'
+      required:
+        - statusCode
+        - error
+        - message
+        - details
+    ErrorDetail:
+      type: object
+      properties:
+        field:
+          type: string
+          description: どのフィールドでエラーが起きたか - The name of field where the error occurred
+        message:
+          type: string
+          description: そのフィールドに対して起こったエラー内容 - The field error message that occurred
+    Metadata:
+      type: object
+      properties:
+        totalItems:
+          type: integer
+          description: 総アイテム数 - Total number of items
+          example: 100
+        totalPages:
+          type: integer
+          description: 総ページ数 - Total number of pages
+          example: 5
+        pageIndex:
+          type: integer
+          description: 現在のページ番号 - Current page number
+          example: 1
+        limit:
+          type: integer
+          description: 1ページあたりのアイテム数 - Items per page
+          example: 20
+      required:
+        - totalItems
+        - totalPages
+        - pageIndex
+        - limit
+    AuditInfo:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+          description: レコード作成日時 - Created date
+          example: 2020-09-30T08:31:00Z
+        createdBy:
+          type: string
+          description: レコード作成者 - User who created the record
+          example: 初音ミク
+        updatedAt:
+          type: string
+          format: date-time
+          description: レコード更新日時 - Updated date
+          example: 2025-09-06T08:15:00Z
+        updatedBy:
+          type: string
+          description: レコード更新者 - User who update the record
+          example: 星乃 一歌
+      required:
+        - createdAt
+        - createdBy
+        - updatedAt
+        - updatedBy
+  # ===== Common response ======================================================== #
+  responses:
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseWithDetails'
+          example:
+            statusCode: 400
+            error: Bad Request
+            message: Invalid request parameters.
+            details:
+              - field: page
+                message: Page must be a positive integer.
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            statusCode: 401
+            error: Unauthorized
+            message: Authentication credentials were not provided
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            statusCode: 403
+            error: Forbidden
+            message: You do not have permission to access this resource.
+    NotFound:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            statusCode: 404
+            error: Not Found
+            message: The requested resource was not found.
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseWithDetails'
+          example:
+            statusCode: 409
+            error: Conflict
+            message: Resource already exists.
+            details:
+              field: username
+              message: This username is already in use.
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            statusCode: 500
+            error: Internal Server Error
+            message: Server encountered an unexpected condition.
+    ServiceUnavailable:
+      description: Service Unavailable
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            statusCode: 503
+            error: Service Unavailable
+            message: Service is under maintenance. Please try again later.
+  # ===== Common request ========================================================= #
+  parameters:
+    PageParameter:
+      name: page
+      in: query
+      description: ページ番号 - Page number
+      required: false
+      schema:
+        type: integer
+        default: 1
+        minimum: 1
+        example: 1
+    LimitParameter:
+      name: limit
+      in: query
+      description: 1ページあたりのアイテム数 - Number of items per page
+      required: false
+      schema:
+        type: integer
+        default: 20
+        minimum: 1
+        maximum: 1000
+        example: 20
