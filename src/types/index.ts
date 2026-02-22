@@ -44,7 +44,7 @@ export interface PrskMusic {
   musicName: string | null
   featuring: string | null
   youtubeLink: string
-  auditInfo?: AuditInfo
+  auditInfo: AuditInfo
 }
 
 /**
@@ -55,7 +55,7 @@ export interface Artist {
   artistName: string
   unitName: string | null
   content: string | null
-  auditInfo?: AuditInfo
+  auditInfo: AuditInfo
 }
 
 // ============================================================================
@@ -118,7 +118,7 @@ export interface ErrorDetail {
 /**
  * APIエラーレスポンス
  */
-export interface ApiErrorResponse {
+export interface ApiError {
   statusCode: number
   error: string
   message: string
