@@ -1,3 +1,22 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  /* Brand Colors */
+  --color-primary: #33ccba;
+  --color-secondary: #33aaee;
+  
+  /* State Colors */
+  --color-success: #bbdd22;
+  --color-warning: #ffc096;
+  --color-error: #ff6699;
+  
+  /* Focus Ring */
+  --color-primary-light: #33ccba33;
+}
+
+@layer base {
+  /* Container max-width */
+  .container {
+    max-width: 720px;
+  }
+}
