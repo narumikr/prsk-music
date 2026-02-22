@@ -11,12 +11,15 @@ interface Props {
   releaseDate: Date | null
 }
 const props = defineProps<Props>()
+```
 
+```ts
 // Good: API 型を shared/api から引用(@/types/apiはshared/apiを反映させた型)
 import type { Music } from '@/types/api'
 interface Props {
   music: Music
 }
+const props = defineProps<Props>()
 ```
 
 ## ref のジェネリクス
