@@ -6,19 +6,11 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue'
 
-// Props
+// Props（デフォルト値なし）
 const props = defineProps<{
   title: string
   count?: number
 }>()
-
-// withDefaults でデフォルト値を設定
-const props = withDefaults(defineProps<{
-  title: string
-  count?: number
-}>(), {
-  count: 0,
-})
 
 // Emits
 const emit = defineEmits<{
@@ -41,6 +33,20 @@ watch(() => props.count, (newVal, oldVal) => {
 // ライフサイクル
 onMounted(() => {
   // DOM 操作など
+})
+</script>
+```
+
+## withDefaults でデフォルト値を設定
+
+```vue
+<script setup lang="ts">
+// withDefaults でオプションの Props にデフォルト値を設定
+const props = withDefaults(defineProps<{
+  title: string
+  count?: number
+}>(), {
+  count: 0,
 })
 </script>
 ```
