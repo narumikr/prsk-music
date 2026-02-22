@@ -14,7 +14,7 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
   - _Requirements: 全要件_
 
 - [ ] 2. 型定義とAPIクライアントの実装
-  - [ ] 2.1 型定義の作成
+  - [x] 2.1 型定義の作成
     - ドメインモデル型（PrskMusic、Artist、MusicType、AuditInfo）
     - フォームデータ型（MusicFormData、ArtistFormData）
     - APIレスポンス型（PaginatedResponse、PaginationMeta、ApiError）
