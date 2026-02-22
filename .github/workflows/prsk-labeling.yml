@@ -1,0 +1,20 @@
+#.github/workflows/prsk-labeling.yml
+name: PR prsk labeling
+
+on:
+  pull_request:
+    types: [opened]
+
+permissions:
+  issues: write
+  pull-requests: write
+  contents: read
+
+jobs:
+  add-character-label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set prsk label
+        uses: Narumikr/link-sekai-actions/prsk-pr-labeling@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
