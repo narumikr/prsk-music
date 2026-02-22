@@ -12,7 +12,7 @@ interface Props {
 }
 const props = defineProps<Props>()
 
-// Good: API 型を shared/api から引用
+// Good: API 型を shared/api から引用(@/types/apiはshared/apiを反映させた型)
 import type { Music } from '@/types/api'
 interface Props {
   music: Music
