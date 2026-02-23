@@ -1,6 +1,6 @@
 /**
  * UI表示テキスト定義
- * 
+ *
  * このファイルにはアプリケーション全体で使用するUI表示テキストを定義します。
  * リテラル文字列を直接コンポーネントに記述せず、このファイルから参照してください。
  */
@@ -73,6 +73,6 @@ export const TEXT = {
     mv3d: '3DMV',
     mv2d: '2DMV',
   },
-} as const;
+} as const
 
-export type TextKey = typeof TEXT;
+export type TextKey = typeof TEXT

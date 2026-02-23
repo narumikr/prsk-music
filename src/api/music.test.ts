@@ -1,7 +1,7 @@
-import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
 import fc from 'fast-check'
-import { http, HttpResponse } from 'msw'
+import { HttpResponse, http } from 'msw'
 import { setupServer } from 'msw/node'
+import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
 import type { AuditInfo, MusicFormData, MusicType, PrskMusic } from '@/types'
 import { MusicApiClient } from './music'
 
@@ -42,7 +42,7 @@ const musicTypeArb = fc.constantFrom<MusicType>(0, 1, 2)
 
 const nullableStringArb = fc.option(
   fc.string({ minLength: 1, maxLength: 50 }).filter((s) => !s.includes('\0')),
-  { nil: null },
+  { nil: null }
 )
 
 const musicFormDataArb: fc.Arbitrary<MusicFormData> = fc.record({
@@ -67,7 +67,7 @@ const partialMusicFormDataArb: fc.Arbitrary<Partial<MusicFormData>> = fc.record(
     featuring: nullableStringArb,
     youtubeLink: fc.string({ minLength: 1, maxLength: 200 }).filter((s) => !s.includes('\0')),
   },
-  { requiredKeys: [] },
+  { requiredKeys: [] }
 )
 
 // ============================================================================
@@ -108,7 +108,7 @@ describe('MusicApiClient - Property Tests', () => {
             capturedPath = new URL(request.url).pathname
             capturedBody = await request.json()
             return HttpResponse.json(buildMusicResponse(1), { status: 201 })
-          }),
+          })
         )
 
         await musicApi.create(data)
@@ -117,7 +117,7 @@ describe('MusicApiClient - Property Tests', () => {
         expect(capturedPath).toBe('/btw-api/v1/prsk-music')
         expect(capturedBody).toEqual(data)
       }),
-      { numRuns: 100 },
+      { numRuns: 100 }
     )
   })
 
@@ -137,15 +137,12 @@ describe('MusicApiClient - Property Tests', () => {
           let capturedBody: unknown
 
           server.use(
-            http.put(
-              `${getApiBase()}/prsk-music/${id}`,
-              async ({ request }) => {
-                capturedMethod = request.method
-                capturedPath = new URL(request.url).pathname
-                capturedBody = await request.json()
-                return HttpResponse.json(buildMusicResponse(id), { status: 200 })
-              },
-            ),
+            http.put(`${getApiBase()}/prsk-music/${id}`, async ({ request }) => {
+              capturedMethod = request.method
+              capturedPath = new URL(request.url).pathname
+              capturedBody = await request.json()
+              return HttpResponse.json(buildMusicResponse(id), { status: 200 })
+            })
           )
 
           await musicApi.update(id, data)
@@ -153,9 +150,9 @@ describe('MusicApiClient - Property Tests', () => {
           expect(capturedMethod).toBe('PUT')
           expect(capturedPath).toBe(`/btw-api/v1/prsk-music/${id}`)
           expect(capturedBody).toEqual(data)
-        },
+        }
       ),
-      { numRuns: 100 },
+      { numRuns: 100 }
     )
   })
 
@@ -174,7 +171,7 @@ describe('MusicApiClient - Property Tests', () => {
             capturedMethod = request.method
             capturedPath = new URL(request.url).pathname
             return new HttpResponse(null, { status: 204 })
-          }),
+          })
         )
 
         await musicApi.delete(id)
@@ -182,7 +179,7 @@ describe('MusicApiClient - Property Tests', () => {
         expect(capturedMethod).toBe('DELETE')
         expect(capturedPath).toBe(`/btw-api/v1/prsk-music/${id}`)
       }),
-      { numRuns: 100 },
+      { numRuns: 100 }
     )
   })
 
@@ -209,16 +206,16 @@ describe('MusicApiClient - Property Tests', () => {
                 items: [],
                 meta: { totalItems: 0, totalPages: 1, pageIndex: page, limit },
               })
-            }),
+            })
           )
 
           await musicApi.getList(page, limit)
 
           expect(capturedPage).toBe(String(page))
           expect(capturedLimit).toBe(String(limit))
-        },
+        }
       ),
-      { numRuns: 100 },
+      { numRuns: 100 }
     )
   })
 })
