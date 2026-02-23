@@ -74,7 +74,7 @@
 #### 2.2 BaseApiClientのインターフェース定義
 
 **実施内容:**
-- `BaseApiClient`クラスの定義（`src/api/index.ts`）
+- `BaseApiClient`クラスの定義（`src/api/base.ts`）
   - メソッドシグネチャの実装
     - `get<T>()` - GETリクエスト
     - `post<T>()` - POSTリクエスト
@@ -159,7 +159,7 @@
   - メソッドシグネチャの実装
     - `getErrorMessage()` - エラーメッセージ生成
   - 初期実装は空（`throw new Error('Not implemented')`）
-- Unit Testの作成（`src/api/index.test.ts`）
+- Unit Testの作成（`src/api/base.test.ts`）
   - 各HTTPステータスコードのエラーメッセージ確認
   - テストは失敗する状態（Red）
 
@@ -221,16 +221,23 @@
   - APIレスポンス型（PaginatedResponse、PaginationMeta、ApiError）
 
 ### APIクライアント
-- `src/api/index.ts`
+- `src/api/base.ts`
   - `BaseApiClient` - 共通HTTPリクエストメソッド
   - `ApiError` - APIエラークラス
-  - `ApiErrorHandler` - エラーメッセージ生成
+  - `getApiErrorMessage` - エラーメッセージ生成
+  - シングルトンインスタンス（`apiClient`）
+- `src/api/music.ts`
   - `MusicApiClient` - 楽曲API（getList、create、update、delete）
+  - シングルトンインスタンス（`musicApiClient`）
+- `src/api/artist.ts`
   - `ArtistApiClient` - アーティストAPI（getList、create、update、delete）
-  - シングルトンインスタンス（apiClient、musicApiClient、artistApiClient）
+  - シングルトンインスタンス（`artistApiClient`）
+- `src/api/index.ts` - 上記のre-export
 
 ### テスト
-- `src/api/index.test.ts` - APIクライアントのUnit Test
+- `src/api/base.test.ts` - `getApiErrorMessage` のUnit Test
+- `src/api/music.test.ts` - `MusicApiClient` のProperty Test
+- `src/api/artist.test.ts` - `ArtistApiClient` のProperty Test
 
 ---
 
