@@ -1,4 +1,8 @@
 <script setup lang="ts">
+// biome-ignore lint/correctness/noUnusedImports: used in template
+import HelloWorld from '@/components/HelloWorld.vue'
+// biome-ignore lint/correctness/noUnusedImports: used in template
+import { TEXT } from '@/constants/text'
 </script>
 
 <template>
@@ -10,7 +14,7 @@
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
     </a>
   </div>
-  <HelloWorld msg="Vite + Vue" />
+  <HelloWorld :msg="TEXT.demo.title" />
 </template>
 
 <style scoped>
