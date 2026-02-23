@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+// biome-ignore lint/correctness/noUnusedImports: used in template
+import { TEXT } from '@/constants/text'
 
 defineProps<{ msg: string }>()
 
@@ -10,28 +12,31 @@ const _count = ref(0)
   <h1>{{ msg }}</h1>
 
   <div class="card">
-    <button type="button" @click="_count.value++">count is {{ _count.value }}</button>
+    <button type="button" @click="_count++">
+      {{ TEXT.demo.countButton }} {{ _count }}
+    </button>
     <p>
-      Edit
-      <code>components/HelloWorld.vue</code> to test HMR
+      {{ TEXT.demo.editMessage }}
+      <code>{{ TEXT.demo.editFile }}</code> {{ TEXT.demo.editSuffix }}
     </p>
   </div>
 
   <p>
-    Check out
-    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
-      >create-vue</a
-    >, the official Vue + Vite starter
+    {{ TEXT.demo.checkOut }}
+    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank">{{
+      TEXT.demo.createVueLink
+    }}</a
+    >{{ TEXT.demo.createVueDescription }}
   </p>
   <p>
-    Learn more about IDE Support for Vue in the
+    {{ TEXT.demo.learnMore }}
     <a
       href="https://vuejs.org/guide/scaling-up/tooling.html#ide-support"
       target="_blank"
-      >Vue Docs Scaling up Guide</a
+      >{{ TEXT.demo.vueDocsLink }}</a
     >.
   </p>
-  <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
+  <p class="read-the-docs">{{ TEXT.demo.clickLogos }}</p>
 </template>
 
 <style scoped>

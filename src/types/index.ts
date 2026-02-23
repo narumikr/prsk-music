@@ -1,3 +1,5 @@
+import { TEXT } from '@/constants/text'
+
 // ============================================================================
 // Domain Models
 // ============================================================================
@@ -14,9 +16,9 @@ export type MusicType = 0 | 1 | 2
  * 楽曲タイプのラベルマップ
  */
 export const MUSIC_TYPE_LABELS: Record<MusicType, string> = {
-  0: 'オリジナル',
-  1: '3DMV',
-  2: '2DMV',
+  0: TEXT.musicType.original,
+  1: TEXT.musicType.mv3d,
+  2: TEXT.musicType.mv2d,
 }
 
 /**
@@ -118,7 +120,7 @@ export interface ErrorDetail {
 /**
  * APIエラーレスポンス
  */
-export interface ApiError {
+export interface ApiErrorResponse {
   statusCode: number
   error: string
   message: string

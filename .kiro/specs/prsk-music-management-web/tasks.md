@@ -13,20 +13,20 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
   - Tailwind CSSの設定
   - _Requirements: 全要件_
 
-- [ ] 2. 型定義とAPIクライアントの実装
+- [x] 2. 型定義とAPIクライアントの実装
   - [x] 2.1 型定義の作成
     - ドメインモデル型（PrskMusic、Artist、MusicType、AuditInfo）
     - フォームデータ型（MusicFormData、ArtistFormData）
     - APIレスポンス型（PaginatedResponse、PaginationMeta、ApiError）
     - _Requirements: 要件1, 要件9_
   
-  - [ ] 2.2 BaseApiClientのインターフェース定義
+  - [x] 2.2 BaseApiClientのインターフェース定義
     - メソッドシグネチャのみ実装（get、post、put、delete）
     - 認証トークン管理のインターフェース
     - 実装は空（throw new Error('Not implemented')）
     - _Requirements: 要件2, 要件3, 要件4, 要件10, 要件11, 要件12_
   
-  - [ ]* 2.3 BaseApiClientのProperty Test作成
+  - [x] 2.3 BaseApiClientのProperty Test作成
     - **Property 4: 楽曲作成時のPOSTリクエスト送信**
     - **Property 8: 楽曲更新時のPUTリクエスト送信**
     - **Property 9: 楽曲削除時のDELETEリクエスト送信**
@@ -38,34 +38,34 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - テストは失敗する状態（Red）
     - **Validates: Requirements 要件2, 要件3, 要件4, 要件5, 要件10, 要件11, 要件12**
   
-  - [ ] 2.4 BaseApiClientの実装
+  - [x] 2.4 BaseApiClientの実装
     - 共通HTTPリクエストメソッドの実装
     - 認証トークン管理機能の実装
     - エラーハンドリングの実装
     - すべてのProperty Testがパスすることを確認（Green）
     - _Requirements: 要件2, 要件3, 要件4, 要件10, 要件11, 要件12_
   
-  - [ ] 2.5 MusicApiClientのインターフェース定義
+  - [x] 2.5 MusicApiClientのインターフェース定義
     - メソッドシグネチャのみ実装
     - 実装は空（throw new Error('Not implemented')）
     - _Requirements: 要件1, 要件2, 要件3, 要件4_
   
-  - [ ] 2.6 ArtistApiClientのインターフェース定義
+  - [x] 2.6 ArtistApiClientのインターフェース定義
     - メソッドシグネチャのみ実装
     - 実装は空（throw new Error('Not implemented')）
     - _Requirements: 要件9, 要件10, 要件11, 要件12_
   
-  - [ ] 2.7 MusicApiClientとArtistApiClientの実装
+  - [x] 2.7 MusicApiClientとArtistApiClientの実装
     - BaseApiClientを使用した実装
     - _Requirements: 要件1, 要件2, 要件3, 要件4, 要件9, 要件10, 要件11, 要件12_
   
-  - [ ] 2.8 ApiErrorHandlerのインターフェース定義とテスト作成
+  - [x] 2.8 ApiErrorHandlerのインターフェース定義とテスト作成
     - メソッドシグネチャのみ実装
     - Unit Testを作成（各ステータスコードのエラーメッセージ確認）
     - テストは失敗する状態（Red）
     - _Requirements: 要件6_
   
-  - [ ] 2.9 ApiErrorHandlerの実装
+  - [x] 2.9 ApiErrorHandlerの実装
     - ステータスコード別エラーメッセージ生成の実装
     - すべてのUnit Testがパスすることを確認（Green）
     - _Requirements: 要件6_
@@ -78,7 +78,7 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - 実装は空（throw new Error('Not implemented')）
     - _Requirements: 要件1, 要件2, 要件3, 要件4, 要件5_
   
-  - [ ]* 3.2 useMusicListのProperty Test作成
+  - [ ] 3.2 useMusicListのProperty Test作成
     - **Property 12: ページ番号クリック時のデータ取得**
     - MSWでAPIをモック
     - テストは失敗する状態（Red）
@@ -96,7 +96,7 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - 実装は空（throw new Error('Not implemented')）
     - _Requirements: 要件9, 要件10, 要件11, 要件12_
   
-  - [ ]* 3.5 useArtistListのProperty Test作成
+  - [ ] 3.5 useArtistListのProperty Test作成
     - アーティスト一覧取得のテスト
     - MSWでAPIをモック
     - テストは失敗する状態（Red）
@@ -114,7 +114,7 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - 実装は空（throw new Error('Not implemented')）
     - _Requirements: 要件2, 要件3, 要件4, 要件6_
   
-  - [ ]* 3.8 useNotificationのProperty Test作成
+  - [ ] 3.8 useNotificationのProperty Test作成
     - **Property 14: エラー詳細の表示**
     - **Property 15: エラーのコンソールログ出力**
     - テストは失敗する状態（Red）
@@ -131,7 +131,7 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - テンプレートは空のdiv
     - _Requirements: 要件7_
   
-  - [ ]* 4.2 LoadingSpinnerのProperty Test作成
+  - [ ] 4.2 LoadingSpinnerのProperty Test作成
     - **Property 16: 非同期操作中のローディング表示**
     - テストは失敗する状態（Red）
     - **Validates: Requirements 要件7**
@@ -146,7 +146,7 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - テンプレートは空のdiv
     - _Requirements: 要件1, 要件5, 要件9_
   
-  - [ ]* 4.5 PaginationControlのUnit Test作成
+  - [ ] 4.5 PaginationControlのUnit Test作成
     - 20件以下でページネーション非表示
     - 21件以上でページネーション表示
     - 最初のページで「前へ」ボタン無効化
@@ -154,7 +154,7 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - テストは失敗する状態（Red）
     - _Requirements: 要件1, 要件5, 要件9_
   
-  - [ ]* 4.6 PaginationControlのProperty Test作成
+  - [ ] 4.6 PaginationControlのProperty Test作成
     - **Property 11: ページネーションメタデータの表示**
     - **Property 13: 20件超でのページネーション表示**
     - テストは失敗する状態（Red）
@@ -172,7 +172,7 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - テンプレートは空のdiv
     - _Requirements: 要件4, 要件12_
   
-  - [ ]* 4.9 ConfirmDialog.vueのUnit Test作成
+  - [ ] 4.9 ConfirmDialog.vueのUnit Test作成
     - 確認ダイアログ表示のテスト
     - 確認ボタンクリック時のイベント発火
     - キャンセルボタンクリック時のイベント発火
@@ -189,7 +189,7 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - テンプレートは空のdiv
     - _Requirements: 要件1_
   
-  - [ ]* 4.12 YouTubeModal.vueのUnit Test作成
+  - [ ] 4.12 YouTubeModal.vueのUnit Test作成
     - モーダル表示のテスト
     - YouTube動画埋め込みのテスト
     - URLから動画ID抽出のテスト
@@ -209,7 +209,7 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - テンプレートは空のnav
     - _Requirements: 要件13_
   
-  - [ ]* 5.2 NavigationのProperty Test作成
+  - [ ] 5.2 NavigationのProperty Test作成
     - **Property 35: ナビゲーションメニューの現在ページ表示**
     - **Property 36: 全ページでのナビゲーションメニュー表示**
     - テストは失敗する状態（Red）
@@ -225,7 +225,7 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - テンプレートは空のdiv
     - _Requirements: 要件13_
   
-  - [ ]* 5.5 Layout.vueのUnit Test作成
+  - [ ] 5.5 Layout.vueのUnit Test作成
     - ヘッダー表示のテスト
     - ナビゲーション表示のテスト
     - router-view表示のテスト
@@ -244,7 +244,7 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - テンプレートは空のdiv
     - _Requirements: 要件9_
   
-  - [ ]* 6.2 ArtistTableのProperty Test作成
+  - [ ] 6.2 ArtistTableのProperty Test作成
     - **Property 25: アーティストレコードの完全なフィールド表示**
     - **Property 26: アーティストレコードのアクションボタン表示**
     - テストは失敗する状態（Red）
@@ -261,7 +261,7 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - テンプレートは空のdiv
     - _Requirements: 要件7, 要件10, 要件11_
   
-  - [ ]* 6.5 ArtistFormModalのProperty Test作成
+  - [ ] 6.5 ArtistFormModalのProperty Test作成
     - **Property 17: フォームフィールドのラベル表示**
     - **Property 28: アーティスト名フィールドの空文字検証**
     - **Property 29: アーティスト名の文字数検証**
@@ -284,7 +284,7 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - useArtistListとuseNotificationの呼び出しのみ
     - _Requirements: 要件9, 要件10, 要件11, 要件12_
   
-  - [ ]* 6.8 ArtistListPageのUnit Test作成
+  - [ ] 6.8 ArtistListPageのUnit Test作成
     - アーティスト一覧ページアクセス時のテーブル表示
     - 新規登録ボタンクリック時のフォーム表示
     - 削除ボタンクリック時の確認ダイアログ表示
@@ -308,13 +308,13 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - テンプレートは空のdiv
     - _Requirements: 要件1_
   
-  - [ ]* 7.2 MusicTableのUnit Test作成
+  - [ ] 7.2 MusicTableのUnit Test作成
     - 楽曲一覧ページアクセス時のテーブル表示
     - YouTubeリンククリック時のモーダル表示
     - テストは失敗する状態（Red）
     - _Requirements: 要件1_
   
-  - [ ]* 7.3 MusicTableのProperty Test作成
+  - [ ] 7.3 MusicTableのProperty Test作成
     - **Property 1: 楽曲レコードの完全なフィールド表示**
     - **Property 2: MusicType値のラベル変換**
     - **Property 3: YouTubeリンクのクリック可能性**
@@ -334,7 +334,7 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - テンプレートは空のdiv
     - _Requirements: 要件2, 要件3, 要件7, 要件8_
   
-  - [ ]* 7.6 MusicFormModalのUnit Test作成
+  - [ ] 7.6 MusicFormModalのUnit Test作成
     - 新規登録ボタンクリック時の空フォーム表示
     - 編集ボタンクリック時の事前入力フォーム表示
     - musicTypeドロップダウンの選択肢表示
@@ -342,7 +342,7 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - テストは失敗する状態（Red）
     - _Requirements: 要件2, 要件3_
   
-  - [ ]* 7.7 MusicFormModalのProperty Test作成
+  - [ ] 7.7 MusicFormModalのProperty Test作成
     - **Property 5: バリデーションエラーメッセージの表示**
     - **Property 6: 必須フィールドの検証**
     - **Property 7: 編集フォームの事前入力**
@@ -371,7 +371,7 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - useMusicList、useArtistList、useNotificationの呼び出しのみ
     - _Requirements: 要件1, 要件2, 要件3, 要件4_
   
-  - [ ]* 7.10 MusicListPageのUnit Test作成
+  - [ ] 7.10 MusicListPageのUnit Test作成
     - 楽曲一覧ページアクセス時のテーブル表示
     - 新規登録ボタンクリック時のフォーム表示
     - 削除ボタンクリック時の確認ダイアログ表示
@@ -379,7 +379,7 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - テストは失敗する状態（Red）
     - _Requirements: 要件1, 要件2, 要件4_
   
-  - [ ]* 7.11 MusicListPageのProperty Test作成
+  - [ ] 7.11 MusicListPageのProperty Test作成
     - **Property 37: 楽曲フォームからのアーティスト追加トリガー**
     - **Property 38: アーティスト追加後の自動選択**
     - テストは失敗する状態（Red）
@@ -426,7 +426,7 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - playwright.config.tsの作成
     - テスト環境の設定
   
-  - [ ]* 10.2 楽曲管理のE2Eテスト
+  - [ ] 10.2 楽曲管理のE2Eテスト
     - 楽曲一覧表示
     - 楽曲新規登録フロー
     - 楽曲編集フロー
@@ -434,20 +434,20 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - ページネーション操作
     - _Requirements: 要件1, 要件2, 要件3, 要件4, 要件5_
   
-  - [ ]* 10.3 アーティスト管理のE2Eテスト
+  - [ ] 10.3 アーティスト管理のE2Eテスト
     - アーティスト一覧表示
     - アーティスト新規登録フロー
     - アーティスト編集フロー
     - アーティスト削除フロー
     - _Requirements: 要件9, 要件10, 要件11, 要件12_
   
-  - [ ]* 10.4 楽曲フォームからのアーティスト追加E2Eテスト
+  - [ ] 10.4 楽曲フォームからのアーティスト追加E2Eテスト
     - 楽曲フォームで「新規アーティスト追加」ボタンをクリック
     - アーティスト登録モーダルでアーティストを追加
     - 楽曲フォームで新規追加されたアーティストが自動選択されることを確認
     - _Requirements: 要件2_
   
-  - [ ]* 10.5 エラーハンドリングのE2Eテスト
+  - [ ] 10.5 エラーハンドリングのE2Eテスト
     - 重複データ登録時の409エラー表示
     - 無効なデータ送信時の400エラー表示
     - 存在しないレコード操作時の404エラー表示
