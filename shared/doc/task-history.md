@@ -159,7 +159,7 @@
   - メソッドシグネチャの実装
     - `getErrorMessage()` - エラーメッセージ生成
   - 初期実装は空（`throw new Error('Not implemented')`）
-- Unit Testの作成（`src/api/index.test.ts`）
+- Unit Testの作成（`src/api/base.test.ts`）
   - 各HTTPステータスコードのエラーメッセージ確認
   - テストは失敗する状態（Red）
 
