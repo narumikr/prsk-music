@@ -95,10 +95,10 @@ export interface ArtistFormData {
  * ページネーションメタデータ
  */
 export interface PaginationMeta {
-  totalItems: number
+  currentPage: number
   totalPages: number
-  pageIndex: number
-  limit: number
+  totalItems: number
+  itemsPerPage: number
 }
 
 /**
