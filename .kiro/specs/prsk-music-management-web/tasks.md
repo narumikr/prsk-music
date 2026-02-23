@@ -13,20 +13,20 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
   - Tailwind CSSの設定
   - _Requirements: 全要件_
 
-- [ ] 2. 型定義とAPIクライアントの実装
+- [x] 2. 型定義とAPIクライアントの実装
   - [x] 2.1 型定義の作成
     - ドメインモデル型（PrskMusic、Artist、MusicType、AuditInfo）
     - フォームデータ型（MusicFormData、ArtistFormData）
     - APIレスポンス型（PaginatedResponse、PaginationMeta、ApiError）
     - _Requirements: 要件1, 要件9_
   
-  - [ ] 2.2 BaseApiClientのインターフェース定義
+  - [x] 2.2 BaseApiClientのインターフェース定義
     - メソッドシグネチャのみ実装（get、post、put、delete）
     - 認証トークン管理のインターフェース
     - 実装は空（throw new Error('Not implemented')）
     - _Requirements: 要件2, 要件3, 要件4, 要件10, 要件11, 要件12_
   
-  - [ ]* 2.3 BaseApiClientのProperty Test作成
+  - [x] 2.3 BaseApiClientのProperty Test作成
     - **Property 4: 楽曲作成時のPOSTリクエスト送信**
     - **Property 8: 楽曲更新時のPUTリクエスト送信**
     - **Property 9: 楽曲削除時のDELETEリクエスト送信**
@@ -38,34 +38,34 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - テストは失敗する状態（Red）
     - **Validates: Requirements 要件2, 要件3, 要件4, 要件5, 要件10, 要件11, 要件12**
   
-  - [ ] 2.4 BaseApiClientの実装
+  - [x] 2.4 BaseApiClientの実装
     - 共通HTTPリクエストメソッドの実装
     - 認証トークン管理機能の実装
     - エラーハンドリングの実装
     - すべてのProperty Testがパスすることを確認（Green）
     - _Requirements: 要件2, 要件3, 要件4, 要件10, 要件11, 要件12_
   
-  - [ ] 2.5 MusicApiClientのインターフェース定義
+  - [x] 2.5 MusicApiClientのインターフェース定義
     - メソッドシグネチャのみ実装
     - 実装は空（throw new Error('Not implemented')）
     - _Requirements: 要件1, 要件2, 要件3, 要件4_
   
-  - [ ] 2.6 ArtistApiClientのインターフェース定義
+  - [x] 2.6 ArtistApiClientのインターフェース定義
     - メソッドシグネチャのみ実装
     - 実装は空（throw new Error('Not implemented')）
     - _Requirements: 要件9, 要件10, 要件11, 要件12_
   
-  - [ ] 2.7 MusicApiClientとArtistApiClientの実装
+  - [x] 2.7 MusicApiClientとArtistApiClientの実装
     - BaseApiClientを使用した実装
     - _Requirements: 要件1, 要件2, 要件3, 要件4, 要件9, 要件10, 要件11, 要件12_
   
-  - [ ] 2.8 ApiErrorHandlerのインターフェース定義とテスト作成
+  - [x] 2.8 ApiErrorHandlerのインターフェース定義とテスト作成
     - メソッドシグネチャのみ実装
     - Unit Testを作成（各ステータスコードのエラーメッセージ確認）
     - テストは失敗する状態（Red）
     - _Requirements: 要件6_
   
-  - [ ] 2.9 ApiErrorHandlerの実装
+  - [x] 2.9 ApiErrorHandlerの実装
     - ステータスコード別エラーメッセージ生成の実装
     - すべてのUnit Testがパスすることを確認（Green）
     - _Requirements: 要件6_
