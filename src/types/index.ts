@@ -120,7 +120,7 @@ export interface ErrorDetail {
 /**
  * APIエラーレスポンス
  */
-export interface ApiError {
+export interface ApiErrorResponse {
   statusCode: number
   error: string
   message: string

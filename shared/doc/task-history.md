@@ -66,7 +66,7 @@
 - APIレスポンス型の定義
   - `PaginatedResponse<T>` - ページネーション付きレスポンス
   - `PaginationMeta` - ページネーションメタデータ
-  - `ApiError` - エラーレスポンス
+  - `ApiErrorResponse` - エラーレスポンス
   - `ErrorDetail` - エラー詳細
 
 **対応要件:** 要件1, 要件9
@@ -74,7 +74,7 @@
 #### 2.2 BaseApiClientのインターフェース定義
 
 **実施内容:**
-- `BaseApiClient`クラスの定義（`src/api/index.ts`）
+- `BaseApiClient`クラスの定義（`src/api/base.ts`）
   - メソッドシグネチャの実装
     - `get<T>()` - GETリクエスト
     - `post<T>()` - POSTリクエスト
@@ -99,7 +99,7 @@
   - `setAuthToken()` - トークンの設定/クリア
   - Authorizationヘッダーへの自動付与
 - エラーハンドリングの実装
-  - `ApiError`クラス - APIエラーの表現
+  - `ApiErrorResponse`クラス - APIエラーの表現
   - `parseBody()` - エラーレスポンスのパース
   - HTTPステータスコードの保持
 - シングルトンインスタンスのエクスポート
@@ -221,16 +221,23 @@
   - APIレスポンス型（PaginatedResponse、PaginationMeta、ApiError）
 
 ### APIクライアント
-- `src/api/index.ts`
+- `src/api/base.ts`
   - `BaseApiClient` - 共通HTTPリクエストメソッド
-  - `ApiError` - APIエラークラス
-  - `ApiErrorHandler` - エラーメッセージ生成
+  - `ApiErrorResponse` - APIエラークラス
+  - `getApiErrorMessage` - エラーメッセージ生成
+  - シングルトンインスタンス（`apiClient`）
+- `src/api/music.ts`
   - `MusicApiClient` - 楽曲API（getList、create、update、delete）
+  - シングルトンインスタンス（`musicApiClient`）
+- `src/api/artist.ts`
   - `ArtistApiClient` - アーティストAPI（getList、create、update、delete）
-  - シングルトンインスタンス（apiClient、musicApiClient、artistApiClient）
+  - シングルトンインスタンス（`artistApiClient`）
+- `src/api/index.ts` - 上記のre-export
 
 ### テスト
-- `src/api/index.test.ts` - APIクライアントのUnit Test
+- `src/api/base.test.ts` - `getApiErrorMessage` のUnit Test
+- `src/api/music.test.ts` - `MusicApiClient` のProperty Test
+- `src/api/artist.test.ts` - `ArtistApiClient` のProperty Test
 
 ---
 
