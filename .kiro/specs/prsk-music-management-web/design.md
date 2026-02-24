@@ -350,7 +350,7 @@ function useNotification(): UseNotificationReturn;
 #### BaseApiClient（共通APIクライアント）
 ```typescript
 class BaseApiClient {
-  private baseUrl = '/btw-api/v1';
+  private baseUrl = '/api/v1';
   private authToken: string | null = null;
 
   // 認証トークンの設定（将来の認証対応）

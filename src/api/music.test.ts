@@ -79,7 +79,7 @@ const musicApi = new MusicApiClient()
 
 // happy-dom の window.location.origin からベースURLを動的に取得する
 // （Vitest の happy-dom 環境では http://localhost:PORT が設定される）
-const getApiBase = () => `${window.location.origin}/btw-api/v1`
+const getApiBase = () => `${window.location.origin}/api/v1`
 
 beforeAll(() => server.listen({ onUnhandledRequest: 'warn' }))
 afterEach(() => server.resetHandlers())
@@ -114,7 +114,7 @@ describe('MusicApiClient - Property Tests', () => {
         await musicApi.create(data)
 
         expect(capturedMethod).toBe('POST')
-        expect(capturedPath).toBe('/btw-api/v1/prsk-music')
+        expect(capturedPath).toBe('/api/v1/prsk-music')
         expect(capturedBody).toEqual(data)
       }),
       { numRuns: 100 }
@@ -148,7 +148,7 @@ describe('MusicApiClient - Property Tests', () => {
           await musicApi.update(id, data)
 
           expect(capturedMethod).toBe('PUT')
-          expect(capturedPath).toBe(`/btw-api/v1/prsk-music/${id}`)
+          expect(capturedPath).toBe(`/api/v1/prsk-music/${id}`)
           expect(capturedBody).toEqual(data)
         }
       ),
@@ -177,7 +177,7 @@ describe('MusicApiClient - Property Tests', () => {
         await musicApi.delete(id)
 
         expect(capturedMethod).toBe('DELETE')
-        expect(capturedPath).toBe(`/btw-api/v1/prsk-music/${id}`)
+        expect(capturedPath).toBe(`/api/v1/prsk-music/${id}`)
       }),
       { numRuns: 100 }
     )

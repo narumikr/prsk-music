@@ -50,7 +50,7 @@ function buildPaginationMeta(pageIndex: number, totalItems: number, limit = 20):
 const server = setupServer()
 
 // happy-dom の window.location.origin からベースURLを動的に取得する
-const getApiBase = () => `${window.location.origin}/btw-api/v1`
+const getApiBase = () => `${window.location.origin}/api/v1`
 
 beforeAll(() => server.listen({ onUnhandledRequest: 'warn' }))
 afterEach(() => server.resetHandlers())

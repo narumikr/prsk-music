@@ -369,7 +369,7 @@ pnpm typecheck
 
 **問題3: テストが失敗する**
 - MSWのセットアップを確認
-- APIエンドポイントが正しいか確認（`/btw-api/v1`がベースURL）
+- APIエンドポイントが正しいか確認（`/api/v1`がベースURL）
 - テストファイルの`describe`と`it`の構造を確認
 
 **問題4: Tailwind CSSが適用されない**

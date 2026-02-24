@@ -69,7 +69,7 @@ src/
 
 ## API
 
-バックエンドAPIは `http://localhost:8080/btw-api/v1` で動作することを想定しています。
+バックエンドAPIは `http://localhost:8080/api/v1` で動作することを想定しています。
 
 - `GET /prsk-music` - 楽曲一覧取得
 - `POST /prsk-music` - 楽曲登録
