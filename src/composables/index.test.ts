@@ -2,7 +2,7 @@ import fc from 'fast-check'
 import { HttpResponse, http } from 'msw'
 import { setupServer } from 'msw/node'
 import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
-import type { AuditInfo, PaginationMeta, PrskMusic } from '@/types'
+import type { AuditInfo, MusicFormData, PaginationMeta, PrskMusic } from '@/types'
 import { useMusicList } from './index'
 
 // ============================================================================
@@ -34,12 +34,12 @@ function buildMusicResponse(id: number, overrides: Partial<PrskMusic> = {}): Prs
   }
 }
 
-function buildPaginationMeta(page: number, totalItems: number, itemsPerPage = 20): PaginationMeta {
+function buildPaginationMeta(pageIndex: number, totalItems: number, limit = 20): PaginationMeta {
   return {
-    currentPage: page,
-    totalPages: Math.ceil(totalItems / itemsPerPage),
+    pageIndex,
+    totalPages: Math.ceil(totalItems / limit),
     totalItems,
-    itemsPerPage,
+    limit,
   }
 }
 
@@ -55,6 +55,151 @@ const getApiBase = () => `${window.location.origin}/btw-api/v1`
 beforeAll(() => server.listen({ onUnhandledRequest: 'warn' }))
 afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
+
+const mockMusicFormData: MusicFormData = {
+  title: 'Test Music',
+  artistId: 1,
+  musicType: 0,
+  specially: null,
+  lyricsName: null,
+  musicName: null,
+  featuring: null,
+  youtubeLink: 'https://www.youtube.com/watch?v=test',
+}
+
+// ============================================================================
+// Unit Tests - CRUD Operations
+// ============================================================================
+
+describe('useMusicList - createMusic', () => {
+  it('成功時にAPIを呼び出し、楽曲一覧を再取得する', async () => {
+    const createdMusic = buildMusicResponse(999, { title: 'New Music' })
+
+    server.use(
+      http.post(`${getApiBase()}/prsk-music`, () => {
+        return HttpResponse.json(createdMusic, { status: 201 })
+      }),
+      http.get(`${getApiBase()}/prsk-music`, () => {
+        return HttpResponse.json({
+          items: [createdMusic],
+          meta: buildPaginationMeta(1, 1),
+        })
+      })
+    )
+
+    const { musics, loading, error, createMusic } = useMusicList()
+
+    await createMusic(mockMusicFormData)
+
+    expect(musics.value).toEqual([createdMusic])
+    expect(loading.value).toBe(false)
+    expect(error.value).toBeNull()
+  })
+
+  it('失敗時にerrorが設定され、loadingがリセットされる', async () => {
+    server.use(
+      http.post(`${getApiBase()}/prsk-music`, () => {
+        return HttpResponse.json(
+          { statusCode: 400, error: 'Bad Request', message: 'Invalid data' },
+          { status: 400 }
+        )
+      })
+    )
+
+    const { loading, error, createMusic } = useMusicList()
+
+    await expect(createMusic(mockMusicFormData)).rejects.toBeInstanceOf(Error)
+
+    expect(loading.value).toBe(false)
+    expect(error.value).toBeInstanceOf(Error)
+  })
+})
+
+describe('useMusicList - updateMusic', () => {
+  it('成功時にAPIを呼び出し、楽曲一覧を再取得する', async () => {
+    const updatedMusic = buildMusicResponse(1, { title: 'Updated Music' })
+
+    server.use(
+      http.put(`${getApiBase()}/prsk-music/1`, () => {
+        return HttpResponse.json(updatedMusic)
+      }),
+      http.get(`${getApiBase()}/prsk-music`, () => {
+        return HttpResponse.json({
+          items: [updatedMusic],
+          meta: buildPaginationMeta(1, 1),
+        })
+      })
+    )
+
+    const { musics, loading, error, updateMusic } = useMusicList()
+
+    await updateMusic(1, mockMusicFormData)
+
+    expect(musics.value).toEqual([updatedMusic])
+    expect(loading.value).toBe(false)
+    expect(error.value).toBeNull()
+  })
+
+  it('失敗時にerrorが設定され、loadingがリセットされる', async () => {
+    server.use(
+      http.put(`${getApiBase()}/prsk-music/1`, () => {
+        return HttpResponse.json(
+          { statusCode: 404, error: 'Not Found', message: 'Music not found' },
+          { status: 404 }
+        )
+      })
+    )
+
+    const { loading, error, updateMusic } = useMusicList()
+
+    await expect(updateMusic(1, mockMusicFormData)).rejects.toBeInstanceOf(Error)
+
+    expect(loading.value).toBe(false)
+    expect(error.value).toBeInstanceOf(Error)
+  })
+})
+
+describe('useMusicList - deleteMusic', () => {
+  it('成功時にAPIを呼び出し、楽曲一覧を再取得する', async () => {
+    server.use(
+      http.delete(`${getApiBase()}/prsk-music/1`, () => {
+        return new HttpResponse(null, { status: 204 })
+      }),
+      http.get(`${getApiBase()}/prsk-music`, () => {
+        return HttpResponse.json({
+          items: [],
+          meta: buildPaginationMeta(1, 0),
+        })
+      })
+    )
+
+    const { musics, loading, error, deleteMusic } = useMusicList()
+
+    await deleteMusic(1)
+
+    expect(musics.value).toEqual([])
+    expect(loading.value).toBe(false)
+    expect(error.value).toBeNull()
+  })
+
+  it('失敗時にerrorが設定され、loadingがリセットされる', async () => {
+    server.use(
+      http.delete(`${getApiBase()}/prsk-music/1`, () => {
+        return HttpResponse.json(
+          { statusCode: 404, error: 'Not Found', message: 'Music not found' },
+          { status: 404 }
+        )
+      })
+    )
+
+    const { loading, error, deleteMusic } = useMusicList()
+
+    await expect(deleteMusic(1)).rejects.toBeInstanceOf(Error)
+
+    expect(loading.value).toBe(false)
+    expect(error.value).toBeInstanceOf(Error)
+  })
+})
 
 // ============================================================================
 // Property Tests
@@ -117,7 +262,7 @@ describe('useMusicList - Property Tests', () => {
           expect(musicList.value).toEqual(musics)
 
           // ページネーション情報が正しく設定されていることを確認
-          expect(pagination.value.currentPage).toBe(page)
+          expect(pagination.value.pageIndex).toBe(page)
           expect(pagination.value.totalItems).toBe(totalItems)
         }
       ),

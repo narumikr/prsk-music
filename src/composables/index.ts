@@ -34,10 +34,10 @@ export function useMusicList(): UseMusicListReturn {
   const loading = ref(false)
   const error = ref<Error | null>(null)
   const pagination = ref<PaginationMeta>({
-    currentPage: 1,
+    pageIndex: 1,
     totalPages: 0,
     totalItems: 0,
-    itemsPerPage: 20,
+    limit: 20,
   })
 
   /**
@@ -49,12 +49,12 @@ export function useMusicList(): UseMusicListReturn {
     error.value = null
 
     try {
-      const response = await musicApiClient.getList(page, pagination.value.itemsPerPage)
+      const response = await musicApiClient.getList(page, pagination.value.limit)
       musics.value = response.items
       pagination.value = response.meta
     } catch (err) {
       error.value = err instanceof Error ? err : new Error('Unknown error')
-      throw err
+      throw error.value
     } finally {
       loading.value = false
     }
@@ -71,10 +71,10 @@ export function useMusicList(): UseMusicListReturn {
     try {
       await musicApiClient.create(data)
       // 作成後、現在のページを再取得
-      await fetchMusics(pagination.value.currentPage)
+      await fetchMusics(pagination.value.pageIndex)
     } catch (err) {
       error.value = err instanceof Error ? err : new Error('Unknown error')
-      throw err
+      throw error.value
     } finally {
       loading.value = false
     }
@@ -92,10 +92,10 @@ export function useMusicList(): UseMusicListReturn {
     try {
       await musicApiClient.update(id, data)
       // 更新後、現在のページを再取得
-      await fetchMusics(pagination.value.currentPage)
+      await fetchMusics(pagination.value.pageIndex)
     } catch (err) {
       error.value = err instanceof Error ? err : new Error('Unknown error')
-      throw err
+      throw error.value
     } finally {
       loading.value = false
     }
@@ -112,10 +112,10 @@ export function useMusicList(): UseMusicListReturn {
     try {
       await musicApiClient.delete(id)
       // 削除後、現在のページを再取得
-      await fetchMusics(pagination.value.currentPage)
+      await fetchMusics(pagination.value.pageIndex)
     } catch (err) {
       error.value = err instanceof Error ? err : new Error('Unknown error')
-      throw err
+      throw error.value
     } finally {
       loading.value = false
     }

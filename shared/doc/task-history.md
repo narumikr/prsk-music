@@ -249,7 +249,7 @@
 **次のタスク: 3.4 useArtistListのインターフェース定義**
 
 **実装予定のComposables:**
-- ✅ `useMusicList` - 楽曲一覧の状態管理（タスク3.1完了、3.2〜3.3実施中）
+- ✅ `useMusicList` - 楽曲一覧の状態管理（タスク3.1〜3.3完了）
 - `useArtistList` - アーティスト一覧の状態管理（タスク3.4〜3.6）
 - `useNotification` - 通知メッセージの管理（タスク3.7〜3.9）
 
@@ -289,12 +289,13 @@
 ### Composables
 - `src/composables/index.ts`
   - `UseMusicListReturn` - useMusicListの戻り値型定義
-  - `useMusicList()` - 楽曲一覧の状態管理（インターフェースのみ、実装は未完了）
+  - `useMusicList()` - 楽曲一覧の状態管理（実装済み）
 
 ### テスト
 - `src/api/base.test.ts` - `getApiErrorMessage` のUnit Test
 - `src/api/music.test.ts` - `MusicApiClient` のProperty Test
 - `src/api/artist.test.ts` - `ArtistApiClient` のProperty Test
+- `src/composables/index.test.ts` - `useMusicList` のUnit Test / Property Test
 
 ---
 
