@@ -379,7 +379,7 @@ class BaseApiClient {
     });
 
     if (!response.ok) {
-      const error = new ApiError(response);
+      const error = new ApiErrorResponse(response);
       await error.parseBody();
       throw error;
     }
@@ -490,9 +490,9 @@ class ArtistApiClient {
 export const artistApiClient = new ArtistApiClient();
 ```
 
-#### ApiError
+#### ApiErrorResponse
 ```typescript
-class ApiError extends Error {
+class ApiErrorResponse extends Error {
   status: number;
   data: any;
   private response: Response;
@@ -501,7 +501,7 @@ class ApiError extends Error {
     super(`API Error: ${response.status}`);
     this.status = response.status;
     this.response = response;
-    this.name = 'ApiError';
+    this.name = 'ApiErrorResponse';
   }
 
   async parseBody() {
@@ -518,7 +518,7 @@ class ApiError extends Error {
 ```typescript
 class ApiErrorHandler {
   // APIエラーをユーザーフレンドリーなメッセージに変換
-  static getErrorMessage(error: ApiError): string {
+  static getErrorMessage(error: ApiErrorResponse): string {
     switch (error.status) {
       case 400:
         return error.data?.message || 'リクエストが無効です';
@@ -565,7 +565,7 @@ class ApiErrorHandler {
        // トークンをクリアしてログインページへリダイレクト
        this.setAuthToken(null);
        router.push('/login');
-       throw new ApiError(response);
+       throw new ApiErrorResponse(response);
      }
      
      // ... 残りの処理
@@ -718,9 +718,9 @@ interface PaginationMeta {
 }
 ```
 
-#### ApiError
+#### ApiErrorResponse
 ```typescript
-interface ApiError {
+interface ApiErrorResponse {
   status: number;
   message: string;
   details?: Record<string, string[]>;

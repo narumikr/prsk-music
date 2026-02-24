@@ -66,7 +66,7 @@
 - APIレスポンス型の定義
   - `PaginatedResponse<T>` - ページネーション付きレスポンス
   - `PaginationMeta` - ページネーションメタデータ
-  - `ApiError` - エラーレスポンス
+  - `ApiErrorResponse` - エラーレスポンス
   - `ErrorDetail` - エラー詳細
 
 **対応要件:** 要件1, 要件9
@@ -99,7 +99,7 @@
   - `setAuthToken()` - トークンの設定/クリア
   - Authorizationヘッダーへの自動付与
 - エラーハンドリングの実装
-  - `ApiError`クラス - APIエラーの表現
+  - `ApiErrorResponse`クラス - APIエラーの表現
   - `parseBody()` - エラーレスポンスのパース
   - HTTPステータスコードの保持
 - シングルトンインスタンスのエクスポート
@@ -275,7 +275,7 @@
 ### APIクライアント
 - `src/api/base.ts`
   - `BaseApiClient` - 共通HTTPリクエストメソッド
-  - `ApiError` - APIエラークラス
+  - `ApiErrorResponse` - APIエラークラス
   - `getApiErrorMessage` - エラーメッセージ生成
   - シングルトンインスタンス（`apiClient`）
 - `src/api/music.ts`

@@ -36,7 +36,7 @@ export class BaseApiClient {
     })
 
     if (!response.ok) {
-      const error = new ApiError(response)
+      const error = new ApiErrorResponse(response)
       await error.parseBody()
       throw error
     }
@@ -99,10 +99,10 @@ export class BaseApiClient {
 }
 
 /**
- * ApiError
+ * ApiErrorResponse
  * APIエラーを表すクラス
  */
-export class ApiError extends Error {
+export class ApiErrorResponse extends Error {
   status: number
   data: { message?: string } | null
   private response: Response
@@ -111,7 +111,7 @@ export class ApiError extends Error {
     super(`API Error: ${response.status}`)
     this.status = response.status
     this.response = response
-    this.name = 'ApiError'
+    this.name = 'ApiErrorResponse'
     this.data = null
   }
 
@@ -127,7 +127,7 @@ export class ApiError extends Error {
 /**
  * APIエラーをユーザーフレンドリーなメッセージに変換
  */
-export function getApiErrorMessage(error: ApiError): string {
+export function getApiErrorMessage(error: ApiErrorResponse): string {
   switch (error.status) {
     case 400:
       return error.data?.message ?? TEXT.apiError.badRequest
