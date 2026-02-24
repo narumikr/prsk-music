@@ -108,19 +108,19 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - すべてのProperty Testがパスすることを確認（Green）
     - _Requirements: 要件9, 要件10, 要件11, 要件12_
   
-  - [ ] 3.7 useNotificationのインターフェース定義
+  - [x] 3.7 useNotificationのインターフェース定義
     - 戻り値の型定義
     - メソッドシグネチャのみ実装
     - 実装は空（throw new Error('Not implemented')）
     - _Requirements: 要件2, 要件3, 要件4, 要件6_
   
-  - [ ] 3.8 useNotificationのProperty Test作成
+  - [x] 3.8 useNotificationのProperty Test作成
     - **Property 14: エラー詳細の表示**
     - **Property 15: エラーのコンソールログ出力**
     - テストは失敗する状態（Red）
     - **Validates: Requirements 要件6**
   
-  - [ ] 3.9 useNotificationの実装
+  - [x] 3.9 useNotificationの実装
     - 成功・エラー・情報メッセージの表示機能の実装
     - すべてのProperty Testがパスすることを確認（Green）
     - _Requirements: 要件2, 要件3, 要件4, 要件6_
