@@ -72,19 +72,19 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
 
 
 - [ ] 3. Composablesの実装
-  - [ ] 3.1 useMusicListのインターフェース定義
+  - [x] 3.1 useMusicListのインターフェース定義
     - 戻り値の型定義
     - メソッドシグネチャのみ実装
     - 実装は空（throw new Error('Not implemented')）
     - _Requirements: 要件1, 要件2, 要件3, 要件4, 要件5_
   
-  - [ ] 3.2 useMusicListのProperty Test作成
+  - [x] 3.2 useMusicListのProperty Test作成
     - **Property 12: ページ番号クリック時のデータ取得**
     - MSWでAPIをモック
     - テストは失敗する状態（Red）
     - **Validates: Requirements 要件5**
   
-  - [ ] 3.3 useMusicListの実装
+  - [x] 3.3 useMusicListの実装
     - 楽曲一覧の状態管理の実装
     - データ取得・作成・更新・削除メソッドの実装
     - すべてのProperty Testがパスすることを確認（Green）

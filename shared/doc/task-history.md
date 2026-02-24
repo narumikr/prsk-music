@@ -184,20 +184,72 @@
 
 ---
 
-## 次のタスク
-
 ### タスク3: Composablesの実装
 
-**開始方法:**
-1. `.kiro/specs/prsk-music-management-web/tasks.md`を開く
-2. タスク3.1から順番に実施する
-3. TDD（Test-Driven Development）アプローチに従う
-   - Red: インターフェース定義とテスト作成（失敗する状態）
-   - Green: 実装してテストをパスさせる
-   - Refactor: 必要に応じてリファクタリング
+#### 3.1 useMusicListのインターフェース定義
+
+**実施内容:**
+- `src/composables/index.ts`にuseMusicListのインターフェース定義を追加
+- `UseMusicListReturn`型の定義
+  - `musics: Ref<PrskMusic[]>` - 楽曲一覧の状態
+  - `loading: Ref<boolean>` - ローディング状態
+  - `error: Ref<Error | null>` - エラー状態
+  - `pagination: Ref<PaginationMeta>` - ページネーション情報
+  - `fetchMusics(page: number): Promise<void>` - 楽曲一覧取得
+  - `createMusic(data: MusicFormData): Promise<void>` - 楽曲作成
+  - `updateMusic(id: number, data: MusicFormData): Promise<void>` - 楽曲更新
+  - `deleteMusic(id: number): Promise<void>` - 楽曲削除
+- `useMusicList()`関数のシグネチャ定義（実装は空、`throw new Error('Not implemented')`）
+- 型安全性を確保するためVueの`Ref`型をインポート
+- 既存の型定義（`PrskMusic`、`MusicFormData`、`PaginationMeta`）を活用
+
+**対応要件:** 要件1, 要件2, 要件3, 要件4, 要件5
+
+#### 3.2 useMusicListのProperty Test作成
+
+**実施内容:**
+- `src/composables/index.test.ts`にProperty Testを作成
+- **Property 12: ページ番号クリック時のデータ取得**のテスト実装
+  - 任意のページ番号に対して対応するページの楽曲レコードが取得されることを検証
+  - fast-checkを使用して100回の反復テスト
+  - MSWでAPIをモック
+- テストは失敗する状態（Red）で作成完了
+
+**対応要件:** 要件5
+
+#### 3.3 useMusicListの実装
+
+**実施内容:**
+- `src/composables/index.ts`にuseMusicListの完全な実装を追加
+- 状態管理の実装
+  - `musics: Ref<PrskMusic[]>` - 楽曲一覧
+  - `loading: Ref<boolean>` - ローディング状態
+  - `error: Ref<Error | null>` - エラー状態
+  - `pagination: Ref<PaginationMeta>` - ページネーション情報
+- メソッドの実装
+  - `fetchMusics(page)` - 楽曲一覧取得（ページネーション対応）
+  - `createMusic(data)` - 楽曲作成（作成後に現在ページを再取得）
+  - `updateMusic(id, data)` - 楽曲更新（更新後に現在ページを再取得）
+  - `deleteMusic(id)` - 楽曲削除（削除後に現在ページを再取得）
+- エラーハンドリングの実装
+  - try-catch-finallyでエラーを捕捉
+  - エラー状態の更新
+  - ローディング状態の適切な管理
+- すべてのProperty Testがパス（Green）
+- 型チェックもパス
+
+**対応要件:** 要件1, 要件2, 要件3, 要件4, 要件5
+
+---
+
+## 次のタスク
+
+### タスク3: Composablesの実装（続き）
+
+**次のタスク: 3.4 useArtistListのインターフェース定義**
 
 **実装予定のComposables:**
-- `useMusicList` - 楽曲一覧の状態管理（タスク3.1〜3.3）
+- ✅ `useMusicList` - 楽曲一覧の状態管理（タスク3.1〜3.3完了）
 - `useArtistList` - アーティスト一覧の状態管理（タスク3.4〜3.6）
 - `useNotification` - 通知メッセージの管理（タスク3.7〜3.9）
 
@@ -234,10 +286,16 @@
   - シングルトンインスタンス（`artistApiClient`）
 - `src/api/index.ts` - 上記のre-export
 
+### Composables
+- `src/composables/index.ts`
+  - `UseMusicListReturn` - useMusicListの戻り値型定義
+  - `useMusicList()` - 楽曲一覧の状態管理（実装済み）
+
 ### テスト
 - `src/api/base.test.ts` - `getApiErrorMessage` のUnit Test
 - `src/api/music.test.ts` - `MusicApiClient` のProperty Test
 - `src/api/artist.test.ts` - `ArtistApiClient` のProperty Test
+- `src/composables/index.test.ts` - `useMusicList` のUnit Test / Property Test
 
 ---
 
