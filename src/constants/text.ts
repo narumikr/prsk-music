@@ -23,6 +23,12 @@ export const TEXT = {
     noData: 'データがありません',
   },
 
+  // 確認ダイアログ
+  confirmDialog: {
+    cancel: 'キャンセル',
+    delete: '削除',
+  },
+
   // バリデーションメッセージ
   validation: {
     required: '必須項目です',
@@ -72,6 +78,12 @@ export const TEXT = {
     original: 'オリジナル',
     mv3d: '3DMV',
     mv2d: '2DMV',
+  },
+
+  // YouTubeモーダル
+  youtubeModal: {
+    title: 'YouTube動画',
+    loadError: '動画を読み込めませんでした',
   },
 } as const
 
