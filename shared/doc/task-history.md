@@ -422,18 +422,116 @@
 
 **対応要件:** 要件7
 
+#### 4.4 PaginationControl.vueのスケルトン作成
+
+**実施内容:**
+- `src/components/PaginationControl.vue`を新規作成
+- `PaginationControlProps`インターフェースの定義
+  - `currentPage: number` - 現在のページ番号
+  - `totalPages: number` - 総ページ数
+  - `totalItems: number` - 総アイテム数
+- `PaginationControlEmits`インターフェースの定義
+  - `page-change` - ページ変更イベント（ページ番号を引数として渡す）
+- `defineProps`と`defineEmits`を使用した型安全なprops/emits定義
+- テンプレートは空の`<div></div>`（スケルトン）
+- 型チェックがパスすることを確認
+- 次のタスク（4.5）でUnit Testを作成予定
+
+**対応要件:** 要件1, 要件5, 要件9
+
+#### 4.5 PaginationControlのUnit Test作成
+
+**実施内容:**
+- `src/components/PaginationControl.test.ts`を新規作成
+- Unit Testの実装
+  - 20件以下でページネーション非表示のテスト
+  - 21件以上でページネーション表示のテスト
+  - 最初のページで「前へ」ボタン無効化のテスト
+  - 最後のページで「次へ」ボタン無効化のテスト
+  - 中間ページで「前へ」「次へ」ボタンが有効のテスト
+  - ページ情報が正しく表示されるテスト
+  - 「前へ」ボタンクリックでpage-changeイベント発火のテスト
+  - 「次へ」ボタンクリックでpage-changeイベント発火のテスト
+  - ページ番号リンククリックでpage-changeイベント発火のテスト
+  - 現在のページ番号がハイライト表示されるテスト
+- テストは失敗する状態（Red）で作成完了
+  - 9件のテストが失敗（期待通り）
+  - 1件のテスト（20件以下でページネーション非表示）がパス（スケルトンが空のdivのため）
+- 次のタスク（4.6）でProperty Testを作成予定
+
+**対応要件:** 要件1, 要件5, 要件9
+
+#### 4.6 PaginationControlのProperty Test作成
+
+**実施内容:**
+- `src/components/PaginationControl.test.ts`にProperty Testを追加
+- **Property 11: ページネーションメタデータの表示**のテスト実装
+  - 任意のページネーションメタデータ（currentPage、totalPages、totalItems）に対して正しく表示されることを検証
+  - fast-checkを使用して100回の反復テスト
+  - currentPageがtotalPagesを超えないように調整
+  - ページ情報要素（`[data-testid="page-info"]`）に各値が含まれることを確認
+- **Property 13: 20件超でのページネーション表示**のテスト実装
+  - 任意のアイテム数（21-1000件）に対してページネーションが表示されることを検証
+  - fast-checkを使用して100回の反復テスト
+  - 1ページあたり20件として総ページ数を自動計算
+  - ページネーション要素（`[data-testid="pagination"]`）が存在することを確認
+- **Property 13（補足）: 20件以下でのページネーション非表示**のテスト実装
+  - 任意のアイテム数（1-20件）に対してページネーションが非表示になることを検証
+  - fast-checkを使用して100回の反復テスト
+- テストは失敗する状態（Red）で作成完了
+  - Property 11: 失敗（`[data-testid="page-info"]`が存在しない）
+  - Property 13: 失敗（`[data-testid="pagination"]`が存在しない）
+  - Property 13（補足）: パス（スケルトンが空のdivのため）
+- 次のタスク（4.7）で実装を行い、すべてのテストをパスさせる予定
+
+**対応要件:** 要件1, 要件5, 要件9
+
+#### 4.7 PaginationControl.vueの実装
+
+**実施内容:**
+- `src/components/PaginationControl.vue`の完全な実装
+- ページネーション表示条件の実装
+  - 20件以下の場合は非表示（`shouldShowPagination` computed）
+  - 21件以上の場合は表示
+- ページ情報表示の実装
+  - 現在のページ番号、総ページ数、総アイテム数を表示
+  - フォーマット: 「ページ X / Y （全 Z 件）」
+- 前へ・次へボタンの実装
+  - 最初のページで「前へ」ボタンを無効化
+  - 最後のページで「次へ」ボタンを無効化
+  - クリック時に`page-change`イベントを発火
+- ページ番号リンクの実装
+  - 全ページ番号をボタンとして表示
+  - クリック時に`page-change`イベントを発火
+  - 現在のページ番号をハイライト表示（Primaryカラー）
+- UIガイドラインに従ったデザイン
+  - Primaryカラー（#33ccba）をアクセントとして使用
+  - グレー（gray-200）をボーダーに使用
+  - ホバー時にPrimaryカラーのborderとテキストカラーを適用
+  - 無効状態は透明度50%、cursor-not-allowed
+- すべてのUnit TestとProperty Testがパス（Green）
+  - Unit Test: 10件すべてパス
+  - Property 11: 任意のページネーションメタデータが正しく表示される（100回反復）
+  - Property 13: 任意のアイテム数が20件を超える場合にページネーションが表示される（100回反復）
+  - Property 13（補足）: 任意のアイテム数が20件以下の場合にページネーションが非表示（100回反復）
+- Property 11のテスト修正
+  - totalItemsを21件以上に制限（ページネーションが表示される条件を満たすため）
+- 型チェックもパス
+
+**対応要件:** 要件1, 要件5, 要件9
+
 ---
 
 ## 次のタスク
 
 ### タスク4: 共通コンポーネントの実装
 
-**次のタスク: 4.4 PaginationControl.vueのスケルトン作成**
+**次のタスク: 4.8 ConfirmDialog.vueのスケルトン作成**
 
 **実装予定のコンポーネント:**
 - ✅ `LoadingSpinner.vue` - ローディングインジケーター（実装完了）
-- `PaginationControl.vue` - ページネーション制御
-- `ConfirmDialog.vue` - 確認ダイアログ
+- ✅ `PaginationControl.vue` - ページネーション制御（実装完了）
+- ⏭️ `ConfirmDialog.vue` - 確認ダイアログ（次のタスク）
 - `YouTubeModal.vue` - YouTube動画埋め込みモーダル
 
 **実装ファイル:**
@@ -487,6 +585,14 @@
   - サイズバリエーション実装（small: 16px、medium: 32px、large: 48px）
   - Primaryカラー（#33ccba）を使用したスピナーアニメーション
   - アクセシビリティ対応（role="status"、aria-label）
+- `src/components/PaginationControl.vue`
+  - `PaginationControlProps` - propsの型定義（currentPage、totalPages、totalItems）
+  - `PaginationControlEmits` - emitsの型定義（page-change）
+  - ページネーション表示条件（20件以下は非表示、21件以上は表示）
+  - ページ情報表示（現在ページ/総ページ数、総アイテム数）
+  - 前へ・次へボタン（最初/最後のページで無効化）
+  - ページ番号リンク（現在ページをハイライト表示）
+  - Primaryカラー（#33ccba）をアクセントとして使用
 
 ### テスト
 - `src/api/base.test.ts` - `getApiErrorMessage` のUnit Test
@@ -496,6 +602,7 @@
 - `src/composables/useArtistList.test.ts` - `useArtistList` のProperty Test
 - `src/composables/useNotification.test.ts` - `useNotification` のProperty Test
 - `src/components/LoadingSpinner.test.ts` - `LoadingSpinner` のProperty Test（Property 16）
+- `src/components/PaginationControl.test.ts` - `PaginationControl` のUnit Test + Property Test（Property 11, Property 13）
 
 ---
 
@@ -587,3 +694,4 @@ pnpm typecheck
 3. 既存の実装ファイル（`src/types/index.ts`、`src/api/index.ts`）
 
 それでも解決しない場合は、チームメンバーに相談してください。
+- `src/components/PaginationControl.test.ts` - `PaginationControl` のUnit Test + Property Test（Property 11, Property 13）

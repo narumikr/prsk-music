@@ -141,12 +141,12 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - すべてのProperty Testがパスすることを確認（Green）
     - _Requirements: 要件7_
   
-  - [ ] 4.4 PaginationControl.vueのスケルトン作成
+  - [x] 4.4 PaginationControl.vueのスケルトン作成
     - propsとemitsの型定義のみ
     - テンプレートは空のdiv
     - _Requirements: 要件1, 要件5, 要件9_
   
-  - [ ] 4.5 PaginationControlのUnit Test作成
+  - [x] 4.5 PaginationControlのUnit Test作成
     - 20件以下でページネーション非表示
     - 21件以上でページネーション表示
     - 最初のページで「前へ」ボタン無効化
@@ -154,13 +154,13 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - テストは失敗する状態（Red）
     - _Requirements: 要件1, 要件5, 要件9_
   
-  - [ ] 4.6 PaginationControlのProperty Test作成
+  - [x] 4.6 PaginationControlのProperty Test作成
     - **Property 11: ページネーションメタデータの表示**
     - **Property 13: 20件超でのページネーション表示**
     - テストは失敗する状態（Red）
     - **Validates: Requirements 要件1, 要件5, 要件9**
   
-  - [ ] 4.7 PaginationControl.vueの実装
+  - [x] 4.7 PaginationControl.vueの実装
     - ページ情報表示の実装
     - 前へ・次へボタン、ページ番号リンクの実装
     - 最初/最後のページでのボタン無効化の実装
