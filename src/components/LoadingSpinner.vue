@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+// biome-ignore lint/correctness/noUnusedImports: used in template :aria-label binding
+import { TEXT } from '@/constants/text'
 
 interface LoadingSpinnerProps {
   size?: 'small' | 'medium' | 'large'
@@ -30,6 +32,6 @@ const sizeClasses = computed(() => {
       sizeClasses,
     ]"
     role="status"
-    aria-label="読み込み中"
+    :aria-label="TEXT.common.loading"
   />
 </template>

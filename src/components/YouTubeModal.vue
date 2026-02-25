@@ -87,7 +87,7 @@ onUnmounted(() => {
     role="dialog"
     aria-modal="true"
     class="fixed inset-0 z-50 flex items-center justify-center"
-    @keydown.escape="handleClose"
+    @keydown.escape.stop="handleClose"
   >
     <!-- 背景オーバーレイ -->
     <div
@@ -126,8 +126,10 @@ onUnmounted(() => {
       <!-- 動画埋め込みエリア -->
       <div class="relative w-full aspect-video">
         <iframe
+          v-if="embedUrl"
           data-testid="youtube-iframe"
           :src="embedUrl"
+          :title="TEXT.youtubeModal.title"
           class="absolute inset-0 w-full h-full"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen

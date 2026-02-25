@@ -205,8 +205,8 @@ describe('YouTubeModal Unit Tests', () => {
     const modal = wrapper.find('[data-testid="youtube-modal"]')
     expect(modal.exists()).toBe(true)
 
-    // iframeが存在することを確認（動画IDが抽出できない場合は空のsrcになる可能性がある）
+    // 無効なURLの場合はiframeが描画されないことを確認
     const iframe = wrapper.find('[data-testid="youtube-iframe"]')
-    expect(iframe.exists()).toBe(true)
+    expect(iframe.exists()).toBe(false)
   })
 })

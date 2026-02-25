@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+// biome-ignore lint/correctness/noUnusedImports: used in template interpolation
+import { TEXT } from '@/constants/text'
 
 interface PaginationControlProps {
   currentPage: number
@@ -56,7 +58,7 @@ const handleNext = () => {
   <div v-if="shouldShowPagination" data-testid="pagination" class="flex items-center justify-between gap-4 py-4">
     <!-- ページ情報 -->
     <div data-testid="page-info" class="text-sm text-gray-600">
-      ページ {{ currentPage }} / {{ totalPages }} （全 {{ totalItems }} 件）
+      {{ TEXT.pagination.pagePrefix }} {{ currentPage }} / {{ totalPages }} （{{ TEXT.pagination.totalPrefix }} {{ totalItems }} {{ TEXT.pagination.totalSuffix }}）
     </div>
 
     <!-- ページネーションコントロール -->
@@ -73,7 +75,7 @@ const handleNext = () => {
         ]"
         @click="handlePrev"
       >
-        前へ
+        {{ TEXT.pagination.prev }}
       </button>
 
       <!-- ページ番号リンク -->
@@ -106,7 +108,7 @@ const handleNext = () => {
         ]"
         @click="handleNext"
       >
-        次へ
+        {{ TEXT.pagination.next }}
       </button>
     </div>
   </div>

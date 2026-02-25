@@ -80,6 +80,15 @@ export const TEXT = {
     mv2d: '2DMV',
   },
 
+  // ページネーション
+  pagination: {
+    pagePrefix: 'ページ',
+    totalPrefix: '全',
+    totalSuffix: '件',
+    prev: '前へ',
+    next: '次へ',
+  },
+
   // YouTubeモーダル
   youtubeModal: {
     title: 'YouTube動画',

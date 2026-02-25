@@ -29,8 +29,6 @@ describe('LoadingSpinner - Property Tests', () => {
             },
           })
 
-          // 実装後は、ローディングスピナーが表示されることを期待
-          // 現在はスケルトン実装なので、このテストは失敗する（Red）
           expect(wrapper.find('[data-testid="loading-spinner"]').exists()).toBe(true)
 
           // 非同期操作をシミュレート
@@ -58,8 +56,6 @@ describe('LoadingSpinner - Property Tests', () => {
           },
         })
 
-        // 実装後は、サイズに応じたクラスが適用されることを期待
-        // 現在はスケルトン実装なので、このテストは失敗する（Red）
         const spinner = wrapper.find('[data-testid="loading-spinner"]')
         expect(spinner.exists()).toBe(true)
 
@@ -86,8 +82,6 @@ describe('LoadingSpinner - Property Tests', () => {
   it('Property 16 (補足): sizeプロパティが指定されていない場合はmediumサイズが適用される', () => {
     const wrapper = mount(LoadingSpinner)
 
-    // 実装後は、mediumサイズのクラスが適用されることを期待
-    // 現在はスケルトン実装なので、このテストは失敗する（Red）
     const spinner = wrapper.find('[data-testid="loading-spinner"]')
     expect(spinner.exists()).toBe(true)
     expect(spinner.classes()).toContain('w-8')
