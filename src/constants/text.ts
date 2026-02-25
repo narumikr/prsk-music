@@ -23,6 +23,12 @@ export const TEXT = {
     noData: 'データがありません',
   },
 
+  // 確認ダイアログ
+  confirmDialog: {
+    cancel: 'キャンセル',
+    delete: '削除',
+  },
+
   // バリデーションメッセージ
   validation: {
     required: '必須項目です',

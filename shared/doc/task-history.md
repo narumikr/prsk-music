@@ -520,19 +520,104 @@
 
 **対応要件:** 要件1, 要件5, 要件9
 
+#### 4.8 ConfirmDialog.vueのスケルトン作成
+
+**実施内容:**
+- `src/components/ConfirmDialog.vue`を新規作成
+- `ConfirmDialogProps`インターフェースの定義
+  - `open: boolean` - ダイアログの表示/非表示
+  - `title: string` - ダイアログのタイトル
+  - `message: string` - 確認メッセージ
+- `ConfirmDialogEmits`インターフェースの定義
+  - `confirm` - 確認ボタンクリック時のイベント
+  - `cancel` - キャンセルボタンクリック時のイベント
+- `defineProps`と`defineEmits`を使用した型安全なprops/emits定義
+- テンプレートは空の`<div></div>`（スケルトン）
+- 型チェックがパスすることを確認
+- 次のタスク（4.9）でUnit Testを作成予定
+
+**対応要件:** 要件4, 要件12
+
+#### 4.9 ConfirmDialog.vueのUnit Test作成
+
+**実施内容:**
+- `src/components/ConfirmDialog.test.ts`を新規作成
+- Unit Testの実装（11件のテストケース）
+  - 確認ダイアログ表示のテスト（open=trueで表示、open=falseで非表示）
+  - タイトル表示のテスト
+  - メッセージ表示のテスト
+  - 確認ボタン表示のテスト
+  - キャンセルボタン表示のテスト
+  - 確認ボタンクリック時のconfirmイベント発火のテスト
+  - キャンセルボタンクリック時のcancelイベント発火のテスト
+  - 背景オーバーレイクリック時のcancelイベント発火のテスト
+  - Escapeキー押下時のcancelイベント発火のテスト
+  - アーティスト削除時の警告メッセージ表示のテスト
+- アクセシビリティ対応の確認
+  - `role="dialog"`属性の確認
+  - `data-testid`属性の設定
+- テストは失敗する状態（Red）で作成完了
+  - 10件のテストが失敗（期待通り）
+  - 1件のテスト（open=falseで非表示）がパス（スケルトンが空のdivのため）
+- 次のタスク（4.10）で実装を行い、すべてのテストをパスさせる予定
+
+**対応要件:** 要件4, 要件12
+
+#### 4.10 ConfirmDialog.vueの実装
+
+**実施内容:**
+- `src/components/ConfirmDialog.vue`の完全な実装
+- ダイアログ表示条件の実装
+  - `open`プロパティがtrueの場合のみ表示
+  - v-ifディレクティブで条件付きレンダリング
+- ダイアログコンテンツの実装
+  - タイトル表示（`dialog-title`）
+  - メッセージ表示（`dialog-message`）
+  - 確認ボタン（`confirm-button`）
+  - キャンセルボタン（`cancel-button`）
+- イベントハンドリングの実装
+  - 確認ボタンクリック時に`confirm`イベント発火
+  - キャンセルボタンクリック時に`cancel`イベント発火
+  - 背景オーバーレイクリック時に`cancel`イベント発火
+  - Escapeキー押下時に`cancel`イベント発火
+- Escapeキーリスナーの管理
+  - `watch`でダイアログの開閉を監視
+  - 開いているときにkeydownリスナーを追加
+  - 閉じているときにリスナーを削除
+  - `onUnmounted`でクリーンアップ
+- UIガイドラインに従ったデザイン
+  - Errorカラー（#ff6699）を確認ボタンに使用
+  - グレー（gray-200）をボーダーに使用
+  - ホバー時に透明度80%を適用
+  - シンプルで控えめなモーダルデザイン
+  - 背景オーバーレイ（黒、透明度50%）
+- アクセシビリティ対応
+  - `role="dialog"` 属性の追加
+  - `aria-modal="true"` 属性の追加
+  - `data-testid`属性の追加（テスト用）
+- コーディング規約への準拠
+  - UI表示テキストを`src/constants/text.ts`に追加
+  - `TEXT.confirmDialog.cancel`と`TEXT.confirmDialog.delete`を使用
+  - リテラル文字列を直接記述せず、定数から参照
+- すべてのUnit Testがパス（Green）
+  - 11件のテストすべてがパス
+- 型チェックもパス
+
+**対応要件:** 要件4, 要件12
+
 ---
 
 ## 次のタスク
 
 ### タスク4: 共通コンポーネントの実装
 
-**次のタスク: 4.8 ConfirmDialog.vueのスケルトン作成**
+**次のタスク: 4.11 YouTubeModal.vueのスケルトン作成**
 
 **実装予定のコンポーネント:**
 - ✅ `LoadingSpinner.vue` - ローディングインジケーター（実装完了）
 - ✅ `PaginationControl.vue` - ページネーション制御（実装完了）
-- ⏭️ `ConfirmDialog.vue` - 確認ダイアログ（次のタスク）
-- `YouTubeModal.vue` - YouTube動画埋め込みモーダル
+- ✅ `ConfirmDialog.vue` - 確認ダイアログ（実装完了）
+- ⏭️ `YouTubeModal.vue` - YouTube動画埋め込みモーダル（次のタスク）
 
 **実装ファイル:**
 - `src/components/` - コンポーネントの実装先
@@ -579,6 +664,17 @@
   - `useNotification()` - 通知メッセージの管理（実装済み）
 - `src/composables/index.ts` - 上記のre-export
 
+### 定数
+- `src/constants/text.ts`
+  - `TEXT` - UI表示テキスト定義
+  - `common` - 共通テキスト（ボタンラベル、メッセージなど）
+  - `confirmDialog` - 確認ダイアログテキスト（キャンセル、削除）
+  - `validation` - バリデーションメッセージ
+  - `error` - エラーメッセージ
+  - `apiError` - APIエラーメッセージ
+  - `demo` - デモ用テキスト
+  - `musicType` - 楽曲タイプラベル
+
 ### コンポーネント
 - `src/components/LoadingSpinner.vue`
   - `LoadingSpinnerProps` - propsの型定義（size: 'small' | 'medium' | 'large'）
@@ -593,6 +689,15 @@
   - 前へ・次へボタン（最初/最後のページで無効化）
   - ページ番号リンク（現在ページをハイライト表示）
   - Primaryカラー（#33ccba）をアクセントとして使用
+- `src/components/ConfirmDialog.vue`
+  - `ConfirmDialogProps` - propsの型定義（open、title、message）
+  - `ConfirmDialogEmits` - emitsの型定義（confirm、cancel）
+  - ダイアログ表示条件（openプロパティで制御）
+  - タイトル、メッセージ、確認・キャンセルボタンの実装
+  - イベントハンドリング（確認、キャンセル、背景クリック、Escapeキー）
+  - Errorカラー（#ff6699）を確認ボタンに使用
+  - アクセシビリティ対応（role="dialog"、aria-modal）
+  - UI表示テキストを定数から参照（TEXT.confirmDialog）
 
 ### テスト
 - `src/api/base.test.ts` - `getApiErrorMessage` のUnit Test
@@ -603,6 +708,7 @@
 - `src/composables/useNotification.test.ts` - `useNotification` のProperty Test
 - `src/components/LoadingSpinner.test.ts` - `LoadingSpinner` のProperty Test（Property 16）
 - `src/components/PaginationControl.test.ts` - `PaginationControl` のUnit Test + Property Test（Property 11, Property 13）
+- `src/components/ConfirmDialog.test.ts` - `ConfirmDialog` のUnit Test（11件のテストケース）
 
 ---
 

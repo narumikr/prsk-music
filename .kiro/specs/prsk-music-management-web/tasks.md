@@ -167,19 +167,19 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - すべてのUnit TestとProperty Testがパスすることを確認（Green）
     - _Requirements: 要件1, 要件5, 要件9_
   
-  - [ ] 4.8 ConfirmDialog.vueのスケルトン作成
+  - [x] 4.8 ConfirmDialog.vueのスケルトン作成
     - propsとemitsの型定義のみ
     - テンプレートは空のdiv
     - _Requirements: 要件4, 要件12_
   
-  - [ ] 4.9 ConfirmDialog.vueのUnit Test作成
+  - [x] 4.9 ConfirmDialog.vueのUnit Test作成
     - 確認ダイアログ表示のテスト
     - 確認ボタンクリック時のイベント発火
     - キャンセルボタンクリック時のイベント発火
     - テストは失敗する状態（Red）
     - _Requirements: 要件4, 要件12_
   
-  - [ ] 4.10 ConfirmDialog.vueの実装
+  - [x] 4.10 ConfirmDialog.vueの実装
     - タイトル、メッセージ、確認・キャンセルボタンの実装
     - すべてのUnit Testがパスすることを確認（Green）
     - _Requirements: 要件4, 要件12_
