@@ -33,7 +33,8 @@ watch(
     } else {
       document.removeEventListener('keydown', handleKeydown)
     }
-  }
+  },
+  { immediate: true }
 )
 
 // コンポーネントがアンマウントされるときにリスナーをクリーンアップ
@@ -72,7 +73,7 @@ const handleOverlayClick = () => {
       class="bg-white rounded-lg shadow-lg max-w-md w-full mx-4 transition-transform duration-150 ease-in-out"
       data-testid="confirm-dialog"
       @click.stop
-      @keydown.escape="handleCancel"
+      @keydown.escape.stop="handleCancel"
     >
       <!-- ダイアログヘッダー -->
       <div class="px-6 py-4 border-b border-gray-200">
