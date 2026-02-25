@@ -5,7 +5,7 @@ import { TEXT } from '@/constants/text'
  * 共通のHTTPリクエストメソッドを提供するAPIクライアント
  */
 export class BaseApiClient {
-  private baseUrl = '/btw-api/v1'
+  private baseUrl = '/api/v1'
   private authToken: string | null = null
 
   /**

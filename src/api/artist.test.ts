@@ -67,7 +67,7 @@ const artistApi = new ArtistApiClient()
 
 // happy-dom の window.location.origin からベースURLを動的に取得する
 // （Vitest の happy-dom 環境では http://localhost:PORT が設定される）
-const getApiBase = () => `${window.location.origin}/btw-api/v1`
+const getApiBase = () => `${window.location.origin}/api/v1`
 
 beforeAll(() => server.listen({ onUnhandledRequest: 'warn' }))
 afterEach(() => server.resetHandlers())
@@ -102,7 +102,7 @@ describe('ArtistApiClient - Property Tests', () => {
         await artistApi.create(data)
 
         expect(capturedMethod).toBe('POST')
-        expect(capturedPath).toBe('/btw-api/v1/artists')
+        expect(capturedPath).toBe('/api/v1/artists')
         expect(capturedBody).toEqual(data)
       }),
       { numRuns: 100 }
@@ -136,7 +136,7 @@ describe('ArtistApiClient - Property Tests', () => {
           await artistApi.update(id, data)
 
           expect(capturedMethod).toBe('PUT')
-          expect(capturedPath).toBe(`/btw-api/v1/artists/${id}`)
+          expect(capturedPath).toBe(`/api/v1/artists/${id}`)
           expect(capturedBody).toEqual(data)
         }
       ),
@@ -165,7 +165,7 @@ describe('ArtistApiClient - Property Tests', () => {
         await artistApi.delete(id)
 
         expect(capturedMethod).toBe('DELETE')
-        expect(capturedPath).toBe(`/btw-api/v1/artists/${id}`)
+        expect(capturedPath).toBe(`/api/v1/artists/${id}`)
       }),
       { numRuns: 100 }
     )
