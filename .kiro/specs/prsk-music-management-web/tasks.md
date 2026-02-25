@@ -90,19 +90,19 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - すべてのProperty Testがパスすることを確認（Green）
     - _Requirements: 要件1, 要件2, 要件3, 要件4, 要件5_
   
-  - [ ] 3.4 useArtistListのインターフェース定義
+  - [x] 3.4 useArtistListのインターフェース定義
     - 戻り値の型定義
     - メソッドシグネチャのみ実装
     - 実装は空（throw new Error('Not implemented')）
     - _Requirements: 要件9, 要件10, 要件11, 要件12_
   
-  - [ ] 3.5 useArtistListのProperty Test作成
+  - [x] 3.5 useArtistListのProperty Test作成
     - アーティスト一覧取得のテスト
     - MSWでAPIをモック
     - テストは失敗する状態（Red）
     - _Requirements: 要件9_
   
-  - [ ] 3.6 useArtistListの実装
+  - [x] 3.6 useArtistListの実装
     - アーティスト一覧の状態管理の実装
     - データ取得・作成・更新・削除メソッドの実装
     - すべてのProperty Testがパスすることを確認（Green）

@@ -2,8 +2,8 @@ import fc from 'fast-check'
 import { HttpResponse, http } from 'msw'
 import { setupServer } from 'msw/node'
 import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
-import type { AuditInfo, MusicFormData, PaginationMeta, PrskMusic } from '@/types'
-import { useMusicList } from './index'
+import type { Artist, ArtistFormData, AuditInfo, PaginationMeta } from '@/types'
+import { useArtistList } from './useArtistList'
 
 // ============================================================================
 // テスト用ヘルパー
@@ -16,19 +16,12 @@ const mockAuditInfo: AuditInfo = {
   updatedBy: 'test-user',
 }
 
-function buildMusicResponse(id: number, overrides: Partial<PrskMusic> = {}): PrskMusic {
+function buildArtistResponse(id: number, overrides: Partial<Artist> = {}): Artist {
   return {
     id,
-    title: 'Test Music',
     artistName: 'Test Artist',
     unitName: null,
     content: null,
-    musicType: 0,
-    specially: null,
-    lyricsName: null,
-    musicName: null,
-    featuring: null,
-    youtubeLink: 'https://www.youtube.com/watch?v=test',
     auditInfo: mockAuditInfo,
     ...overrides,
   }
@@ -56,49 +49,44 @@ beforeAll(() => server.listen({ onUnhandledRequest: 'warn' }))
 afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
 
-const mockMusicFormData: MusicFormData = {
-  title: 'Test Music',
-  artistId: 1,
-  musicType: 0,
-  specially: null,
-  lyricsName: null,
-  musicName: null,
-  featuring: null,
-  youtubeLink: 'https://www.youtube.com/watch?v=test',
+const mockArtistFormData: ArtistFormData = {
+  artistName: 'Test Artist',
+  unitName: null,
+  content: null,
 }
 
 // ============================================================================
 // Unit Tests - CRUD Operations
 // ============================================================================
 
-describe('useMusicList - createMusic', () => {
-  it('成功時にAPIを呼び出し、楽曲一覧を再取得する', async () => {
-    const createdMusic = buildMusicResponse(999, { title: 'New Music' })
+describe('useArtistList - createArtist', () => {
+  it('成功時にAPIを呼び出し、アーティスト一覧を再取得する', async () => {
+    const createdArtist = buildArtistResponse(999, { artistName: 'New Artist' })
 
     server.use(
-      http.post(`${getApiBase()}/prsk-music`, () => {
-        return HttpResponse.json(createdMusic, { status: 201 })
+      http.post(`${getApiBase()}/artists`, () => {
+        return HttpResponse.json(createdArtist, { status: 201 })
       }),
-      http.get(`${getApiBase()}/prsk-music`, () => {
+      http.get(`${getApiBase()}/artists`, () => {
         return HttpResponse.json({
-          items: [createdMusic],
+          items: [createdArtist],
           meta: buildPaginationMeta(1, 1),
         })
       })
     )
 
-    const { musics, loading, error, createMusic } = useMusicList()
+    const { artists, loading, error, createArtist } = useArtistList()
 
-    await createMusic(mockMusicFormData)
+    await createArtist(mockArtistFormData)
 
-    expect(musics.value).toEqual([createdMusic])
+    expect(artists.value).toEqual([createdArtist])
     expect(loading.value).toBe(false)
     expect(error.value).toBeNull()
   })
 
   it('失敗時にerrorが設定され、loadingがリセットされる', async () => {
     server.use(
-      http.post(`${getApiBase()}/prsk-music`, () => {
+      http.post(`${getApiBase()}/artists`, () => {
         return HttpResponse.json(
           { statusCode: 400, error: 'Bad Request', message: 'Invalid data' },
           { status: 400 }
@@ -106,66 +94,66 @@ describe('useMusicList - createMusic', () => {
       })
     )
 
-    const { loading, error, createMusic } = useMusicList()
+    const { loading, error, createArtist } = useArtistList()
 
-    await expect(createMusic(mockMusicFormData)).rejects.toBeInstanceOf(Error)
+    await expect(createArtist(mockArtistFormData)).rejects.toBeInstanceOf(Error)
 
     expect(loading.value).toBe(false)
     expect(error.value).toBeInstanceOf(Error)
   })
 })
 
-describe('useMusicList - updateMusic', () => {
-  it('成功時にAPIを呼び出し、楽曲一覧を再取得する', async () => {
-    const updatedMusic = buildMusicResponse(1, { title: 'Updated Music' })
+describe('useArtistList - updateArtist', () => {
+  it('成功時にAPIを呼び出し、アーティスト一覧を再取得する', async () => {
+    const updatedArtist = buildArtistResponse(1, { artistName: 'Updated Artist' })
 
     server.use(
-      http.put(`${getApiBase()}/prsk-music/1`, () => {
-        return HttpResponse.json(updatedMusic)
+      http.put(`${getApiBase()}/artists/1`, () => {
+        return HttpResponse.json(updatedArtist)
       }),
-      http.get(`${getApiBase()}/prsk-music`, () => {
+      http.get(`${getApiBase()}/artists`, () => {
         return HttpResponse.json({
-          items: [updatedMusic],
+          items: [updatedArtist],
           meta: buildPaginationMeta(1, 1),
         })
       })
     )
 
-    const { musics, loading, error, updateMusic } = useMusicList()
+    const { artists, loading, error, updateArtist } = useArtistList()
 
-    await updateMusic(1, mockMusicFormData)
+    await updateArtist(1, mockArtistFormData)
 
-    expect(musics.value).toEqual([updatedMusic])
+    expect(artists.value).toEqual([updatedArtist])
     expect(loading.value).toBe(false)
     expect(error.value).toBeNull()
   })
 
   it('失敗時にerrorが設定され、loadingがリセットされる', async () => {
     server.use(
-      http.put(`${getApiBase()}/prsk-music/1`, () => {
+      http.put(`${getApiBase()}/artists/1`, () => {
         return HttpResponse.json(
-          { statusCode: 404, error: 'Not Found', message: 'Music not found' },
+          { statusCode: 404, error: 'Not Found', message: 'Artist not found' },
           { status: 404 }
         )
       })
     )
 
-    const { loading, error, updateMusic } = useMusicList()
+    const { loading, error, updateArtist } = useArtistList()
 
-    await expect(updateMusic(1, mockMusicFormData)).rejects.toBeInstanceOf(Error)
+    await expect(updateArtist(1, mockArtistFormData)).rejects.toBeInstanceOf(Error)
 
     expect(loading.value).toBe(false)
     expect(error.value).toBeInstanceOf(Error)
   })
 })
 
-describe('useMusicList - deleteMusic', () => {
-  it('成功時にAPIを呼び出し、楽曲一覧を再取得する', async () => {
+describe('useArtistList - deleteArtist', () => {
+  it('成功時にAPIを呼び出し、アーティスト一覧を再取得する', async () => {
     server.use(
-      http.delete(`${getApiBase()}/prsk-music/1`, () => {
+      http.delete(`${getApiBase()}/artists/1`, () => {
         return new HttpResponse(null, { status: 204 })
       }),
-      http.get(`${getApiBase()}/prsk-music`, () => {
+      http.get(`${getApiBase()}/artists`, () => {
         return HttpResponse.json({
           items: [],
           meta: buildPaginationMeta(1, 0),
@@ -173,28 +161,28 @@ describe('useMusicList - deleteMusic', () => {
       })
     )
 
-    const { musics, loading, error, deleteMusic } = useMusicList()
+    const { artists, loading, error, deleteArtist } = useArtistList()
 
-    await deleteMusic(1)
+    await deleteArtist(1)
 
-    expect(musics.value).toEqual([])
+    expect(artists.value).toEqual([])
     expect(loading.value).toBe(false)
     expect(error.value).toBeNull()
   })
 
   it('失敗時にerrorが設定され、loadingがリセットされる', async () => {
     server.use(
-      http.delete(`${getApiBase()}/prsk-music/1`, () => {
+      http.delete(`${getApiBase()}/artists/1`, () => {
         return HttpResponse.json(
-          { statusCode: 404, error: 'Not Found', message: 'Music not found' },
+          { statusCode: 404, error: 'Not Found', message: 'Artist not found' },
           { status: 404 }
         )
       })
     )
 
-    const { loading, error, deleteMusic } = useMusicList()
+    const { loading, error, deleteArtist } = useArtistList()
 
-    await expect(deleteMusic(1)).rejects.toBeInstanceOf(Error)
+    await expect(deleteArtist(1)).rejects.toBeInstanceOf(Error)
 
     expect(loading.value).toBe(false)
     expect(error.value).toBeInstanceOf(Error)
@@ -205,16 +193,16 @@ describe('useMusicList - deleteMusic', () => {
 // Property Tests
 // ============================================================================
 
-describe('useMusicList - Property Tests', () => {
+describe('useArtistList - Property Tests', () => {
   /**
-   * Property 12: ページ番号クリック時のデータ取得
+   * アーティスト一覧取得のProperty Test
    * 任意のページ番号に対して、そのページ番号をクリックした際には
-   * 対応するページの楽曲レコードが取得され表示される必要があります
+   * 対応するページのアーティストレコードが取得され表示される必要があります
    *
-   * Feature: prsk-music-management-web, Property 12: ページ番号クリック時のデータ取得
-   * Validates: Requirements 要件5.3
+   * Feature: prsk-music-management-web
+   * Validates: Requirements 要件9
    */
-  it('Property 12: 任意のページ番号に対して対応するページの楽曲レコードが取得される', async () => {
+  it('Property: 任意のページ番号に対して対応するページのアーティストレコードが取得される', async () => {
     await fc.assert(
       fc.asyncProperty(
         fc.integer({ min: 1, max: 100 }), // ページ番号
@@ -222,9 +210,9 @@ describe('useMusicList - Property Tests', () => {
         fc.integer({ min: 0, max: 1000 }), // 総アイテム数
         async (page, itemCount, totalItems) => {
           // テストデータ生成
-          const musics = Array.from({ length: itemCount }, (_, i) =>
-            buildMusicResponse(page * 100 + i, {
-              title: `Music ${page}-${i}`,
+          const artists = Array.from({ length: itemCount }, (_, i) =>
+            buildArtistResponse(page * 100 + i, {
+              artistName: `Artist ${page}-${i}`,
             })
           )
 
@@ -232,14 +220,14 @@ describe('useMusicList - Property Tests', () => {
 
           // MSWでAPIをモック
           server.use(
-            http.get(`${getApiBase()}/prsk-music`, ({ request }) => {
+            http.get(`${getApiBase()}/artists`, ({ request }) => {
               const url = new URL(request.url)
               const requestedPage = url.searchParams.get('page')
 
               // リクエストされたページ番号が正しいことを確認
               if (requestedPage === String(page)) {
                 return HttpResponse.json({
-                  items: musics,
+                  items: artists,
                   meta,
                 })
               }
@@ -251,15 +239,15 @@ describe('useMusicList - Property Tests', () => {
             })
           )
 
-          // useMusicListを使用
-          const { musics: musicList, pagination, fetchMusics } = useMusicList()
+          // useArtistListを使用
+          const { artists: artistList, pagination, fetchArtists } = useArtistList()
 
-          // ページ番号をクリック（fetchMusicsを呼び出し）
-          await fetchMusics(page)
+          // ページ番号をクリック（fetchArtistsを呼び出し）
+          await fetchArtists(page)
 
-          // 対応するページの楽曲レコードが取得されていることを確認
-          expect(musicList.value).toHaveLength(itemCount)
-          expect(musicList.value).toEqual(musics)
+          // 対応するページのアーティストレコードが取得されていることを確認
+          expect(artistList.value).toHaveLength(itemCount)
+          expect(artistList.value).toEqual(artists)
 
           // ページネーション情報が正しく設定されていることを確認
           expect(pagination.value.pageIndex).toBe(page)

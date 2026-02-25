@@ -240,25 +240,86 @@
 
 **対応要件:** 要件1, 要件2, 要件3, 要件4, 要件5
 
+#### 3.4 useArtistListのインターフェース定義
+
+**実施内容:**
+- `src/composables/index.ts`にuseArtistListのインターフェース定義を追加
+- `UseArtistListReturn`型の定義
+  - `artists: Ref<Artist[]>` - アーティスト一覧の状態
+  - `loading: Ref<boolean>` - ローディング状態
+  - `error: Ref<Error | null>` - エラー状態
+  - `pagination: Ref<PaginationMeta>` - ページネーション情報
+  - `fetchArtists(page: number): Promise<void>` - アーティスト一覧取得
+  - `createArtist(data: ArtistFormData): Promise<void>` - アーティスト作成
+  - `updateArtist(id: number, data: ArtistFormData): Promise<void>` - アーティスト更新
+  - `deleteArtist(id: number): Promise<void>` - アーティスト削除
+- `useArtistList()`関数のシグネチャ定義（実装は空、`throw new Error('Not implemented')`）
+- 型安全性を確保するためVueの`Ref`型をインポート
+- 既存の型定義（`Artist`、`ArtistFormData`、`PaginationMeta`）を活用
+- 型チェックがパスすることを確認
+
+**対応要件:** 要件9, 要件10, 要件11, 要件12
+
+#### 3.5 useArtistListのProperty Test作成
+
+**実施内容:**
+- `src/composables/index.test.ts`にuseArtistListのProperty Testを追加
+- アーティスト一覧取得のProperty Test実装
+  - 任意のページ番号に対して対応するページのアーティストレコードが取得されることを検証
+  - fast-checkを使用して100回の反復テスト
+  - MSWでAPIをモック（`/api/v1/artists`エンドポイント）
+- テスト用ヘルパー関数の追加
+  - `buildArtistResponse()` - テスト用アーティストデータ生成
+- テストは失敗する状態（Red）で作成完了
+  - エラー: "Error: Not implemented"（useArtistListが未実装のため）
+
+**対応要件:** 要件9
+
+#### 3.6 useArtistListの実装
+
+**実施内容:**
+- `src/composables/index.ts`にuseArtistListの完全な実装を追加
+- 状態管理の実装
+  - `artists: Ref<Artist[]>` - アーティスト一覧
+  - `loading: Ref<boolean>` - ローディング状態
+  - `error: Ref<Error | null>` - エラー状態
+  - `pagination: Ref<PaginationMeta>` - ページネーション情報
+- メソッドの実装
+  - `fetchArtists(page)` - アーティスト一覧取得（ページネーション対応）
+  - `createArtist(data)` - アーティスト作成（作成後に現在ページを再取得）
+  - `updateArtist(id, data)` - アーティスト更新（更新後に現在ページを再取得）
+  - `deleteArtist(id)` - アーティスト削除（削除後に現在ページを再取得）
+- エラーハンドリングの実装
+  - try-catch-finallyでエラーを捕捉
+  - エラー状態の更新
+  - ローディング状態の適切な管理
+- `artistApiClient`をインポートして使用
+- すべてのProperty Testがパス（Green）
+- 型チェックもパス
+
+**対応要件:** 要件9, 要件10, 要件11, 要件12
+
 ---
 
 ## 次のタスク
 
 ### タスク3: Composablesの実装（続き）
 
-**次のタスク: 3.4 useArtistListのインターフェース定義**
+**次のタスク: 3.7 useNotificationのインターフェース定義**
 
 **実装予定のComposables:**
 - ✅ `useMusicList` - 楽曲一覧の状態管理（タスク3.1〜3.3完了）
-- `useArtistList` - アーティスト一覧の状態管理（タスク3.4〜3.6）
+- ✅ `useArtistList` - アーティスト一覧の状態管理（タスク3.4〜3.6完了）
 - `useNotification` - 通知メッセージの管理（タスク3.7〜3.9）
 
 **実装ファイル:**
 - `src/composables/index.ts` - Composablesの実装先
+- `src/composables/index.test.ts` - Composablesのテスト
 
 **参考:**
 - 設計書の「Composables (Vue 3 Composition API)」セクションを参照
 - 既存の`src/api/index.ts`を活用してAPI通信を実装
+- 既存の`useMusicList`と`useArtistList`の実装を参考にする
 
 ---
 
@@ -290,6 +351,8 @@
 - `src/composables/index.ts`
   - `UseMusicListReturn` - useMusicListの戻り値型定義
   - `useMusicList()` - 楽曲一覧の状態管理（実装済み）
+  - `UseArtistListReturn` - useArtistListの戻り値型定義
+  - `useArtistList()` - アーティスト一覧の状態管理（実装済み）
 
 ### テスト
 - `src/api/base.test.ts` - `getApiErrorMessage` のUnit Test
