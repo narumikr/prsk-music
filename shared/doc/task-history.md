@@ -18,7 +18,9 @@
 
 - ✅ タスク1: プロジェクトセットアップと基本構造の構築（完了）
 - ✅ タスク2: 型定義とAPIクライアントの実装（完了）
-- ⏭️ タスク3: Composablesの実装（次のタスク）
+- ✅ タスク3: Composablesの実装（完了）
+- ✅ タスク4: 共通コンポーネントの実装（完了）
+- ⏭️ タスク5: レイアウトコンポーネントの実装（次のタスク）
 
 ---
 
@@ -364,25 +366,354 @@
 
 ---
 
+#### 4.1 LoadingSpinner.vueのスケルトン作成
+
+**実施内容:**
+- `src/components/LoadingSpinner.vue`を新規作成
+- `LoadingSpinnerProps`インターフェースの定義
+  - `size?: 'small' | 'medium' | 'large'` - スピナーのサイズ（デフォルト: 'medium'）
+- `withDefaults`を使用してデフォルト値を設定
+- テンプレートは空の`<div></div>`（スケルトン）
+- 次のタスク（4.2）でProperty Testを作成予定
+
+**対応要件:** 要件7
+
+---
+
+#### 4.2 LoadingSpinnerのProperty Test作成
+
+**実施内容:**
+- `src/components/LoadingSpinner.test.ts`を新規作成
+- **Property 16: 非同期操作中のローディング表示**のテスト実装
+  - 任意の非同期操作（フォーム送信またはデータ取得）中にローディングインジケーターが表示されることを検証
+  - サイズバリエーション（small, medium, large）のテスト
+  - fast-checkを使用して100回の反復テスト
+  - 非同期操作の遅延時間（1-50ms）をランダムに生成してテスト
+- **Property 16 (補足): サイズバリエーションの検証**
+  - 任意のサイズに対して適切なローディングインジケーターが表示されることを検証
+  - サイズに応じたクラス（w-4/h-4, w-8/h-8, w-12/h-12）の適用を確認
+- **Property 16 (補足): デフォルトサイズの検証**
+  - sizeプロパティが指定されていない場合、mediumサイズが適用されることを検証
+- テストは失敗する状態（Red）で作成完了
+  - エラー: `expected false to be true` - `[data-testid="loading-spinner"]`が存在しない（スケルトン実装のため）
+- 次のタスク（4.3）で実装を行い、テストをパスさせる予定
+
+**対応要件:** 要件7
+
+#### 4.3 LoadingSpinner.vueの実装
+
+**実施内容:**
+- `src/components/LoadingSpinner.vue`の完全な実装
+- サイズバリエーション（small、medium、large）の実装
+  - small: w-4 h-4 border-2
+  - medium: w-8 h-8 border-2（デフォルト）
+  - large: w-12 h-12 border-4
+- UIガイドラインに従ったデザイン
+  - Primaryカラー（#33ccba）をアクセントとして使用
+  - グレー（gray-200）をベースカラーとして使用
+  - シンプルで控えめなスピナーデザイン
+- アクセシビリティ対応
+  - `role="status"` 属性の追加
+  - `aria-label="読み込み中"` 属性の追加
+  - `data-testid="loading-spinner"` 属性の追加
+- すべてのProperty Testがパス（Green）
+  - Property 16: 任意の非同期操作中にローディングインジケーターが表示される（100回反復）
+  - Property 16（補足）: 任意のサイズに対して適切なローディングインジケーターが表示される（100回反復）
+  - Property 16（補足）: sizeプロパティが指定されていない場合はmediumサイズが適用される
+- 型チェックもパス
+
+**対応要件:** 要件7
+
+#### 4.4 PaginationControl.vueのスケルトン作成
+
+**実施内容:**
+- `src/components/PaginationControl.vue`を新規作成
+- `PaginationControlProps`インターフェースの定義
+  - `currentPage: number` - 現在のページ番号
+  - `totalPages: number` - 総ページ数
+  - `totalItems: number` - 総アイテム数
+- `PaginationControlEmits`インターフェースの定義
+  - `page-change` - ページ変更イベント（ページ番号を引数として渡す）
+- `defineProps`と`defineEmits`を使用した型安全なprops/emits定義
+- テンプレートは空の`<div></div>`（スケルトン）
+- 型チェックがパスすることを確認
+- 次のタスク（4.5）でUnit Testを作成予定
+
+**対応要件:** 要件1, 要件5, 要件9
+
+#### 4.5 PaginationControlのUnit Test作成
+
+**実施内容:**
+- `src/components/PaginationControl.test.ts`を新規作成
+- Unit Testの実装
+  - 20件以下でページネーション非表示のテスト
+  - 21件以上でページネーション表示のテスト
+  - 最初のページで「前へ」ボタン無効化のテスト
+  - 最後のページで「次へ」ボタン無効化のテスト
+  - 中間ページで「前へ」「次へ」ボタンが有効のテスト
+  - ページ情報が正しく表示されるテスト
+  - 「前へ」ボタンクリックでpage-changeイベント発火のテスト
+  - 「次へ」ボタンクリックでpage-changeイベント発火のテスト
+  - ページ番号リンククリックでpage-changeイベント発火のテスト
+  - 現在のページ番号がハイライト表示されるテスト
+- テストは失敗する状態（Red）で作成完了
+  - 9件のテストが失敗（期待通り）
+  - 1件のテスト（20件以下でページネーション非表示）がパス（スケルトンが空のdivのため）
+- 次のタスク（4.6）でProperty Testを作成予定
+
+**対応要件:** 要件1, 要件5, 要件9
+
+#### 4.6 PaginationControlのProperty Test作成
+
+**実施内容:**
+- `src/components/PaginationControl.test.ts`にProperty Testを追加
+- **Property 11: ページネーションメタデータの表示**のテスト実装
+  - 任意のページネーションメタデータ（currentPage、totalPages、totalItems）に対して正しく表示されることを検証
+  - fast-checkを使用して100回の反復テスト
+  - currentPageがtotalPagesを超えないように調整
+  - ページ情報要素（`[data-testid="page-info"]`）に各値が含まれることを確認
+- **Property 13: 20件超でのページネーション表示**のテスト実装
+  - 任意のアイテム数（21-1000件）に対してページネーションが表示されることを検証
+  - fast-checkを使用して100回の反復テスト
+  - 1ページあたり20件として総ページ数を自動計算
+  - ページネーション要素（`[data-testid="pagination"]`）が存在することを確認
+- **Property 13（補足）: 20件以下でのページネーション非表示**のテスト実装
+  - 任意のアイテム数（1-20件）に対してページネーションが非表示になることを検証
+  - fast-checkを使用して100回の反復テスト
+- テストは失敗する状態（Red）で作成完了
+  - Property 11: 失敗（`[data-testid="page-info"]`が存在しない）
+  - Property 13: 失敗（`[data-testid="pagination"]`が存在しない）
+  - Property 13（補足）: パス（スケルトンが空のdivのため）
+- 次のタスク（4.7）で実装を行い、すべてのテストをパスさせる予定
+
+**対応要件:** 要件1, 要件5, 要件9
+
+#### 4.7 PaginationControl.vueの実装
+
+**実施内容:**
+- `src/components/PaginationControl.vue`の完全な実装
+- ページネーション表示条件の実装
+  - 20件以下の場合は非表示（`shouldShowPagination` computed）
+  - 21件以上の場合は表示
+- ページ情報表示の実装
+  - 現在のページ番号、総ページ数、総アイテム数を表示
+  - フォーマット: 「ページ X / Y （全 Z 件）」
+- 前へ・次へボタンの実装
+  - 最初のページで「前へ」ボタンを無効化
+  - 最後のページで「次へ」ボタンを無効化
+  - クリック時に`page-change`イベントを発火
+- ページ番号リンクの実装
+  - 全ページ番号をボタンとして表示
+  - クリック時に`page-change`イベントを発火
+  - 現在のページ番号をハイライト表示（Primaryカラー）
+- UIガイドラインに従ったデザイン
+  - Primaryカラー（#33ccba）をアクセントとして使用
+  - グレー（gray-200）をボーダーに使用
+  - ホバー時にPrimaryカラーのborderとテキストカラーを適用
+  - 無効状態は透明度50%、cursor-not-allowed
+- すべてのUnit TestとProperty Testがパス（Green）
+  - Unit Test: 10件すべてパス
+  - Property 11: 任意のページネーションメタデータが正しく表示される（100回反復）
+  - Property 13: 任意のアイテム数が20件を超える場合にページネーションが表示される（100回反復）
+  - Property 13（補足）: 任意のアイテム数が20件以下の場合にページネーションが非表示（100回反復）
+- Property 11のテスト修正
+  - totalItemsを21件以上に制限（ページネーションが表示される条件を満たすため）
+- 型チェックもパス
+
+**対応要件:** 要件1, 要件5, 要件9
+
+#### 4.8 ConfirmDialog.vueのスケルトン作成
+
+**実施内容:**
+- `src/components/ConfirmDialog.vue`を新規作成
+- `ConfirmDialogProps`インターフェースの定義
+  - `open: boolean` - ダイアログの表示/非表示
+  - `title: string` - ダイアログのタイトル
+  - `message: string` - 確認メッセージ
+- `ConfirmDialogEmits`インターフェースの定義
+  - `confirm` - 確認ボタンクリック時のイベント
+  - `cancel` - キャンセルボタンクリック時のイベント
+- `defineProps`と`defineEmits`を使用した型安全なprops/emits定義
+- テンプレートは空の`<div></div>`（スケルトン）
+- 型チェックがパスすることを確認
+- 次のタスク（4.9）でUnit Testを作成予定
+
+**対応要件:** 要件4, 要件12
+
+#### 4.9 ConfirmDialog.vueのUnit Test作成
+
+**実施内容:**
+- `src/components/ConfirmDialog.test.ts`を新規作成
+- Unit Testの実装（11件のテストケース）
+  - 確認ダイアログ表示のテスト（open=trueで表示、open=falseで非表示）
+  - タイトル表示のテスト
+  - メッセージ表示のテスト
+  - 確認ボタン表示のテスト
+  - キャンセルボタン表示のテスト
+  - 確認ボタンクリック時のconfirmイベント発火のテスト
+  - キャンセルボタンクリック時のcancelイベント発火のテスト
+  - 背景オーバーレイクリック時のcancelイベント発火のテスト
+  - Escapeキー押下時のcancelイベント発火のテスト
+  - アーティスト削除時の警告メッセージ表示のテスト
+- アクセシビリティ対応の確認
+  - `role="dialog"`属性の確認
+  - `data-testid`属性の設定
+- テストは失敗する状態（Red）で作成完了
+  - 10件のテストが失敗（期待通り）
+  - 1件のテスト（open=falseで非表示）がパス（スケルトンが空のdivのため）
+- 次のタスク（4.10）で実装を行い、すべてのテストをパスさせる予定
+
+**対応要件:** 要件4, 要件12
+
+#### 4.10 ConfirmDialog.vueの実装
+
+**実施内容:**
+- `src/components/ConfirmDialog.vue`の完全な実装
+- ダイアログ表示条件の実装
+  - `open`プロパティがtrueの場合のみ表示
+  - v-ifディレクティブで条件付きレンダリング
+- ダイアログコンテンツの実装
+  - タイトル表示（`dialog-title`）
+  - メッセージ表示（`dialog-message`）
+  - 確認ボタン（`confirm-button`）
+  - キャンセルボタン（`cancel-button`）
+- イベントハンドリングの実装
+  - 確認ボタンクリック時に`confirm`イベント発火
+  - キャンセルボタンクリック時に`cancel`イベント発火
+  - 背景オーバーレイクリック時に`cancel`イベント発火
+  - Escapeキー押下時に`cancel`イベント発火
+- Escapeキーリスナーの管理
+  - `watch`でダイアログの開閉を監視
+  - 開いているときにkeydownリスナーを追加
+  - 閉じているときにリスナーを削除
+  - `onUnmounted`でクリーンアップ
+- UIガイドラインに従ったデザイン
+  - Errorカラー（#ff6699）を確認ボタンに使用
+  - グレー（gray-200）をボーダーに使用
+  - ホバー時に透明度80%を適用
+  - シンプルで控えめなモーダルデザイン
+  - 背景オーバーレイ（黒、透明度50%）
+- アクセシビリティ対応
+  - `role="dialog"` 属性の追加
+  - `aria-modal="true"` 属性の追加
+  - `data-testid`属性の追加（テスト用）
+- コーディング規約への準拠
+  - UI表示テキストを`src/constants/text.ts`に追加
+  - `TEXT.confirmDialog.cancel`と`TEXT.confirmDialog.delete`を使用
+  - リテラル文字列を直接記述せず、定数から参照
+- すべてのUnit Testがパス（Green）
+  - 11件のテストすべてがパス
+- 型チェックもパス
+
+**対応要件:** 要件4, 要件12
+
+#### 4.11 YouTubeModal.vueのスケルトン作成
+
+**実施内容:**
+- `src/components/YouTubeModal.vue`を新規作成
+- `YouTubeModalProps`インターフェースの定義
+  - `open: boolean` - モーダルの表示/非表示
+  - `videoUrl: string` - YouTube動画のURL
+- `YouTubeModalEmits`インターフェースの定義
+  - `close` - モーダルを閉じるイベント
+- `defineProps`と`defineEmits`を使用した型安全なprops/emits定義
+- テンプレートは空の`<div></div>`（スケルトン）
+- 型チェックがパスすることを確認
+- 次のタスク（4.12）でUnit Testを作成予定
+
+**対応要件:** 要件1
+
+#### 4.12 YouTubeModal.vueのUnit Test作成
+
+**実施内容:**
+- `src/components/YouTubeModal.test.ts`を新規作成
+- Unit Testの実装（12件のテストケース）
+  - モーダル表示のテスト（open=trueで表示、open=falseで非表示）
+  - YouTube動画埋め込みのテスト（iframeの存在確認）
+  - URLから動画ID抽出のテスト
+    - 標準形式: `https://www.youtube.com/watch?v=VIDEO_ID`
+    - 短縮形式: `https://youtu.be/VIDEO_ID`
+    - 埋め込み形式: `https://www.youtube.com/embed/VIDEO_ID`
+  - 閉じるボタン表示のテスト
+  - 閉じるボタンクリック時のcloseイベント発火のテスト
+  - 背景オーバーレイクリック時のcloseイベント発火のテスト
+  - Escapeキー押下時のcloseイベント発火のテスト
+  - iframeの適切な属性設定のテスト（allow、allowfullscreen）
+  - 無効なURLの場合のエラーハンドリングのテスト
+- アクセシビリティ対応の確認
+  - `role="dialog"`属性の確認
+  - `data-testid`属性の設定
+- テストは失敗する状態（Red）で作成完了
+  - 11件のテストが失敗（期待通り）
+  - 1件のテスト（open=falseで非表示）がパス（スケルトンが空のdivのため）
+- 次のタスク（4.13）で実装を行い、すべてのテストをパスさせる予定
+
+**対応要件:** 要件1
+
+#### 4.13 YouTubeModal.vueの実装
+
+**実施内容:**
+- `src/components/YouTubeModal.vue`の完全な実装
+- YouTube動画ID抽出機能の実装
+  - `extractVideoId()` - URLから動画IDを抽出
+  - 標準形式（`watch?v=`）、短縮形式（`youtu.be/`）、埋め込み形式（`embed/`）に対応
+  - 正規表現を使用した柔軟なパース処理
+- YouTube埋め込みURL生成の実装
+  - `embedUrl` computed - 動画IDから埋め込みURLを生成
+  - 無効なURLの場合は空文字列を返す
+- モーダル表示条件の実装
+  - `open`プロパティがtrueの場合のみ表示
+  - v-ifディレクティブで条件付きレンダリング
+- モーダルコンテンツの実装
+  - ヘッダー（タイトル + 閉じるボタン）
+  - YouTube動画埋め込みエリア（16:9アスペクト比）
+  - エラーメッセージ表示（無効なURLの場合）
+- イベントハンドリングの実装
+  - 閉じるボタンクリック時に`close`イベント発火
+  - 背景オーバーレイクリック時に`close`イベント発火
+  - Escapeキー押下時に`close`イベント発火
+- Escapeキーリスナーの管理
+  - `watch`でモーダルの開閉を監視
+  - 開いているときにkeydownリスナーを追加
+  - 閉じているときにリスナーを削除
+  - `onUnmounted`でクリーンアップ
+- UIガイドラインに従ったデザイン
+  - グレー（gray-200）をボーダーに使用
+  - シンプルで控えめなモーダルデザイン
+  - 背景オーバーレイ（黒、透明度50%）
+  - レスポンシブ対応（max-w-4xl、mx-4）
+- アクセシビリティ対応
+  - `role="dialog"` 属性の追加
+  - `aria-modal="true"` 属性の追加
+  - `data-testid`属性の追加（テスト用）
+- コーディング規約への準拠
+  - UI表示テキストを`src/constants/text.ts`に追加
+  - `TEXT.youtubeModal.title`と`TEXT.youtubeModal.loadError`を使用
+  - リテラル文字列を直接記述せず、定数から参照
+- すべてのUnit Testがパス（Green）
+  - 12件のテストすべてがパス
+- 型チェックもパス
+
+**対応要件:** 要件1
+
+---
+
 ## 次のタスク
 
-### タスク4: 共通コンポーネントの実装
+### タスク5: レイアウトコンポーネントの実装
 
-**次のタスク: 4.1 LoadingSpinner.vueのスケルトン作成**
+**次のタスク: 5.1 Navigation.vueのスケルトン作成**
 
-**実装予定のComposables:**
-- ✅ `useMusicList` - 楽曲一覧の状態管理（タスク3.1〜3.3完了）
-- ✅ `useArtistList` - アーティスト一覧の状態管理（タスク3.4〜3.6完了）
-- `useNotification` - 通知メッセージの管理（タスク3.7〜3.9完了）
+**実装予定のコンポーネント:**
+- ⏭️ `Navigation.vue` - ナビゲーションメニュー（次のタスク）
+- `Layout.vue` - 全ページ共通レイアウト
 
 **実装ファイル:**
-- `src/composables/index.ts` - Composablesの実装先
-- `src/composables/index.test.ts` - Composablesのテスト
+- `src/components/` - コンポーネントの実装先
 
 **参考:**
-- 設計書の「Composables (Vue 3 Composition API)」セクションを参照
-- 既存の`src/api/index.ts`を活用してAPI通信を実装
-- 既存の`useMusicList`と`useArtistList`の実装を参考にする
+- 設計書の「Layout Components」セクションを参照
+- UIガイドライン（`.kiro/steering/ui-design-guidelines.md`）に従う
 
 ---
 
@@ -422,6 +753,54 @@
   - `useNotification()` - 通知メッセージの管理（実装済み）
 - `src/composables/index.ts` - 上記のre-export
 
+### 定数
+- `src/constants/text.ts`
+  - `TEXT` - UI表示テキスト定義
+  - `common` - 共通テキスト（ボタンラベル、メッセージなど）
+  - `confirmDialog` - 確認ダイアログテキスト（キャンセル、削除）
+  - `youtubeModal` - YouTubeモーダルテキスト（タイトル、読み込みエラー）
+  - `validation` - バリデーションメッセージ
+  - `error` - エラーメッセージ
+  - `apiError` - APIエラーメッセージ
+  - `demo` - デモ用テキスト
+  - `musicType` - 楽曲タイプラベル
+
+### コンポーネント
+- `src/components/LoadingSpinner.vue`
+  - `LoadingSpinnerProps` - propsの型定義（size: 'small' | 'medium' | 'large'）
+  - サイズバリエーション実装（small: 16px、medium: 32px、large: 48px）
+  - Primaryカラー（#33ccba）を使用したスピナーアニメーション
+  - アクセシビリティ対応（role="status"、aria-label）
+- `src/components/PaginationControl.vue`
+  - `PaginationControlProps` - propsの型定義（currentPage、totalPages、totalItems）
+  - `PaginationControlEmits` - emitsの型定義（page-change）
+  - ページネーション表示条件（20件以下は非表示、21件以上は表示）
+  - ページ情報表示（現在ページ/総ページ数、総アイテム数）
+  - 前へ・次へボタン（最初/最後のページで無効化）
+  - ページ番号リンク（現在ページをハイライト表示）
+  - Primaryカラー（#33ccba）をアクセントとして使用
+- `src/components/ConfirmDialog.vue`
+  - `ConfirmDialogProps` - propsの型定義（open、title、message）
+  - `ConfirmDialogEmits` - emitsの型定義（confirm、cancel）
+  - ダイアログ表示条件（openプロパティで制御）
+  - タイトル、メッセージ、確認・キャンセルボタンの実装
+  - イベントハンドリング（確認、キャンセル、背景クリック、Escapeキー）
+  - Errorカラー（#ff6699）を確認ボタンに使用
+  - アクセシビリティ対応（role="dialog"、aria-modal）
+  - UI表示テキストを定数から参照（TEXT.confirmDialog）
+- `src/components/YouTubeModal.vue`
+  - `YouTubeModalProps` - propsの型定義（open、videoUrl）
+  - `YouTubeModalEmits` - emitsの型定義（close）
+  - YouTube動画ID抽出機能（標準形式、短縮形式、埋め込み形式に対応）
+  - YouTube埋め込みURL生成（embedUrl computed）
+  - モーダル表示条件（openプロパティで制御）
+  - YouTube動画埋め込みエリア（16:9アスペクト比）
+  - エラーメッセージ表示（無効なURLの場合）
+  - イベントハンドリング（閉じるボタン、背景クリック、Escapeキー）
+  - Escapeキーリスナーの管理（watch、onUnmounted）
+  - アクセシビリティ対応（role="dialog"、aria-modal）
+  - UI表示テキストを定数から参照（TEXT.youtubeModal）
+
 ### テスト
 - `src/api/base.test.ts` - `getApiErrorMessage` のUnit Test
 - `src/api/music.test.ts` - `MusicApiClient` のProperty Test
@@ -429,6 +808,10 @@
 - `src/composables/useMusicList.test.ts` - `useMusicList` のProperty Test
 - `src/composables/useArtistList.test.ts` - `useArtistList` のProperty Test
 - `src/composables/useNotification.test.ts` - `useNotification` のProperty Test
+- `src/components/LoadingSpinner.test.ts` - `LoadingSpinner` のProperty Test（Property 16）
+- `src/components/PaginationControl.test.ts` - `PaginationControl` のUnit Test + Property Test（Property 11, Property 13）
+- `src/components/ConfirmDialog.test.ts` - `ConfirmDialog` のUnit Test（11件のテストケース）
+- `src/components/YouTubeModal.test.ts` - `YouTubeModal` のUnit Test（12件のテストケース、すべてパス）
 
 ---
 
@@ -520,3 +903,4 @@ pnpm typecheck
 3. 既存の実装ファイル（`src/types/index.ts`、`src/api/index.ts`）
 
 それでも解決しない場合は、チームメンバーに相談してください。
+- `src/components/PaginationControl.test.ts` - `PaginationControl` のUnit Test + Property Test（Property 11, Property 13）

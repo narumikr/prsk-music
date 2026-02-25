@@ -126,27 +126,27 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - _Requirements: 要件2, 要件3, 要件4, 要件6_
 
 - [ ] 4. 共通コンポーネントの実装
-  - [ ] 4.1 LoadingSpinner.vueのスケルトン作成
+  - [x] 4.1 LoadingSpinner.vueのスケルトン作成
     - propsの型定義のみ
     - テンプレートは空のdiv
     - _Requirements: 要件7_
   
-  - [ ] 4.2 LoadingSpinnerのProperty Test作成
+  - [x] 4.2 LoadingSpinnerのProperty Test作成
     - **Property 16: 非同期操作中のローディング表示**
     - テストは失敗する状態（Red）
     - **Validates: Requirements 要件7**
   
-  - [ ] 4.3 LoadingSpinner.vueの実装
+  - [x] 4.3 LoadingSpinner.vueの実装
     - サイズバリエーション（small、medium、large）の実装
     - すべてのProperty Testがパスすることを確認（Green）
     - _Requirements: 要件7_
   
-  - [ ] 4.4 PaginationControl.vueのスケルトン作成
+  - [x] 4.4 PaginationControl.vueのスケルトン作成
     - propsとemitsの型定義のみ
     - テンプレートは空のdiv
     - _Requirements: 要件1, 要件5, 要件9_
   
-  - [ ] 4.5 PaginationControlのUnit Test作成
+  - [x] 4.5 PaginationControlのUnit Test作成
     - 20件以下でページネーション非表示
     - 21件以上でページネーション表示
     - 最初のページで「前へ」ボタン無効化
@@ -154,49 +154,49 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - テストは失敗する状態（Red）
     - _Requirements: 要件1, 要件5, 要件9_
   
-  - [ ] 4.6 PaginationControlのProperty Test作成
+  - [x] 4.6 PaginationControlのProperty Test作成
     - **Property 11: ページネーションメタデータの表示**
     - **Property 13: 20件超でのページネーション表示**
     - テストは失敗する状態（Red）
     - **Validates: Requirements 要件1, 要件5, 要件9**
   
-  - [ ] 4.7 PaginationControl.vueの実装
+  - [x] 4.7 PaginationControl.vueの実装
     - ページ情報表示の実装
     - 前へ・次へボタン、ページ番号リンクの実装
     - 最初/最後のページでのボタン無効化の実装
     - すべてのUnit TestとProperty Testがパスすることを確認（Green）
     - _Requirements: 要件1, 要件5, 要件9_
   
-  - [ ] 4.8 ConfirmDialog.vueのスケルトン作成
+  - [x] 4.8 ConfirmDialog.vueのスケルトン作成
     - propsとemitsの型定義のみ
     - テンプレートは空のdiv
     - _Requirements: 要件4, 要件12_
   
-  - [ ] 4.9 ConfirmDialog.vueのUnit Test作成
+  - [x] 4.9 ConfirmDialog.vueのUnit Test作成
     - 確認ダイアログ表示のテスト
     - 確認ボタンクリック時のイベント発火
     - キャンセルボタンクリック時のイベント発火
     - テストは失敗する状態（Red）
     - _Requirements: 要件4, 要件12_
   
-  - [ ] 4.10 ConfirmDialog.vueの実装
+  - [x] 4.10 ConfirmDialog.vueの実装
     - タイトル、メッセージ、確認・キャンセルボタンの実装
     - すべてのUnit Testがパスすることを確認（Green）
     - _Requirements: 要件4, 要件12_
   
-  - [ ] 4.11 YouTubeModal.vueのスケルトン作成
+  - [x] 4.11 YouTubeModal.vueのスケルトン作成
     - propsとemitsの型定義のみ
     - テンプレートは空のdiv
     - _Requirements: 要件1_
   
-  - [ ] 4.12 YouTubeModal.vueのUnit Test作成
+  - [x] 4.12 YouTubeModal.vueのUnit Test作成
     - モーダル表示のテスト
     - YouTube動画埋め込みのテスト
     - URLから動画ID抽出のテスト
     - テストは失敗する状態（Red）
     - _Requirements: 要件1_
   
-  - [ ] 4.13 YouTubeModal.vueの実装
+  - [x] 4.13 YouTubeModal.vueの実装
     - YouTube動画埋め込み表示の実装
     - URLから動画ID抽出の実装
     - すべてのUnit Testがパスすることを確認（Green）
