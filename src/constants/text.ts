@@ -79,6 +79,12 @@ export const TEXT = {
     mv3d: '3DMV',
     mv2d: '2DMV',
   },
+
+  // YouTubeモーダル
+  youtubeModal: {
+    title: 'YouTube動画',
+    loadError: '動画を読み込めませんでした',
+  },
 } as const
 
 export type TextKey = typeof TEXT

@@ -184,19 +184,19 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - すべてのUnit Testがパスすることを確認（Green）
     - _Requirements: 要件4, 要件12_
   
-  - [ ] 4.11 YouTubeModal.vueのスケルトン作成
+  - [x] 4.11 YouTubeModal.vueのスケルトン作成
     - propsとemitsの型定義のみ
     - テンプレートは空のdiv
     - _Requirements: 要件1_
   
-  - [ ] 4.12 YouTubeModal.vueのUnit Test作成
+  - [x] 4.12 YouTubeModal.vueのUnit Test作成
     - モーダル表示のテスト
     - YouTube動画埋め込みのテスト
     - URLから動画ID抽出のテスト
     - テストは失敗する状態（Red）
     - _Requirements: 要件1_
   
-  - [ ] 4.13 YouTubeModal.vueの実装
+  - [x] 4.13 YouTubeModal.vueの実装
     - YouTube動画埋め込み表示の実装
     - URLから動画ID抽出の実装
     - すべてのUnit Testがパスすることを確認（Green）

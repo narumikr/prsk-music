@@ -18,7 +18,9 @@
 
 - ✅ タスク1: プロジェクトセットアップと基本構造の構築（完了）
 - ✅ タスク2: 型定義とAPIクライアントの実装（完了）
-- ⏭️ タスク3: Composablesの実装（次のタスク）
+- ✅ タスク3: Composablesの実装（完了）
+- ✅ タスク4: 共通コンポーネントの実装（完了）
+- ⏭️ タスク5: レイアウトコンポーネントの実装（次のタスク）
 
 ---
 
@@ -605,25 +607,112 @@
 
 **対応要件:** 要件4, 要件12
 
+#### 4.11 YouTubeModal.vueのスケルトン作成
+
+**実施内容:**
+- `src/components/YouTubeModal.vue`を新規作成
+- `YouTubeModalProps`インターフェースの定義
+  - `open: boolean` - モーダルの表示/非表示
+  - `videoUrl: string` - YouTube動画のURL
+- `YouTubeModalEmits`インターフェースの定義
+  - `close` - モーダルを閉じるイベント
+- `defineProps`と`defineEmits`を使用した型安全なprops/emits定義
+- テンプレートは空の`<div></div>`（スケルトン）
+- 型チェックがパスすることを確認
+- 次のタスク（4.12）でUnit Testを作成予定
+
+**対応要件:** 要件1
+
+#### 4.12 YouTubeModal.vueのUnit Test作成
+
+**実施内容:**
+- `src/components/YouTubeModal.test.ts`を新規作成
+- Unit Testの実装（12件のテストケース）
+  - モーダル表示のテスト（open=trueで表示、open=falseで非表示）
+  - YouTube動画埋め込みのテスト（iframeの存在確認）
+  - URLから動画ID抽出のテスト
+    - 標準形式: `https://www.youtube.com/watch?v=VIDEO_ID`
+    - 短縮形式: `https://youtu.be/VIDEO_ID`
+    - 埋め込み形式: `https://www.youtube.com/embed/VIDEO_ID`
+  - 閉じるボタン表示のテスト
+  - 閉じるボタンクリック時のcloseイベント発火のテスト
+  - 背景オーバーレイクリック時のcloseイベント発火のテスト
+  - Escapeキー押下時のcloseイベント発火のテスト
+  - iframeの適切な属性設定のテスト（allow、allowfullscreen）
+  - 無効なURLの場合のエラーハンドリングのテスト
+- アクセシビリティ対応の確認
+  - `role="dialog"`属性の確認
+  - `data-testid`属性の設定
+- テストは失敗する状態（Red）で作成完了
+  - 11件のテストが失敗（期待通り）
+  - 1件のテスト（open=falseで非表示）がパス（スケルトンが空のdivのため）
+- 次のタスク（4.13）で実装を行い、すべてのテストをパスさせる予定
+
+**対応要件:** 要件1
+
+#### 4.13 YouTubeModal.vueの実装
+
+**実施内容:**
+- `src/components/YouTubeModal.vue`の完全な実装
+- YouTube動画ID抽出機能の実装
+  - `extractVideoId()` - URLから動画IDを抽出
+  - 標準形式（`watch?v=`）、短縮形式（`youtu.be/`）、埋め込み形式（`embed/`）に対応
+  - 正規表現を使用した柔軟なパース処理
+- YouTube埋め込みURL生成の実装
+  - `embedUrl` computed - 動画IDから埋め込みURLを生成
+  - 無効なURLの場合は空文字列を返す
+- モーダル表示条件の実装
+  - `open`プロパティがtrueの場合のみ表示
+  - v-ifディレクティブで条件付きレンダリング
+- モーダルコンテンツの実装
+  - ヘッダー（タイトル + 閉じるボタン）
+  - YouTube動画埋め込みエリア（16:9アスペクト比）
+  - エラーメッセージ表示（無効なURLの場合）
+- イベントハンドリングの実装
+  - 閉じるボタンクリック時に`close`イベント発火
+  - 背景オーバーレイクリック時に`close`イベント発火
+  - Escapeキー押下時に`close`イベント発火
+- Escapeキーリスナーの管理
+  - `watch`でモーダルの開閉を監視
+  - 開いているときにkeydownリスナーを追加
+  - 閉じているときにリスナーを削除
+  - `onUnmounted`でクリーンアップ
+- UIガイドラインに従ったデザイン
+  - グレー（gray-200）をボーダーに使用
+  - シンプルで控えめなモーダルデザイン
+  - 背景オーバーレイ（黒、透明度50%）
+  - レスポンシブ対応（max-w-4xl、mx-4）
+- アクセシビリティ対応
+  - `role="dialog"` 属性の追加
+  - `aria-modal="true"` 属性の追加
+  - `data-testid`属性の追加（テスト用）
+- コーディング規約への準拠
+  - UI表示テキストを`src/constants/text.ts`に追加
+  - `TEXT.youtubeModal.title`と`TEXT.youtubeModal.loadError`を使用
+  - リテラル文字列を直接記述せず、定数から参照
+- すべてのUnit Testがパス（Green）
+  - 12件のテストすべてがパス
+- 型チェックもパス
+
+**対応要件:** 要件1
+
 ---
 
 ## 次のタスク
 
-### タスク4: 共通コンポーネントの実装
+### タスク5: レイアウトコンポーネントの実装
 
-**次のタスク: 4.11 YouTubeModal.vueのスケルトン作成**
+**次のタスク: 5.1 Navigation.vueのスケルトン作成**
 
 **実装予定のコンポーネント:**
-- ✅ `LoadingSpinner.vue` - ローディングインジケーター（実装完了）
-- ✅ `PaginationControl.vue` - ページネーション制御（実装完了）
-- ✅ `ConfirmDialog.vue` - 確認ダイアログ（実装完了）
-- ⏭️ `YouTubeModal.vue` - YouTube動画埋め込みモーダル（次のタスク）
+- ⏭️ `Navigation.vue` - ナビゲーションメニュー（次のタスク）
+- `Layout.vue` - 全ページ共通レイアウト
 
 **実装ファイル:**
 - `src/components/` - コンポーネントの実装先
 
 **参考:**
-- 設計書の「Shared Components」セクションを参照
+- 設計書の「Layout Components」セクションを参照
 - UIガイドライン（`.kiro/steering/ui-design-guidelines.md`）に従う
 
 ---
@@ -669,6 +758,7 @@
   - `TEXT` - UI表示テキスト定義
   - `common` - 共通テキスト（ボタンラベル、メッセージなど）
   - `confirmDialog` - 確認ダイアログテキスト（キャンセル、削除）
+  - `youtubeModal` - YouTubeモーダルテキスト（タイトル、読み込みエラー）
   - `validation` - バリデーションメッセージ
   - `error` - エラーメッセージ
   - `apiError` - APIエラーメッセージ
@@ -698,6 +788,18 @@
   - Errorカラー（#ff6699）を確認ボタンに使用
   - アクセシビリティ対応（role="dialog"、aria-modal）
   - UI表示テキストを定数から参照（TEXT.confirmDialog）
+- `src/components/YouTubeModal.vue`
+  - `YouTubeModalProps` - propsの型定義（open、videoUrl）
+  - `YouTubeModalEmits` - emitsの型定義（close）
+  - YouTube動画ID抽出機能（標準形式、短縮形式、埋め込み形式に対応）
+  - YouTube埋め込みURL生成（embedUrl computed）
+  - モーダル表示条件（openプロパティで制御）
+  - YouTube動画埋め込みエリア（16:9アスペクト比）
+  - エラーメッセージ表示（無効なURLの場合）
+  - イベントハンドリング（閉じるボタン、背景クリック、Escapeキー）
+  - Escapeキーリスナーの管理（watch、onUnmounted）
+  - アクセシビリティ対応（role="dialog"、aria-modal）
+  - UI表示テキストを定数から参照（TEXT.youtubeModal）
 
 ### テスト
 - `src/api/base.test.ts` - `getApiErrorMessage` のUnit Test
@@ -709,6 +811,7 @@
 - `src/components/LoadingSpinner.test.ts` - `LoadingSpinner` のProperty Test（Property 16）
 - `src/components/PaginationControl.test.ts` - `PaginationControl` のUnit Test + Property Test（Property 11, Property 13）
 - `src/components/ConfirmDialog.test.ts` - `ConfirmDialog` のUnit Test（11件のテストケース）
+- `src/components/YouTubeModal.test.ts` - `YouTubeModal` のUnit Test（12件のテストケース、すべてパス）
 
 ---
 
