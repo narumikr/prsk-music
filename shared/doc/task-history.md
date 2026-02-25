@@ -373,7 +373,7 @@
 **実装予定のComposables:**
 - ✅ `useMusicList` - 楽曲一覧の状態管理（タスク3.1〜3.3完了）
 - ✅ `useArtistList` - アーティスト一覧の状態管理（タスク3.4〜3.6完了）
-- `useNotification` - 通知メッセージの管理（タスク3.7, 3.8完了、3.9実装予定）
+- `useNotification` - 通知メッセージの管理（タスク3.7〜3.9完了）
 
 **実装ファイル:**
 - `src/composables/index.ts` - Composablesの実装先
