@@ -126,10 +126,15 @@ onUnmounted(() => {
       <!-- 動画埋め込みエリア -->
       <div class="relative w-full aspect-video">
         <iframe
+<<<<<<< HEAD
           v-if="embedUrl"
           data-testid="youtube-iframe"
           :src="embedUrl"
           :title="TEXT.youtubeModal.title"
+=======
+          data-testid="youtube-iframe"
+          :src="embedUrl"
+>>>>>>> 78aa01a3885cb201dcb237d611580601af49d446
           class="absolute inset-0 w-full h-full"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen

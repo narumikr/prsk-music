@@ -903,3 +903,4 @@ pnpm typecheck
 3. 既存の実装ファイル（`src/types/index.ts`、`src/api/index.ts`）
 
 それでも解決しない場合は、チームメンバーに相談してください。
+- `src/components/PaginationControl.test.ts` - `PaginationControl` のUnit Test + Property Test（Property 11, Property 13）

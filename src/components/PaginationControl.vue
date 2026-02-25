@@ -58,7 +58,11 @@ const handleNext = () => {
   <div v-if="shouldShowPagination" data-testid="pagination" class="flex items-center justify-between gap-4 py-4">
     <!-- ページ情報 -->
     <div data-testid="page-info" class="text-sm text-gray-600">
+<<<<<<< HEAD
       {{ TEXT.pagination.pagePrefix }} {{ currentPage }} / {{ totalPages }} （{{ TEXT.pagination.totalPrefix }} {{ totalItems }} {{ TEXT.pagination.totalSuffix }}）
+=======
+      ページ {{ currentPage }} / {{ totalPages }} （全 {{ totalItems }} 件）
+>>>>>>> 78aa01a3885cb201dcb237d611580601af49d446
     </div>
 
     <!-- ページネーションコントロール -->
@@ -75,7 +79,11 @@ const handleNext = () => {
         ]"
         @click="handlePrev"
       >
+<<<<<<< HEAD
         {{ TEXT.pagination.prev }}
+=======
+        前へ
+>>>>>>> 78aa01a3885cb201dcb237d611580601af49d446
       </button>
 
       <!-- ページ番号リンク -->
@@ -108,7 +116,11 @@ const handleNext = () => {
         ]"
         @click="handleNext"
       >
+<<<<<<< HEAD
         {{ TEXT.pagination.next }}
+=======
+        次へ
+>>>>>>> 78aa01a3885cb201dcb237d611580601af49d446
       </button>
     </div>
   </div>
