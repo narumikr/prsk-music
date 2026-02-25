@@ -364,25 +364,84 @@
 
 ---
 
+#### 4.1 LoadingSpinner.vueのスケルトン作成
+
+**実施内容:**
+- `src/components/LoadingSpinner.vue`を新規作成
+- `LoadingSpinnerProps`インターフェースの定義
+  - `size?: 'small' | 'medium' | 'large'` - スピナーのサイズ（デフォルト: 'medium'）
+- `withDefaults`を使用してデフォルト値を設定
+- テンプレートは空の`<div></div>`（スケルトン）
+- 次のタスク（4.2）でProperty Testを作成予定
+
+**対応要件:** 要件7
+
+---
+
+#### 4.2 LoadingSpinnerのProperty Test作成
+
+**実施内容:**
+- `src/components/LoadingSpinner.test.ts`を新規作成
+- **Property 16: 非同期操作中のローディング表示**のテスト実装
+  - 任意の非同期操作（フォーム送信またはデータ取得）中にローディングインジケーターが表示されることを検証
+  - サイズバリエーション（small, medium, large）のテスト
+  - fast-checkを使用して100回の反復テスト
+  - 非同期操作の遅延時間（1-50ms）をランダムに生成してテスト
+- **Property 16 (補足): サイズバリエーションの検証**
+  - 任意のサイズに対して適切なローディングインジケーターが表示されることを検証
+  - サイズに応じたクラス（w-4/h-4, w-8/h-8, w-12/h-12）の適用を確認
+- **Property 16 (補足): デフォルトサイズの検証**
+  - sizeプロパティが指定されていない場合、mediumサイズが適用されることを検証
+- テストは失敗する状態（Red）で作成完了
+  - エラー: `expected false to be true` - `[data-testid="loading-spinner"]`が存在しない（スケルトン実装のため）
+- 次のタスク（4.3）で実装を行い、テストをパスさせる予定
+
+**対応要件:** 要件7
+
+#### 4.3 LoadingSpinner.vueの実装
+
+**実施内容:**
+- `src/components/LoadingSpinner.vue`の完全な実装
+- サイズバリエーション（small、medium、large）の実装
+  - small: w-4 h-4 border-2
+  - medium: w-8 h-8 border-2（デフォルト）
+  - large: w-12 h-12 border-4
+- UIガイドラインに従ったデザイン
+  - Primaryカラー（#33ccba）をアクセントとして使用
+  - グレー（gray-200）をベースカラーとして使用
+  - シンプルで控えめなスピナーデザイン
+- アクセシビリティ対応
+  - `role="status"` 属性の追加
+  - `aria-label="読み込み中"` 属性の追加
+  - `data-testid="loading-spinner"` 属性の追加
+- すべてのProperty Testがパス（Green）
+  - Property 16: 任意の非同期操作中にローディングインジケーターが表示される（100回反復）
+  - Property 16（補足）: 任意のサイズに対して適切なローディングインジケーターが表示される（100回反復）
+  - Property 16（補足）: sizeプロパティが指定されていない場合はmediumサイズが適用される
+- 型チェックもパス
+
+**対応要件:** 要件7
+
+---
+
 ## 次のタスク
 
 ### タスク4: 共通コンポーネントの実装
 
-**次のタスク: 4.1 LoadingSpinner.vueのスケルトン作成**
+**次のタスク: 4.4 PaginationControl.vueのスケルトン作成**
 
-**実装予定のComposables:**
-- ✅ `useMusicList` - 楽曲一覧の状態管理（タスク3.1〜3.3完了）
-- ✅ `useArtistList` - アーティスト一覧の状態管理（タスク3.4〜3.6完了）
-- `useNotification` - 通知メッセージの管理（タスク3.7〜3.9完了）
+**実装予定のコンポーネント:**
+- ✅ `LoadingSpinner.vue` - ローディングインジケーター（実装完了）
+- `PaginationControl.vue` - ページネーション制御
+- `ConfirmDialog.vue` - 確認ダイアログ
+- `YouTubeModal.vue` - YouTube動画埋め込みモーダル
 
 **実装ファイル:**
-- `src/composables/index.ts` - Composablesの実装先
-- `src/composables/index.test.ts` - Composablesのテスト
+- `src/components/` - コンポーネントの実装先
 
 **参考:**
-- 設計書の「Composables (Vue 3 Composition API)」セクションを参照
-- 既存の`src/api/index.ts`を活用してAPI通信を実装
-- 既存の`useMusicList`と`useArtistList`の実装を参考にする
+- 設計書の「Shared Components」セクションを参照
+- UIガイドライン（`.kiro/steering/ui-design-guidelines.md`）に従う
 
 ---
 
@@ -422,6 +481,13 @@
   - `useNotification()` - 通知メッセージの管理（実装済み）
 - `src/composables/index.ts` - 上記のre-export
 
+### コンポーネント
+- `src/components/LoadingSpinner.vue`
+  - `LoadingSpinnerProps` - propsの型定義（size: 'small' | 'medium' | 'large'）
+  - サイズバリエーション実装（small: 16px、medium: 32px、large: 48px）
+  - Primaryカラー（#33ccba）を使用したスピナーアニメーション
+  - アクセシビリティ対応（role="status"、aria-label）
+
 ### テスト
 - `src/api/base.test.ts` - `getApiErrorMessage` のUnit Test
 - `src/api/music.test.ts` - `MusicApiClient` のProperty Test
@@ -429,6 +495,7 @@
 - `src/composables/useMusicList.test.ts` - `useMusicList` のProperty Test
 - `src/composables/useArtistList.test.ts` - `useArtistList` のProperty Test
 - `src/composables/useNotification.test.ts` - `useNotification` のProperty Test
+- `src/components/LoadingSpinner.test.ts` - `LoadingSpinner` のProperty Test（Property 16）
 
 ---
 

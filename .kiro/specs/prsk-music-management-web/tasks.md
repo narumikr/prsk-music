@@ -126,17 +126,17 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - _Requirements: 要件2, 要件3, 要件4, 要件6_
 
 - [ ] 4. 共通コンポーネントの実装
-  - [ ] 4.1 LoadingSpinner.vueのスケルトン作成
+  - [x] 4.1 LoadingSpinner.vueのスケルトン作成
     - propsの型定義のみ
     - テンプレートは空のdiv
     - _Requirements: 要件7_
   
-  - [ ] 4.2 LoadingSpinnerのProperty Test作成
+  - [x] 4.2 LoadingSpinnerのProperty Test作成
     - **Property 16: 非同期操作中のローディング表示**
     - テストは失敗する状態（Red）
     - **Validates: Requirements 要件7**
   
-  - [ ] 4.3 LoadingSpinner.vueの実装
+  - [x] 4.3 LoadingSpinner.vueの実装
     - サイズバリエーション（small、medium、large）の実装
     - すべてのProperty Testがパスすることを確認（Green）
     - _Requirements: 要件7_
