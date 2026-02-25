@@ -299,18 +299,81 @@
 
 **対応要件:** 要件9, 要件10, 要件11, 要件12
 
+#### 3.7 useNotificationのインターフェース定義
+
+**実施内容:**
+- `src/composables/useNotification.ts`を新規作成
+- `UseNotificationReturn`型の定義
+  - `showSuccess: (message: string) => void` - 成功メッセージ表示
+  - `showError: (message: string) => void` - エラーメッセージ表示
+  - `showInfo: (message: string) => void` - 情報メッセージ表示
+- `useNotification()`関数のシグネチャ定義（実装は空、`throw new Error('Not implemented')`）
+- `src/composables/index.ts`にuseNotificationをエクスポート追加
+- 型チェックがパスすることを確認
+
+**対応要件:** 要件2, 要件3, 要件4, 要件6
+
+#### 3.8 useNotificationのProperty Test作成
+
+**実施内容:**
+- `src/composables/useNotification.test.ts`を新規作成
+- **Property 14: エラー詳細の表示**のテスト実装
+  - 任意のAPIエラーレスポンスに対してエラー詳細がユーザーに表示されることを検証
+  - fast-checkを使用して100回の反復テスト
+  - HTTPステータスコード（400, 404, 409, 500, 503）とエラーメッセージの組み合わせをテスト
+- **Property 15: エラーのコンソールログ出力**のテスト実装
+  - 任意のエラー発生時にコンソールにログ出力されることを検証
+  - fast-checkを使用して100回の反復テスト
+  - console.errorのスパイを設定
+- Property 14 & 15の統合テスト
+  - エラー詳細の表示とコンソールログ出力が同時に行われることを確認
+- 追加テスト
+  - 成功メッセージの表示テスト（showSuccess）
+  - 情報メッセージの表示テスト（showInfo）
+- テストヘルパー関数の実装
+  - `createMockResponse()` - モックResponseオブジェクト作成
+  - `createApiError()` - ApiErrorResponse作成
+- テストは失敗する状態（Red）で作成完了
+  - エラー: "Error: Not implemented"（useNotificationが未実装のため）
+
+**対応要件:** 要件6
+
+#### 3.9 useNotificationの実装
+
+**実施内容:**
+- `src/composables/useNotification.ts`にuseNotificationの完全な実装を追加
+- メソッドの実装
+  - `showSuccess(message)` - 成功メッセージ表示
+    - console.logでログ出力
+    - 将来のUI通知コンポーネント対応のためのTODOコメント追加
+  - `showError(message)` - エラーメッセージ表示
+    - console.errorでエラーログ出力（要件6.5対応）
+    - 将来のUI通知コンポーネント対応のためのTODOコメント追加
+  - `showInfo(message)` - 情報メッセージ表示
+    - console.logでログ出力
+    - 将来のUI通知コンポーネント対応のためのTODOコメント追加
+- すべてのProperty Testがパス（Green）
+  - Property 14: APIエラーレスポンスのエラー詳細がユーザーに表示される
+  - Property 15: エラー発生時にコンソールにログ出力される
+  - Property 14 & 15の統合テスト
+  - 成功メッセージ表示テスト
+  - 情報メッセージ表示テスト
+- 型チェックもパス
+
+**対応要件:** 要件2, 要件3, 要件4, 要件6
+
 ---
 
 ## 次のタスク
 
-### タスク3: Composablesの実装（続き）
+### タスク4: 共通コンポーネントの実装
 
-**次のタスク: 3.7 useNotificationのインターフェース定義**
+**次のタスク: 4.1 LoadingSpinner.vueのスケルトン作成**
 
 **実装予定のComposables:**
 - ✅ `useMusicList` - 楽曲一覧の状態管理（タスク3.1〜3.3完了）
 - ✅ `useArtistList` - アーティスト一覧の状態管理（タスク3.4〜3.6完了）
-- `useNotification` - 通知メッセージの管理（タスク3.7〜3.9）
+- `useNotification` - 通知メッセージの管理（タスク3.7〜3.9完了）
 
 **実装ファイル:**
 - `src/composables/index.ts` - Composablesの実装先
@@ -348,17 +411,24 @@
 - `src/api/index.ts` - 上記のre-export
 
 ### Composables
-- `src/composables/index.ts`
+- `src/composables/useMusicList.ts`
   - `UseMusicListReturn` - useMusicListの戻り値型定義
   - `useMusicList()` - 楽曲一覧の状態管理（実装済み）
+- `src/composables/useArtistList.ts`
   - `UseArtistListReturn` - useArtistListの戻り値型定義
   - `useArtistList()` - アーティスト一覧の状態管理（実装済み）
+- `src/composables/useNotification.ts`
+  - `UseNotificationReturn` - useNotificationの戻り値型定義
+  - `useNotification()` - 通知メッセージの管理（実装済み）
+- `src/composables/index.ts` - 上記のre-export
 
 ### テスト
 - `src/api/base.test.ts` - `getApiErrorMessage` のUnit Test
 - `src/api/music.test.ts` - `MusicApiClient` のProperty Test
 - `src/api/artist.test.ts` - `ArtistApiClient` のProperty Test
-- `src/composables/index.test.ts` - `useMusicList` のUnit Test / Property Test
+- `src/composables/useMusicList.test.ts` - `useMusicList` のProperty Test
+- `src/composables/useArtistList.test.ts` - `useArtistList` のProperty Test
+- `src/composables/useNotification.test.ts` - `useNotification` のProperty Test
 
 ---
 
