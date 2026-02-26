@@ -94,6 +94,12 @@ export const TEXT = {
     title: 'YouTube動画',
     loadError: '動画を読み込めませんでした',
   },
+
+  // ナビゲーション
+  navigation: {
+    musics: '楽曲管理',
+    artists: 'アーティスト管理',
+  },
 } as const
 
 export type TextKey = typeof TEXT
