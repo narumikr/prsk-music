@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { HttpResponse, http } from 'msw'
 import { setupServer } from 'msw/node'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import type { Artist, PaginatedResponse } from '@/types'
 import ArtistListPage from './ArtistListPage.vue'
 
@@ -29,7 +29,9 @@ function createMockArtist(id: number): Artist {
     content: `コンテンツ${id}`,
     auditInfo: {
       createdAt: '2024-01-01T00:00:00Z',
+      createdBy: 'test-user',
       updatedAt: '2024-01-01T00:00:00Z',
+      updatedBy: 'test-user',
     },
   }
 }

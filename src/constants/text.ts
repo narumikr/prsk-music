@@ -127,6 +127,7 @@ export const TEXT = {
     contentMaxLength: 'コンテンツ名は20文字以内で入力してください',
     submit: '保存',
     cancel: 'キャンセル',
+    close: '閉じる',
   },
 
   // アーティストリストページ

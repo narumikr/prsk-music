@@ -82,7 +82,7 @@ const handleDelete = (id: number) => {
                 <button
                   :data-testid="`edit-button-${artist.id}`"
                   type="button"
-                  class="px-3 py-1 text-sm border border-gray-200 rounded text-gray-900 hover:border-[#33ccba] hover:text-[#33ccba] transition duration-150 ease-in-out"
+                  class="px-3 py-1 text-sm border border-gray-200 rounded text-gray-900 hover:border-primary hover:text-primary transition duration-150 ease-in-out"
                   @click="handleEdit(artist.id)"
                 >
                   {{ TEXT.common.edit }}
@@ -90,7 +90,7 @@ const handleDelete = (id: number) => {
                 <button
                   :data-testid="`delete-button-${artist.id}`"
                   type="button"
-                  class="px-3 py-1 text-sm border border-gray-200 rounded text-gray-900 hover:border-[#ff6699] hover:text-[#ff6699] transition duration-150 ease-in-out"
+                  class="px-3 py-1 text-sm border border-gray-200 rounded text-gray-900 hover:border-error hover:text-error transition duration-150 ease-in-out"
                   @click="handleDelete(artist.id)"
                 >
                   {{ TEXT.common.delete }}

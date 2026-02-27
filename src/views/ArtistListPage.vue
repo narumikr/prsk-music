@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { getApiErrorMessage } from '@/api/base'
+import { ApiErrorResponse, getApiErrorMessage } from '@/api/base'
 import ArtistFormModal from '@/components/ArtistFormModal.vue'
 import ArtistTable from '@/components/ArtistTable.vue'
 import ConfirmDialog from '@/components/ConfirmDialog.vue'
@@ -68,8 +68,10 @@ const handleFormSubmit = async (data: ArtistFormData) => {
     }
     formOpen.value = false
     // createArtist/updateArtistの中で既に再取得が行われているため、ここでは不要
-  } catch (error: any) {
-    const errorMessage = getApiErrorMessage(error)
+  } catch (error: unknown) {
+    const errorMessage = error instanceof ApiErrorResponse
+      ? getApiErrorMessage(error)
+      : TEXT.apiError.default
     showError(errorMessage)
   }
 }
@@ -88,8 +90,10 @@ const handleDeleteConfirm = async () => {
       deleteDialogOpen.value = false
       artistToDelete.value = null
       // deleteArtistの中で既に再取得が行われているため、ここでは不要
-    } catch (error: any) {
-      const errorMessage = getApiErrorMessage(error)
+    } catch (error: unknown) {
+      const errorMessage = error instanceof ApiErrorResponse
+        ? getApiErrorMessage(error)
+        : TEXT.apiError.default
       showError(errorMessage)
     }
   }

@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
 import fc from 'fast-check'
 import { describe, expect, it } from 'vitest'
 import { z } from 'zod'
@@ -316,9 +316,9 @@ describe('ArtistFormModal - Property Tests', () => {
    * Feature: prsk-music-management-web, Property 32: アーティスト編集フォームの事前入力
    * Validates: Requirements 要件11.1
    */
-  it('Property 32: 任意のアーティストレコードに対して編集フォームが正しく事前入力される', () => {
-    fc.assert(
-      fc.property(
+  it('Property 32: 任意のアーティストレコードに対して編集フォームが正しく事前入力される', async () => {
+    await fc.assert(
+      fc.asyncProperty(
         fc.record({
           id: fc.integer({ min: 1, max: 1000 }),
           artistName: fc
@@ -327,7 +327,7 @@ describe('ArtistFormModal - Property Tests', () => {
           unitName: fc.option(fc.string({ minLength: 1, maxLength: 25 }), { nil: null }),
           content: fc.option(fc.string({ minLength: 1, maxLength: 20 }), { nil: null }),
         }),
-        (artistData) => {
+        async (artistData) => {
           const mockArtist = createMockArtist(artistData)
 
           const wrapper = mount(ArtistFormModal, {
@@ -338,19 +338,26 @@ describe('ArtistFormModal - Property Tests', () => {
             },
           })
 
-          // フォームフィールドが存在することを確認
-          const artistNameInput = wrapper.find('[data-testid="artistName-input"]')
-          expect(artistNameInput.exists()).toBe(true)
-
-          const unitNameInput = wrapper.find('[data-testid="unitName-input"]')
-          expect(unitNameInput.exists()).toBe(true)
-
-          const contentInput = wrapper.find('[data-testid="content-input"]')
-          expect(contentInput.exists()).toBe(true)
+          // immediate: true の watch で resetForm が呼ばれた後、DOM への反映を待機
+          await flushPromises()
 
           // モーダルが編集モードで開いていることを確認
           const modalTitle = wrapper.find('[data-testid="modal-title"]')
           expect(modalTitle.text()).toBe(TEXT.artistForm.editTitle)
+
+          // フォームフィールドが正しい値で事前入力されていることを確認
+          // VeeValidate + Zod transform により resetForm 後に trim が自動適用される
+          const artistNameInput = wrapper.find('[data-testid="artistName-input"]')
+          expect(artistNameInput.exists()).toBe(true)
+          expect((artistNameInput.element as HTMLInputElement).value).toBe(mockArtist.artistName.trim())
+
+          const unitNameInput = wrapper.find('[data-testid="unitName-input"]')
+          expect(unitNameInput.exists()).toBe(true)
+          expect((unitNameInput.element as HTMLInputElement).value).toBe((mockArtist.unitName ?? '').trim())
+
+          const contentInput = wrapper.find('[data-testid="content-input"]')
+          expect(contentInput.exists()).toBe(true)
+          expect((contentInput.element as HTMLInputElement).value).toBe((mockArtist.content ?? '').trim())
         }
       ),
       { numRuns: 100 }

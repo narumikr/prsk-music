@@ -124,7 +124,8 @@ watch(
     } else {
       window.removeEventListener('keydown', handleEscapeKey)
     }
-  }
+  },
+  { immediate: true }
 )
 
 // コンポーネントのアンマウント時にリスナーをクリーンアップ
@@ -139,15 +140,16 @@ onUnmounted(() => {
     <div class="fixed inset-0 bg-black bg-opacity-50" @click="handleClose" data-testid="modal-overlay"></div>
 
     <!-- モーダルコンテンツ -->
-    <div class="relative bg-white rounded-lg shadow-lg max-w-md w-full mx-4 z-10" role="dialog" aria-modal="true">
+    <div class="relative bg-white rounded-lg shadow-lg max-w-md w-full mx-4 z-10" role="dialog" aria-modal="true" aria-labelledby="artist-modal-title">
       <!-- ヘッダー -->
       <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-        <h2 class="text-xl font-semibold text-gray-900" data-testid="modal-title">
+        <h2 id="artist-modal-title" class="text-xl font-semibold text-gray-900" data-testid="modal-title">
           {{ modalTitle }}
         </h2>
         <button
           type="button"
           class="text-gray-400 hover:text-gray-600 transition duration-150 ease-in-out"
+          :aria-label="TEXT.artistForm.close"
           @click="handleClose"
           data-testid="close-button"
         >
@@ -171,7 +173,7 @@ onUnmounted(() => {
             as="input"
             type="text"
             :placeholder="TEXT.artistForm.artistNamePlaceholder"
-            :class="['w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-[#33ccba] focus:ring-offset-2 transition duration-150 ease-in-out', errors.artistName ? 'border-red-500' : 'border-gray-200']"
+            :class="['w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition duration-150 ease-in-out', errors.artistName ? 'border-red-500' : 'border-gray-200']"
             data-testid="artistName-input"
             :validateOnBlur="true"
             :validateOnChange="false"
@@ -192,7 +194,7 @@ onUnmounted(() => {
             as="input"
             type="text"
             :placeholder="TEXT.artistForm.unitNamePlaceholder"
-            :class="['w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-[#33ccba] focus:ring-offset-2 transition duration-150 ease-in-out', errors.unitName ? 'border-red-500' : 'border-gray-200']"
+            :class="['w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition duration-150 ease-in-out', errors.unitName ? 'border-red-500' : 'border-gray-200']"
             data-testid="unitName-input"
             :validateOnBlur="true"
             :validateOnChange="false"
@@ -213,7 +215,7 @@ onUnmounted(() => {
             as="input"
             type="text"
             :placeholder="TEXT.artistForm.contentPlaceholder"
-            :class="['w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-[#33ccba] focus:ring-offset-2 transition duration-150 ease-in-out', errors.content ? 'border-red-500' : 'border-gray-200']"
+            :class="['w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition duration-150 ease-in-out', errors.content ? 'border-red-500' : 'border-gray-200']"
             data-testid="content-input"
             :validateOnBlur="true"
             :validateOnChange="false"
@@ -236,7 +238,7 @@ onUnmounted(() => {
           <button
             type="submit"
             :disabled="isSubmitDisabled"
-            class="px-4 py-2 border border-[#33ccba] text-[#33ccba] rounded hover:bg-[#33ccba] hover:bg-opacity-10 transition duration-150 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
+            class="px-4 py-2 border border-primary text-primary rounded hover:bg-primary hover:bg-opacity-10 transition duration-150 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
             data-testid="submit-button"
           >
             {{ TEXT.artistForm.submit }}
