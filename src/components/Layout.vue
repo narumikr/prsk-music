@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { RouterView, useRoute } from 'vue-router'
 import Navigation from './Navigation.vue'
 
 const route = useRoute()
@@ -14,7 +14,7 @@ const currentPath = computed(() => route.path)
     </header>
     <main class="mx-auto max-w-screen-lg px-4 py-6">
       <div data-testid="layout-content">
-        <router-view />
+        <RouterView />
       </div>
     </main>
   </div>

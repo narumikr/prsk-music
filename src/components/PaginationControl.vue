@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-// biome-ignore lint/correctness/noUnusedImports: used in template interpolation
 import { TEXT } from '@/constants/text'
 
 interface PaginationControlProps {
@@ -14,7 +13,6 @@ type PaginationControlEmits = (e: 'page-change', page: number) => void
 const props = defineProps<PaginationControlProps>()
 const emit = defineEmits<PaginationControlEmits>()
 
-// biome-ignore lint/correctness/noUnusedVariables: used in template v-if binding
 const shouldShowPagination = computed(() => props.totalItems > 20)
 
 // 前へボタンが無効かどうか
@@ -23,7 +21,6 @@ const isPrevDisabled = computed(() => props.currentPage === 1)
 // 次へボタンが無効かどうか
 const isNextDisabled = computed(() => props.currentPage === props.totalPages)
 
-// biome-ignore lint/correctness/noUnusedVariables: used in template v-for binding
 const pageNumbers = computed(() => {
   const pages: number[] = []
   for (let i = 1; i <= props.totalPages; i++) {
@@ -39,14 +36,12 @@ const handlePageChange = (page: number) => {
   }
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: used in template @click binding
 const handlePrev = () => {
   if (!isPrevDisabled.value) {
     handlePageChange(props.currentPage - 1)
   }
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: used in template @click binding
 const handleNext = () => {
   if (!isNextDisabled.value) {
     handlePageChange(props.currentPage + 1)
@@ -58,11 +53,7 @@ const handleNext = () => {
   <div v-if="shouldShowPagination" data-testid="pagination" class="flex items-center justify-between gap-4 py-4">
     <!-- ページ情報 -->
     <div data-testid="page-info" class="text-sm text-gray-600">
-<<<<<<< HEAD
       {{ TEXT.pagination.pagePrefix }} {{ currentPage }} / {{ totalPages }} （{{ TEXT.pagination.totalPrefix }} {{ totalItems }} {{ TEXT.pagination.totalSuffix }}）
-=======
-      ページ {{ currentPage }} / {{ totalPages }} （全 {{ totalItems }} 件）
->>>>>>> 78aa01a3885cb201dcb237d611580601af49d446
     </div>
 
     <!-- ページネーションコントロール -->
@@ -70,6 +61,7 @@ const handleNext = () => {
       <!-- 前へボタン -->
       <button
         data-testid="prev-button"
+        :aria-label="TEXT.pagination.prev"
         :disabled="isPrevDisabled"
         :class="[
           'px-3 py-1 text-sm border rounded transition duration-150 ease-in-out',
@@ -79,11 +71,7 @@ const handleNext = () => {
         ]"
         @click="handlePrev"
       >
-<<<<<<< HEAD
         {{ TEXT.pagination.prev }}
-=======
-        前へ
->>>>>>> 78aa01a3885cb201dcb237d611580601af49d446
       </button>
 
       <!-- ページ番号リンク -->
@@ -92,6 +80,8 @@ const handleNext = () => {
           v-for="page in pageNumbers"
           :key="page"
           :data-testid="`page-link-${page}`"
+          :aria-label="`${page} ${TEXT.pagination.pageLabel}`"
+          :aria-current="page === currentPage ? 'page' : undefined"
           :class="[
             'px-3 py-1 text-sm border rounded transition duration-150 ease-in-out',
             page === currentPage
@@ -107,6 +97,7 @@ const handleNext = () => {
       <!-- 次へボタン -->
       <button
         data-testid="next-button"
+        :aria-label="TEXT.pagination.next"
         :disabled="isNextDisabled"
         :class="[
           'px-3 py-1 text-sm border rounded transition duration-150 ease-in-out',
@@ -116,11 +107,7 @@ const handleNext = () => {
         ]"
         @click="handleNext"
       >
-<<<<<<< HEAD
         {{ TEXT.pagination.next }}
-=======
-        次へ
->>>>>>> 78aa01a3885cb201dcb237d611580601af49d446
       </button>
     </div>
   </div>

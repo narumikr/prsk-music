@@ -13,6 +13,7 @@ export const TEXT = {
     error: 'エラーが発生しました',
     success: '成功しました',
     cancel: 'キャンセル',
+    close: '閉じる',
     save: '保存',
     delete: '削除',
     edit: '編集',
@@ -87,6 +88,7 @@ export const TEXT = {
     totalSuffix: '件',
     prev: '前へ',
     next: '次へ',
+    pageLabel: 'ページ目',
   },
 
   // YouTubeモーダル
@@ -99,6 +101,45 @@ export const TEXT = {
   navigation: {
     musics: '楽曲管理',
     artists: 'アーティスト管理',
+  },
+
+  // アーティストテーブル
+  artistTable: {
+    id: 'ID',
+    artistName: 'アーティスト名',
+    unitName: 'ユニット名',
+    content: 'コンテンツ',
+    actions: 'アクション',
+    noData: 'アーティストが登録されていません',
+  },
+
+  // アーティストフォーム
+  artistForm: {
+    createTitle: 'アーティスト新規登録',
+    editTitle: 'アーティスト編集',
+    artistName: 'アーティスト名',
+    artistNamePlaceholder: 'アーティスト名を入力',
+    artistNameRequired: 'アーティスト名は必須です',
+    artistNameMaxLength: 'アーティスト名は50文字以内で入力してください',
+    unitName: 'ユニット名',
+    unitNamePlaceholder: 'ユニット名を入力（任意）',
+    unitNameMaxLength: 'ユニット名は25文字以内で入力してください',
+    content: 'コンテンツ',
+    contentPlaceholder: 'コンテンツ名を入力（任意）',
+    contentMaxLength: 'コンテンツ名は20文字以内で入力してください',
+    submit: '保存',
+    cancel: 'キャンセル',
+    close: '閉じる',
+  },
+
+  // アーティストリストページ
+  artistListPage: {
+    deleteConfirmTitle: 'アーティスト削除',
+    deleteConfirmMessage:
+      'このアーティストを削除してもよろしいですか？削除すると楽曲から参照されているアーティストが不明なアーティストとして扱われます。',
+    createSuccess: 'アーティストを登録しました',
+    updateSuccess: 'アーティストを更新しました',
+    deleteSuccess: 'アーティストを削除しました',
   },
 } as const
 
