@@ -84,6 +84,7 @@ onUnmounted(() => {
     data-testid="youtube-modal"
     role="dialog"
     aria-modal="true"
+    aria-labelledby="youtube-modal-title"
     class="fixed inset-0 z-50 flex items-center justify-center"
     @keydown.escape.stop="handleClose"
   >
@@ -98,10 +99,11 @@ onUnmounted(() => {
     <div class="relative z-10 w-full max-w-4xl mx-4 bg-white rounded-lg shadow-lg">
       <!-- ヘッダー -->
       <div class="flex items-center justify-between p-4 border-b border-gray-200">
-        <h2 class="text-lg font-semibold text-gray-900">{{ TEXT.youtubeModal.title }}</h2>
+        <h2 id="youtube-modal-title" class="text-lg font-semibold text-gray-900">{{ TEXT.youtubeModal.title }}</h2>
         <button
           data-testid="close-button"
           type="button"
+          :aria-label="TEXT.common.close"
           class="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out"
           @click="handleClose"
         >

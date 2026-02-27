@@ -4,15 +4,15 @@ import { TEXT } from '@/constants/text'
 
 defineProps<{ msg: string }>()
 
-const _count = ref(0)
+const count = ref(0)
 </script>
 
 <template>
   <h1>{{ msg }}</h1>
 
   <div class="card">
-    <button type="button" @click="_count++">
-      {{ TEXT.demo.countButton }} {{ _count }}
+    <button type="button" @click="count++">
+      {{ TEXT.demo.countButton }} {{ count }}
     </button>
     <p>
       {{ TEXT.demo.editMessage }}
@@ -22,7 +22,7 @@ const _count = ref(0)
 
   <p>
     {{ TEXT.demo.checkOut }}
-    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank">{{
+    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank" rel="noopener noreferrer">{{
       TEXT.demo.createVueLink
     }}</a
     >{{ TEXT.demo.createVueDescription }}
@@ -32,6 +32,7 @@ const _count = ref(0)
     <a
       href="https://vuejs.org/guide/scaling-up/tooling.html#ide-support"
       target="_blank"
+      rel="noopener noreferrer"
       >{{ TEXT.demo.vueDocsLink }}</a
     >.
   </p>

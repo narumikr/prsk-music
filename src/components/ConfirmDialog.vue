@@ -66,6 +66,7 @@ const handleOverlayClick = () => {
     <div
       role="dialog"
       aria-modal="true"
+      aria-labelledby="confirm-dialog-title"
       class="bg-white rounded-lg shadow-lg max-w-md w-full mx-4 transition-transform duration-150 ease-in-out"
       data-testid="confirm-dialog"
       @click.stop
@@ -73,7 +74,7 @@ const handleOverlayClick = () => {
     >
       <!-- ダイアログヘッダー -->
       <div class="px-6 py-4 border-b border-gray-200">
-        <h2 class="text-xl font-semibold text-gray-900" data-testid="dialog-title">
+        <h2 id="confirm-dialog-title" class="text-xl font-semibold text-gray-900" data-testid="dialog-title">
           {{ title }}
         </h2>
       </div>
