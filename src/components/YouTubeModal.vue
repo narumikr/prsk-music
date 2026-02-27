@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, onUnmounted, watch } from 'vue'
-// biome-ignore lint/correctness/noUnusedImports: used in template interpolation
 import { TEXT } from '@/constants/text'
 
 interface YouTubeModalProps {
@@ -40,7 +39,6 @@ const extractVideoId = (url: string): string | null => {
   }
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: used in template :src and v-if bindings
 const embedUrl = computed(() => {
   const videoId = extractVideoId(props.videoUrl)
   if (!videoId) {

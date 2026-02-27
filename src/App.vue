@@ -1,7 +1,5 @@
 <script setup lang="ts">
-// biome-ignore lint/correctness/noUnusedImports: used in template
 import HelloWorld from '@/components/HelloWorld.vue'
-// biome-ignore lint/correctness/noUnusedImports: used in template
 import { TEXT } from '@/constants/text'
 </script>
 

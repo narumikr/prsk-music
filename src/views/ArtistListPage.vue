@@ -69,9 +69,8 @@ const handleFormSubmit = async (data: ArtistFormData) => {
     formOpen.value = false
     // createArtist/updateArtistの中で既に再取得が行われているため、ここでは不要
   } catch (error: unknown) {
-    const errorMessage = error instanceof ApiErrorResponse
-      ? getApiErrorMessage(error)
-      : TEXT.apiError.default
+    const errorMessage =
+      error instanceof ApiErrorResponse ? getApiErrorMessage(error) : TEXT.apiError.default
     showError(errorMessage)
   }
 }
@@ -91,9 +90,8 @@ const handleDeleteConfirm = async () => {
       artistToDelete.value = null
       // deleteArtistの中で既に再取得が行われているため、ここでは不要
     } catch (error: unknown) {
-      const errorMessage = error instanceof ApiErrorResponse
-        ? getApiErrorMessage(error)
-        : TEXT.apiError.default
+      const errorMessage =
+        error instanceof ApiErrorResponse ? getApiErrorMessage(error) : TEXT.apiError.default
       showError(errorMessage)
     }
   }

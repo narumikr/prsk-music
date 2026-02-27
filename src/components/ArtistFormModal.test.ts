@@ -349,15 +349,21 @@ describe('ArtistFormModal - Property Tests', () => {
           // VeeValidate + Zod transform により resetForm 後に trim が自動適用される
           const artistNameInput = wrapper.find('[data-testid="artistName-input"]')
           expect(artistNameInput.exists()).toBe(true)
-          expect((artistNameInput.element as HTMLInputElement).value).toBe(mockArtist.artistName.trim())
+          expect((artistNameInput.element as HTMLInputElement).value).toBe(
+            mockArtist.artistName.trim()
+          )
 
           const unitNameInput = wrapper.find('[data-testid="unitName-input"]')
           expect(unitNameInput.exists()).toBe(true)
-          expect((unitNameInput.element as HTMLInputElement).value).toBe((mockArtist.unitName ?? '').trim())
+          expect((unitNameInput.element as HTMLInputElement).value).toBe(
+            (mockArtist.unitName ?? '').trim()
+          )
 
           const contentInput = wrapper.find('[data-testid="content-input"]')
           expect(contentInput.exists()).toBe(true)
-          expect((contentInput.element as HTMLInputElement).value).toBe((mockArtist.content ?? '').trim())
+          expect((contentInput.element as HTMLInputElement).value).toBe(
+            (mockArtist.content ?? '').trim()
+          )
         }
       ),
       { numRuns: 100 }

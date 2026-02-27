@@ -20,9 +20,13 @@ describe('ArtistTable Property Tests', () => {
           unitName: fc.option(fc.string({ minLength: 1, maxLength: 25 }), { nil: null }),
           content: fc.option(fc.string({ minLength: 1, maxLength: 20 }), { nil: null }),
           auditInfo: fc.record({
-            createdAt: fc.integer({ min: 0, max: 4102444800000 }).map((ts) => new Date(ts).toISOString()),
+            createdAt: fc
+              .integer({ min: 0, max: 4102444800000 })
+              .map((ts) => new Date(ts).toISOString()),
             createdBy: fc.string({ minLength: 1, maxLength: 50 }),
-            updatedAt: fc.integer({ min: 0, max: 4102444800000 }).map((ts) => new Date(ts).toISOString()),
+            updatedAt: fc
+              .integer({ min: 0, max: 4102444800000 })
+              .map((ts) => new Date(ts).toISOString()),
             updatedBy: fc.string({ minLength: 1, maxLength: 50 }),
           }),
         }),
@@ -81,9 +85,13 @@ describe('ArtistTable Property Tests', () => {
           unitName: fc.option(fc.string({ minLength: 1, maxLength: 25 }), { nil: null }),
           content: fc.option(fc.string({ minLength: 1, maxLength: 20 }), { nil: null }),
           auditInfo: fc.record({
-            createdAt: fc.integer({ min: 0, max: 4102444800000 }).map((ts) => new Date(ts).toISOString()),
+            createdAt: fc
+              .integer({ min: 0, max: 4102444800000 })
+              .map((ts) => new Date(ts).toISOString()),
             createdBy: fc.string({ minLength: 1, maxLength: 50 }),
-            updatedAt: fc.integer({ min: 0, max: 4102444800000 }).map((ts) => new Date(ts).toISOString()),
+            updatedAt: fc
+              .integer({ min: 0, max: 4102444800000 })
+              .map((ts) => new Date(ts).toISOString()),
             updatedBy: fc.string({ minLength: 1, maxLength: 50 }),
           }),
         }),

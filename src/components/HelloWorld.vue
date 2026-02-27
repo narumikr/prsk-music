@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-// biome-ignore lint/correctness/noUnusedImports: used in template
 import { TEXT } from '@/constants/text'
 
 defineProps<{ msg: string }>()

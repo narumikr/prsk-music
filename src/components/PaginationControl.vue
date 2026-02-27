@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-// biome-ignore lint/correctness/noUnusedImports: used in template interpolation
 import { TEXT } from '@/constants/text'
 
 interface PaginationControlProps {
@@ -14,7 +13,6 @@ type PaginationControlEmits = (e: 'page-change', page: number) => void
 const props = defineProps<PaginationControlProps>()
 const emit = defineEmits<PaginationControlEmits>()
 
-// biome-ignore lint/correctness/noUnusedVariables: used in template v-if binding
 const shouldShowPagination = computed(() => props.totalItems > 20)
 
 // 前へボタンが無効かどうか
@@ -23,7 +21,6 @@ const isPrevDisabled = computed(() => props.currentPage === 1)
 // 次へボタンが無効かどうか
 const isNextDisabled = computed(() => props.currentPage === props.totalPages)
 
-// biome-ignore lint/correctness/noUnusedVariables: used in template v-for binding
 const pageNumbers = computed(() => {
   const pages: number[] = []
   for (let i = 1; i <= props.totalPages; i++) {
@@ -39,14 +36,12 @@ const handlePageChange = (page: number) => {
   }
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: used in template @click binding
 const handlePrev = () => {
   if (!isPrevDisabled.value) {
     handlePageChange(props.currentPage - 1)
   }
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: used in template @click binding
 const handleNext = () => {
   if (!isNextDisabled.value) {
     handlePageChange(props.currentPage + 1)

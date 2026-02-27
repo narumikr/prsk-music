@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { onUnmounted, watch } from 'vue'
-// biome-ignore lint/correctness/noUnusedImports: used in template interpolation
 import { TEXT } from '@/constants/text'
 
 interface ConfirmDialogProps {
@@ -42,17 +41,14 @@ onUnmounted(() => {
   document.removeEventListener('keydown', handleKeydown)
 })
 
-// biome-ignore lint/correctness/noUnusedVariables: used in template @click binding
 const handleConfirm = () => {
   emit('confirm')
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: used in template @click binding
 const handleCancel = () => {
   emit('cancel')
 }
 
-// biome-ignore lint/correctness/noUnusedVariables: used in template @click binding
 const handleOverlayClick = () => {
   emit('cancel')
 }
