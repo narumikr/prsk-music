@@ -34,12 +34,16 @@ function buildMusicResponse(id: number, overrides: Partial<PrskMusic> = {}): Prs
   }
 }
 
-function buildPaginationMeta(pageIndex: number, totalItems: number, limit = 20): PaginationMeta {
+function buildPaginationMeta(
+  currentPage: number,
+  totalItems: number,
+  itemsPerPage = 20
+): PaginationMeta {
   return {
-    pageIndex,
-    totalPages: Math.ceil(totalItems / limit),
+    currentPage,
+    totalPages: Math.ceil(totalItems / itemsPerPage),
     totalItems,
-    limit,
+    itemsPerPage,
   }
 }
 
@@ -262,7 +266,7 @@ describe('useMusicList - Property Tests', () => {
           expect(musicList.value).toEqual(musics)
 
           // ページネーション情報が正しく設定されていることを確認
-          expect(pagination.value.pageIndex).toBe(page)
+          expect(pagination.value.currentPage).toBe(page)
           expect(pagination.value.totalItems).toBe(totalItems)
         }
       ),

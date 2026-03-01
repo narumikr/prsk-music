@@ -27,12 +27,16 @@ function buildArtistResponse(id: number, overrides: Partial<Artist> = {}): Artis
   }
 }
 
-function buildPaginationMeta(pageIndex: number, totalItems: number, limit = 20): PaginationMeta {
+function buildPaginationMeta(
+  currentPage: number,
+  totalItems: number,
+  itemsPerPage = 20
+): PaginationMeta {
   return {
-    pageIndex,
-    totalPages: Math.ceil(totalItems / limit),
+    currentPage,
+    totalPages: Math.ceil(totalItems / itemsPerPage),
     totalItems,
-    limit,
+    itemsPerPage,
   }
 }
 
@@ -250,7 +254,7 @@ describe('useArtistList - Property Tests', () => {
           expect(artistList.value).toEqual(artists)
 
           // ページネーション情報が正しく設定されていることを確認
-          expect(pagination.value.pageIndex).toBe(page)
+          expect(pagination.value.currentPage).toBe(page)
           expect(pagination.value.totalItems).toBe(totalItems)
         }
       ),
