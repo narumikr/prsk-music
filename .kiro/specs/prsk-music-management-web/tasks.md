@@ -204,35 +204,35 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
 
 
 - [ ] 5. レイアウトコンポーネントの実装
-  - [ ] 5.1 Navigation.vueのスケルトン作成
+  - [x] 5.1 Navigation.vueのスケルトン作成
     - propsの型定義のみ
     - テンプレートは空のnav
     - _Requirements: 要件13_
   
-  - [ ] 5.2 NavigationのProperty Test作成
+  - [x] 5.2 NavigationのProperty Test作成
     - **Property 35: ナビゲーションメニューの現在ページ表示**
     - **Property 36: 全ページでのナビゲーションメニュー表示**
     - テストは失敗する状態（Red）
     - **Validates: Requirements 要件13**
   
-  - [ ] 5.3 Navigation.vueの実装
+  - [x] 5.3 Navigation.vueの実装
     - 楽曲管理・アーティスト管理のナビゲーションリンクの実装
     - 現在のページのハイライト表示の実装
     - すべてのProperty Testがパスすることを確認（Green）
     - _Requirements: 要件13_
   
-  - [ ] 5.4 Layout.vueのスケルトン作成
+  - [x] 5.4 Layout.vueのスケルトン作成
     - テンプレートは空のdiv
     - _Requirements: 要件13_
   
-  - [ ] 5.5 Layout.vueのUnit Test作成
+  - [x] 5.5 Layout.vueのUnit Test作成
     - ヘッダー表示のテスト
     - ナビゲーション表示のテスト
     - router-view表示のテスト
     - テストは失敗する状態（Red）
     - _Requirements: 要件13_
   
-  - [ ] 5.6 Layout.vueの実装
+  - [x] 5.6 Layout.vueの実装
     - ヘッダー（ナビゲーション含む）の実装
     - メインコンテンツエリア（<router-view>）の実装
     - すべてのUnit Testがパスすることを確認（Green）

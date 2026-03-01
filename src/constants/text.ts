@@ -13,6 +13,7 @@ export const TEXT = {
     error: 'エラーが発生しました',
     success: '成功しました',
     cancel: 'キャンセル',
+    close: '閉じる',
     save: '保存',
     delete: '削除',
     edit: '編集',
@@ -87,12 +88,19 @@ export const TEXT = {
     totalSuffix: '件',
     prev: '前へ',
     next: '次へ',
+    pageLabel: 'ページ目',
   },
 
   // YouTubeモーダル
   youtubeModal: {
     title: 'YouTube動画',
     loadError: '動画を読み込めませんでした',
+  },
+
+  // ナビゲーション
+  navigation: {
+    musics: '楽曲管理',
+    artists: 'アーティスト管理',
   },
 } as const
 

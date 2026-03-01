@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-// biome-ignore lint/correctness/noUnusedImports: used in template :aria-label binding
 import { TEXT } from '@/constants/text'
 
 interface LoadingSpinnerProps {
@@ -11,7 +10,6 @@ const props = withDefaults(defineProps<LoadingSpinnerProps>(), {
   size: 'medium',
 })
 
-// biome-ignore lint/correctness/noUnusedVariables: used in template :class binding
 const sizeClasses = computed(() => {
   switch (props.size) {
     case 'small':

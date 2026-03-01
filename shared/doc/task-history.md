@@ -698,21 +698,159 @@
 
 ---
 
+#### 5.1 Navigation.vueのスケルトン作成
+
+**実施内容:**
+- `src/components/Navigation.vue`を新規作成
+- `NavigationProps`インターフェースの定義
+  - `currentPath: string` - 現在のパス
+- `defineProps`を使用した型安全なprops定義
+- テンプレートは空の`<nav></nav>`（スケルトン）
+- TypeScriptの型チェックがパスすることを確認
+
+**対応要件:** 要件13
+
+#### 5.2 NavigationのProperty Test作成
+
+**実施内容:**
+- `src/components/Navigation.test.ts`を新規作成
+- **Property 35: ナビゲーションメニューの現在ページ表示**のテスト実装
+  - 任意のページ（/musics、/artists）に対して現在表示中のページが視覚的に示されることを検証
+  - fast-checkを使用して100回の反復テスト
+  - 現在のページに対応するリンクがハイライト表示されることを確認（border-primaryクラス）
+- **Property 36: 全ページでのナビゲーションメニュー表示**のテスト実装
+  - 任意のページに対して一貫したナビゲーションメニューが表示されることを検証
+  - fast-checkを使用して100回の反復テスト
+  - 楽曲管理リンクとアーティスト管理リンクが常に表示されることを確認
+- **Property 36（補足）: ナビゲーションメニューのリンクテキスト表示**のテスト実装
+  - 任意のページに対してナビゲーションメニューに適切なリンクテキストが表示されることを検証
+  - 「楽曲管理」と「アーティスト管理」のテキストが表示されることを確認
+- テストは失敗する状態（Red）で作成完了
+  - 3件のテストすべてが失敗（期待通り）
+  - Property 35: `[data-testid="navigation"]`が存在しない
+  - Property 36: `[data-testid="nav-link-musics"]`が存在しない
+  - Property 36（補足）: ナビゲーションメニューのテキストが空
+- 次のタスク（5.3）で実装を行い、すべてのテストをパスさせる予定
+
+**対応要件:** 要件13
+
+#### 5.3 Navigation.vueの実装
+
+**実施内容:**
+- `src/components/Navigation.vue`の完全な実装
+- UI表示テキストの定数化
+  - `src/constants/text.ts`に`navigation`カテゴリを追加
+  - `musics`: '楽曲管理'
+  - `artists`: 'アーティスト管理'
+- ナビゲーションメニューの実装
+  - 楽曲管理リンク（`/musics`）
+  - アーティスト管理リンク（`/artists`）
+  - 各リンクに`data-testid`属性を追加（テスト用）
+- 現在のページのハイライト表示の実装
+  - `isActive(path)`関数で現在のパスを判定
+  - アクティブなリンクにPrimaryカラー（#33ccba）のborderとテキストカラーを適用
+  - 非アクティブなリンクはグレー（gray-600）で表示
+- UIガイドラインに従ったデザイン
+  - Primaryカラー（#33ccba）をアクセントとして使用
+  - グレー（gray-200）をボーダーに使用
+  - ホバー時にグレー（gray-300）のborderとテキストカラー（gray-900）を適用
+  - トランジション（150ms ease-in-out）を追加
+- レスポンシブ対応
+  - 最大幅720pxのコンテナ（max-w-screen-lg）
+  - 左右パディング16px（px-4）
+- アクセシビリティ対応
+  - `data-testid`属性の追加（テスト用）
+  - セマンティックなHTML（`<nav>`タグ）
+- すべてのProperty Testがパス（Green）
+  - Property 35: 任意のページに対して現在表示中のページが視覚的に示される（100回反復）
+  - Property 36: 任意のページに対して一貫したナビゲーションメニューが表示される（100回反復）
+  - Property 36（補足）: 任意のページに対してナビゲーションメニューに適切なリンクテキストが表示される（100回反復）
+- 型チェックもパス
+
+**対応要件:** 要件13
+
+---
+
+#### 5.4 Layout.vueのスケルトン作成
+
+**実施内容:**
+- `src/components/Layout.vue`を新規作成
+- テンプレートは空の`<div></div>`（スケルトン）
+- TypeScriptの型チェックがパスすることを確認
+- 次のタスク（5.5）でUnit Testを作成予定
+
+**対応要件:** 要件13
+
+#### 5.5 Layout.vueのUnit Test作成
+
+**実施内容:**
+- `src/components/Layout.test.ts`を新規作成
+- Unit Testの実装（7件のテストケース）
+  - ヘッダー表示のテスト
+  - ナビゲーション表示のテスト
+  - router-view配置のテスト
+  - メインコンテンツエリア表示のテスト
+  - レイアウト構造の順序テスト（ヘッダー→メインコンテンツ）
+  - NavigationコンポーネントへのcurrentPath props渡しのテスト
+  - レスポンシブレイアウトのテスト
+- テストは失敗する状態（Red）で作成完了
+  - 7件のテストすべてが失敗（期待通り）
+  - `[data-testid="layout-header"]`が存在しない
+  - Navigationコンポーネントが存在しない
+  - `[data-testid="layout-content"]`が存在しない
+  - `<main>`要素が存在しない
+- 次のタスク（5.6）で実装を行い、すべてのテストをパスさせる予定
+
+**対応要件:** 要件13
+
+#### 5.6 Layout.vueの実装
+
+**実施内容:**
+- `src/components/Layout.vue`の完全な実装
+- ヘッダー（Navigationコンポーネント含む）の実装
+  - `data-testid="layout-header"`属性の追加
+  - 白背景とグレーのボーダー（`bg-white border-b border-gray-200`）
+- メインコンテンツエリア（`<router-view>`）の実装
+  - `<main>`タグでセマンティックなHTML構造
+  - 最大幅720px（`max-w-screen-lg`）のレスポンシブレイアウト
+  - 左右パディング16px（`px-4`）、上下パディング24px（`py-6`）
+  - `data-testid="layout-content"`属性の追加
+- Vue Routerとの統合
+  - `useRoute()`で現在のルートパスを取得
+  - `computed`でcurrentPathを算出
+  - NavigationコンポーネントにcurrentPathをpropsとして渡す
+- UIガイドラインに従ったデザイン
+  - 背景色: `bg-gray-50`（全体）
+  - 最小高さ: `min-h-screen`
+  - シンプルで控えめなレイアウト
+- テストファイルの修正
+  - `src/components/Layout.test.ts`にVue Routerのセットアップを追加
+  - `createRouter`と`createMemoryHistory`を使用
+  - すべてのテストケースに`async/await`とrouter初期化を追加
+- すべてのUnit Testがパス（Green）
+  - 7件のテストすべてがパス
+
+**対応要件:** 要件13
+
+---
+
 ## 次のタスク
 
-### タスク5: レイアウトコンポーネントの実装
+### タスク6: アーティスト管理コンポーネントの実装
 
-**次のタスク: 5.1 Navigation.vueのスケルトン作成**
+**次のタスク: 6.1 ArtistTable.vueのスケルトン作成**
 
 **実装予定のコンポーネント:**
-- ⏭️ `Navigation.vue` - ナビゲーションメニュー（次のタスク）
-- `Layout.vue` - 全ページ共通レイアウト
+- `ArtistTable.vue` - アーティスト一覧テーブル
+- `ArtistFormModal.vue` - アーティスト登録・編集フォーム
+- `ArtistListPage.vue` - アーティスト一覧ページ
 
 **実装ファイル:**
 - `src/components/` - コンポーネントの実装先
+- `src/views/` - ページコンポーネントの実装先
 
 **参考:**
-- 設計書の「Layout Components」セクションを参照
+- 設計書の「Artist Management Components」セクションを参照
 - UIガイドライン（`.kiro/steering/ui-design-guidelines.md`）に従う
 
 ---
@@ -759,6 +897,7 @@
   - `common` - 共通テキスト（ボタンラベル、メッセージなど）
   - `confirmDialog` - 確認ダイアログテキスト（キャンセル、削除）
   - `youtubeModal` - YouTubeモーダルテキスト（タイトル、読み込みエラー）
+  - `navigation` - ナビゲーションテキスト（楽曲管理、アーティスト管理）
   - `validation` - バリデーションメッセージ
   - `error` - エラーメッセージ
   - `apiError` - APIエラーメッセージ
@@ -800,6 +939,19 @@
   - Escapeキーリスナーの管理（watch、onUnmounted）
   - アクセシビリティ対応（role="dialog"、aria-modal）
   - UI表示テキストを定数から参照（TEXT.youtubeModal）
+- `src/components/Navigation.vue`
+  - `NavigationProps` - propsの型定義（currentPath）
+  - ナビゲーションメニュー実装（楽曲管理、アーティスト管理）
+  - 現在のページのハイライト表示（Primaryカラー）
+  - ホバー時のスタイル変更（グレー）
+  - レスポンシブ対応（最大幅720px）
+  - UI表示テキストを定数から参照（TEXT.navigation）
+- `src/components/Layout.vue`
+  - ヘッダー（Navigationコンポーネント含む）の実装
+  - メインコンテンツエリア（`<router-view>`）の実装
+  - Vue Routerとの統合（useRoute、computed）
+  - レスポンシブレイアウト（最大幅720px、左右パディング16px）
+  - UIガイドラインに従ったデザイン（bg-gray-50、min-h-screen）
 
 ### テスト
 - `src/api/base.test.ts` - `getApiErrorMessage` のUnit Test
@@ -811,7 +963,9 @@
 - `src/components/LoadingSpinner.test.ts` - `LoadingSpinner` のProperty Test（Property 16）
 - `src/components/PaginationControl.test.ts` - `PaginationControl` のUnit Test + Property Test（Property 11, Property 13）
 - `src/components/ConfirmDialog.test.ts` - `ConfirmDialog` のUnit Test（11件のテストケース）
-- `src/components/YouTubeModal.test.ts` - `YouTubeModal` のUnit Test（12件のテストケース、すべてパス）
+- `src/components/YouTubeModal.test.ts` - `YouTubeModal` のUnit Test（12件のテストケース）
+- `src/components/Navigation.test.ts` - `Navigation` のProperty Test（Property 35, Property 36、3件のテストケース）
+- `src/components/Layout.test.ts` - `Layout` のUnit Test（7件のテストケース、Vue Routerセットアップ含む）
 
 ---
 
