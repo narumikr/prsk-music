@@ -37,7 +37,7 @@
     "msw": "^2.12.10",
     "playwright": "^1.58.2",
     "postcss": "^8.5.6",
-    "tailwindcss": "^4.2.0",
+    "tailwindcss": "^4.2.1",
     "typescript": "~5.9.3",
     "vite": "^8.0.0-beta.15",
     "vitest": "^4.0.18",
