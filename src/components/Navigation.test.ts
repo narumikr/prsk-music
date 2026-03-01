@@ -100,8 +100,7 @@ describe('Navigation - Property Tests', () => {
           const artistsLink = wrapper.find('[data-testid="nav-link-artists"]')
           expect(artistsLink.exists()).toBe(true)
 
-          // 両方のリンクが常に表示されることを確認（一貫性）
-          expect(musicsLink.exists() && artistsLink.exists()).toBe(true)
+          // 両方のリンクの存在は個別の assertion で検証済み
         }
       ),
       { numRuns: 100 }
