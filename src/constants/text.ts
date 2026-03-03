@@ -141,6 +141,24 @@ export const TEXT = {
     updateSuccess: 'アーティストを更新しました',
     deleteSuccess: 'アーティストを削除しました',
   },
+
+  // 楽曲テーブル
+  musicTable: {
+    id: 'ID',
+    title: 'タイトル',
+    artistName: 'アーティスト名',
+    unitName: 'ユニット名',
+    content: 'コンテンツ',
+    musicType: '楽曲タイプ',
+    specially: 'スペシャル',
+    lyricsName: '作詞',
+    musicName: '作曲',
+    featuring: 'フィーチャリング',
+    youtubeLink: 'YouTube',
+    actions: 'アクション',
+    noData: '楽曲が登録されていません',
+    watchOnYoutube: 'YouTubeで見る',
+  },
 } as const
 
 export type TextKey = typeof TEXT

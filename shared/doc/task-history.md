@@ -1113,19 +1113,165 @@
 
 ---
 
+#### 7.1 MusicTable.vueのスケルトン作成
+
+**実施内容:**
+- `src/components/MusicTable.vue`を新規作成
+- `MusicTableProps`インターフェースの定義
+  - `data: PrskMusic[]` - 楽曲一覧データ
+  - `loading: boolean` - ローディング状態
+- `MusicTableEmits`インターフェースの定義
+  - `edit` - 編集イベント（楽曲IDを引数として渡す）
+  - `delete` - 削除イベント（楽曲IDを引数として渡す）
+- `defineProps`と`defineEmits`を使用した型安全なprops/emits定義
+- テンプレートは空の`<div></div>`（スケルトン）
+- TypeScriptの型チェックがパスすることを確認
+- 次のタスク（7.2）でUnit Testを作成予定
+
+**対応要件:** 要件1
+
+#### 7.2 MusicTableのUnit Test作成
+
+**実施内容:**
+- `src/components/MusicTable.test.ts`を新規作成
+- Unit Testの実装（10件のテストケース）
+  - 楽曲一覧ページアクセス時のテーブル表示のテスト
+  - YouTubeリンククリック時のモーダル表示のテスト
+  - ローディング中にLoadingSpinnerが表示されるテスト
+  - データが0件の場合のメッセージ表示テスト
+  - 編集ボタンクリック時のeditイベント発火テスト
+  - 削除ボタンクリック時のdeleteイベント発火テスト
+  - musicTypeの数値から日本語ラベルへの変換テスト
+  - nullフィールドの「-」表示テスト
+  - speciallyフィールドのチェックマーク表示テスト（true/false）
+- テストヘルパー関数の実装
+  - `createMockMusic()` - テスト用PrskMusicデータ生成
+- テストは失敗する状態（Red）で作成完了
+  - 10件のテストすべてが失敗（期待通り）
+  - エラー: `expected false to be true`（要素が存在しない）
+  - エラー: `expected '' to contain '...'`（テキストが空）
+- 次のタスク（7.3）でProperty Testを作成予定
+
+**対応要件:** 要件1
+
+#### 7.3 MusicTableのProperty Test作成
+
+**実施内容:**
+- `src/components/MusicTable.test.ts`にProperty Testを追加
+- **Property 1: 楽曲レコードの完全なフィールド表示**のテスト実装
+  - 任意の楽曲レコードに対してテーブル表示にid、title、artistName、unitName、musicType、specially、lyricsName、musicName、featuring、youtubeLinkのすべてのフィールドが含まれることを検証
+  - fast-checkを使用して100回の反復テスト
+  - nullフィールドの表示確認（nullの場合は'-'が表示される想定）
+  - YouTubeリンク要素の存在確認
+- **Property 2: MusicType値のラベル変換**のテスト実装
+  - 任意の有効なmusicType値（0, 1, 2）に対して表示時に対応する日本語ラベル（"オリジナル"、"3DMV"、"2DMV"）に正しく変換されることを検証
+  - fast-checkを使用して100回の反復テスト
+- **Property 3: YouTubeリンクのクリック可能性**のテスト実装
+  - 任意のyoutubeLinkフィールドに対してレンダリング結果がクリック可能なリンク要素（buttonまたはaタグ）として表示されることを検証
+  - fast-checkを使用して100回の反復テスト
+- fast-checkのarbitraryの実装
+  - `fc.record()`を使用したPrskMusicデータ生成
+  - `fc.option()`を使用したnullable フィールドの生成
+  - `fc.constantFrom()`を使用したMusicType（0, 1, 2）の生成
+  - `fc.webUrl()`を使用したYouTube URLの生成
+- テストは失敗する状態（Red）で作成完了
+  - 3件のProperty Testすべてが失敗（期待通り）
+  - Property 1: `expected false to be true`（テーブル要素が存在しない）
+  - Property 2: `expected '' to contain 'オリジナル'`（ラベルが表示されない）
+  - Property 3: `expected false to be true`（YouTubeリンク要素が存在しない）
+- 次のタスク（7.4）で実装を行い、すべてのテストをパスさせる予定
+
+**対応要件:** 要件1
+
+#### 7.3 MusicTableのProperty Test作成
+
+**実施内容:**
+- `src/components/MusicTable.test.ts`にProperty Testを追加
+- **Property 1: 楽曲レコードの完全なフィールド表示**のテスト実装
+  - 任意の楽曲レコードに対してテーブル表示にid、title、artistName、unitName、musicType、specially、lyricsName、musicName、featuring、youtubeLinkのすべてのフィールドが含まれることを検証
+  - fast-checkを使用して100回の反復テスト
+  - nullフィールドの表示確認（nullの場合は'-'が表示される想定）
+  - YouTubeリンク要素の存在確認
+- **Property 2: MusicType値のラベル変換**のテスト実装
+  - 任意の有効なmusicType値（0, 1, 2）に対して表示時に対応する日本語ラベル（"オリジナル"、"3DMV"、"2DMV"）に正しく変換されることを検証
+  - fast-checkを使用して100回の反復テスト
+- **Property 3: YouTubeリンクのクリック可能性**のテスト実装
+  - 任意のyoutubeLinkフィールドに対してレンダリング結果がクリック可能なリンク要素（buttonまたはaタグ）として表示されることを検証
+  - fast-checkを使用して100回の反復テスト
+- fast-checkのarbitraryの実装
+  - `fc.record()`を使用したPrskMusicデータ生成
+  - `fc.option()`を使用したnullable フィールドの生成
+  - `fc.constantFrom()`を使用したMusicType（0, 1, 2）の生成
+  - `fc.webUrl()`を使用したYouTube URLの生成
+- テストは失敗する状態（Red）で作成完了
+  - 3件のProperty Testすべてが失敗（期待通り）
+  - Property 1: `expected false to be true`（テーブル要素が存在しない）
+  - Property 2: `expected '' to contain 'オリジナル'`（ラベルが表示されない）
+  - Property 3: `expected false to be true`（YouTubeリンク要素が存在しない）
+- 次のタスク（7.4）で実装を行い、すべてのテストをパスさせる予定
+
+**対応要件:** 要件1
+
+#### 7.4 MusicTable.vueの実装
+
+**実施内容:**
+- `src/components/MusicTable.vue`の完全な実装
+- UI表示テキストの定数化
+  - `src/constants/text.ts`に`musicTable`カテゴリを追加
+  - id、title、artistName、unitName、content、musicType、specially、lyricsName、musicName、featuring、youtubeLink、actions、noData、watchOnYoutubeのテキストを定義
+- 楽曲一覧テーブル表示の実装
+  - 表示フィールド: id、title、artistName、unitName、content、musicType、specially、lyricsName、musicName、featuring、youtubeLink
+  - nullフィールド（unitName、content、lyricsName、musicName、featuring）は'-'で表示
+  - テーブルヘッダーの実装（11カラム）
+- musicTypeの数値→ラベル変換の実装
+  - `MUSIC_TYPE_LABELS`を使用して0→オリジナル、1→3DMV、2→2DMVに変換
+- speciallyフィールドの表示実装
+  - trueの場合は'✓'を表示
+  - falseまたはnullの場合は空白を表示
+- YouTubeリンクのクリック可能表示の実装
+  - ボタン要素として実装
+  - クリック時にYouTubeモーダルを開く
+  - `YouTubeModal`コンポーネントを統合
+  - モーダルの状態管理（youtubeModalOpen、selectedYoutubeUrl）
+- 編集・削除アクションボタンの実装
+  - 編集ボタン: グレーボーダー、ホバー時にPrimaryカラー（#33ccba）
+  - 削除ボタン: グレーボーダー、ホバー時にErrorカラー（#ff6699）
+  - 各ボタンに`data-testid`属性を追加（`edit-button-{id}`、`delete-button-{id}`）
+- ローディング表示の実装
+  - `LoadingSpinner`コンポーネントを使用（size="large"）
+  - ローディング中はテーブルを非表示
+- データなし表示の実装
+  - データが0件の場合は「楽曲が登録されていません」を表示
+- UIガイドラインに従ったデザイン
+  - グレー（gray-200）をボーダーに使用
+  - ホバー時に背景色を変更（bg-gray-50）
+  - トランジション（150ms ease-in-out）を追加
+  - シンプルで控えめなテーブルデザイン
+- すべてのUnit TestとProperty Testがパス（Green）
+  - Unit Test: 10件すべてパス
+  - Property 1: 任意の楽曲レコードに対してすべてのフィールドが表示される（100回反復）
+  - Property 2: 任意のmusicType値に対して対応する日本語ラベルが表示される（100回反復）
+  - Property 3: 任意のyoutubeLinkに対してクリック可能なリンク要素が表示される（100回反復）
+- 型チェックもパス
+
+**対応要件:** 要件1
+
+---
+
 ## 次のタスク
 
 ### タスク7: 楽曲管理機能の実装
 
-**次のタスク: 7.1 MusicTable.vueのスケルトン作成**
+**次のタスク: 7.5 MusicFormModal.vueのスケルトン作成**
 
 **実装予定の機能:**
-- propsとemitsの型定義
+- `MusicFormModal.vue`を新規作成
+- propsとemitsの型定義のみ
 - テンプレートは空のdiv
 
 **参考:**
-- 設計書の「Music Management Components」セクションを参照
-- タスク一覧（`.kiro/specs/prsk-music-management-web/tasks.md`）のタスク7.1を参照
+- 設計書の「Components and Interfaces」セクションを参照
+- タスク一覧（`.kiro/specs/prsk-music-management-web/tasks.md`）のタスク7.5を参照
 
 ---
 
@@ -1238,6 +1384,12 @@
   - モーダルオーバーレイの実装
   - Escapeキーでモーダルを閉じる機能
 
+- `src/components/MusicTable.vue`
+  - `MusicTableProps` - propsの型定義（data、loading）
+  - `MusicTableEmits` - emitsの型定義（edit、delete）
+  - テンプレートは空の`<div></div>`（スケルトン）
+  - 次のタスク（7.2）でUnit Testを作成予定
+
 ### ビュー
 - `src/views/ArtistListPage.vue`
   - アーティスト一覧表示
@@ -1327,6 +1479,20 @@
 - `src/components/ArtistTable.test.ts` - `ArtistTable` のProperty Test（Property 25, Property 26、2件のテストケース、Green状態）
 - `src/components/ArtistFormModal.test.ts` - `ArtistFormModal` のProperty Test（Property 17, 28, 29, 30, 31, 32、9件のテストケース、Green状態）
 - `src/views/ArtistListPage.test.ts` - `ArtistListPage` のUnit Test（10件のテストケース、Green状態）
+- `src/components/MusicTable.test.ts` - `MusicTable` のUnit Test + Property Test（Property 1, Property 2, Property 3、13件のテストケース、Green状態）
+
+### コンポーネント（続き）
+- `src/components/MusicTable.vue`
+  - `MusicTableProps` - propsの型定義（data、loading）
+  - `MusicTableEmits` - emitsの型定義（edit、delete）
+  - 楽曲一覧テーブルの実装（id、title、artistName、unitName、content、musicType、specially、lyricsName、musicName、featuring、youtubeLink）
+  - musicTypeの数値→ラベル変換（MUSIC_TYPE_LABELSを使用）
+  - speciallyフィールドの表示（trueの場合は'✓'、falseまたはnullの場合は空白）
+  - YouTubeリンクのクリック可能表示（ボタン要素、YouTubeModalと統合）
+  - 編集・削除ボタンの実装
+  - ローディング状態の表示
+  - 空データ時のメッセージ表示
+  - Unit Test + Property Test完了（Property 1, 2, 3、13件のテストケース、Green状態）
 
 ### ビュー（ページコンポーネント）
 - `src/views/ArtistListPage.vue`
