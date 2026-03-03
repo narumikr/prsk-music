@@ -1262,16 +1262,116 @@
 
 ### タスク7: 楽曲管理機能の実装
 
-**次のタスク: 7.5 MusicFormModal.vueのスケルトン作成**
+#### 7.5 MusicFormModal.vueのスケルトン作成
+
+**実施内容:**
+- `src/components/MusicFormModal.vue`を新規作成
+- `MusicFormModalProps`インターフェースの定義
+  - `open: boolean` - モーダルの表示/非表示
+  - `mode: 'create' | 'edit'` - 作成または編集モード
+  - `initialData?: PrskMusic` - 編集時の初期データ（オプショナル）
+  - `artists: Artist[]` - アーティスト一覧（ドロップダウン用）
+- `MusicFormModalEmits`インターフェースの定義
+  - `close` - モーダルを閉じるイベント
+  - `submit` - フォーム送信イベント（MusicFormDataを引数として渡す）
+  - `create-artist` - 新規アーティスト追加トリガーイベント
+- `defineProps`と`defineEmits`を使用した型安全なprops/emits定義
+- テンプレートは空の`<div></div>`（スケルトン）
+- TypeScriptの型チェックがパスすることを確認
+- 次のタスク（7.6）でUnit Testを作成予定
+
+**対応要件:** 要件2, 要件3, 要件7, 要件8
+
+---
+
+#### 7.6 MusicFormModalのUnit Test作成
+
+**実施内容:**
+- `src/components/MusicFormModal.test.ts`を新規作成
+- Unit Testの実装（9件のテストケース）
+  - 新規登録モードで開いたときに空のフォームが表示される
+  - 編集モードで開いたときに既存データが事前入力される
+  - musicTypeドロップダウンに3つの選択肢が表示される（オリジナル、3DMV、2DMV）
+  - アーティスト新規追加ボタンクリック時にcreate-artistイベントが発火する
+  - openがfalseのときにモーダルが表示されない
+  - キャンセルボタンクリック時にcloseイベントが発火する
+  - アーティスト選択ドロップダウンにアーティスト一覧が表示される
+  - speciallyチェックボックスが表示される
+  - 任意フィールド（lyricsName、musicName、featuring）が表示される
+- テストヘルパー関数の実装
+  - `createMockArtist()` - テスト用Artistデータ生成
+  - `createMockMusic()` - テスト用PrskMusicデータ生成
+- テストは失敗する状態（Red）で作成完了
+  - 8件のテストが失敗（期待通り）
+  - 1件のテスト（openがfalseのときにモーダルが表示されない）がパス（スケルトンが空のdivのため）
+- 次のタスク（7.7）でProperty Testを作成予定
+
+**対応要件:** 要件2, 要件3
+
+---
+
+#### 7.7 MusicFormModalのProperty Test作成
+
+**実施内容:**
+- `src/components/MusicFormModal.test.ts`にProperty Testを追加（11件のテストケース）
+- **Property 5: バリデーションエラーメッセージの表示**
+  - 任意のフォームにおいて、APIが400 Bad Requestを返した場合、レスポンスに含まれる各無効なフィールドに対する検証エラーメッセージが適切に表示されることを検証
+  - fast-checkを使用して100回の反復テスト
+- **Property 6: 必須フィールドの検証**
+  - 任意の楽曲フォーム送信において、title、artistId、musicType、youtubeLinkの各必須フィールドが空でないことが検証されることを確認
+  - fast-checkを使用して100回の反復テスト
+- **Property 7: 編集フォームの事前入力**
+  - 任意の楽曲レコードに対して、編集ボタンをクリックした際に表示されるフォームには、そのレコードの現在のデータがすべてのフィールドに正しく事前入力されることを検証
+  - fast-checkを使用して100回の反復テスト
+- **Property 17: フォームフィールドのラベル表示**
+  - 任意のフォームフィールドに対して、日本語の明確なラベルが提供されることを検証
+  - fast-checkを使用して100回の反復テスト
+- **Property 18: タイトルフィールドの空文字検証**
+  - 任意の楽曲フォームにおいて、titleフィールドに空文字列または空白のみの文字列が入力された場合、検証エラーとなることを検証
+  - fast-checkを使用して100回の反復テスト
+- **Property 19: YouTubeリンクのURL形式検証**
+  - 任意のyoutubeLinkフィールドへの入力に対して、有効なURL形式であることが検証されることを確認
+  - fast-checkを使用して100回の反復テスト
+- **Property 20: アーティストID選択の検証**
+  - 任意の楽曲フォームにおいて、有効なアーティストIDが選択されていることが検証されることを確認
+  - fast-checkを使用して100回の反復テスト
+- **Property 21: MusicTypeドロップダウンの選択肢**
+  - 任意の楽曲フォームにおいて、musicTypeドロップダウンには3つの選択肢（0:オリジナル、1:3DMV、2:2DMV）が正しく表示されることを検証
+  - fast-checkを使用して100回の反復テスト
+- **Property 22: 検証失敗時のインラインエラーメッセージ**
+  - 任意のフォーム検証エラーに対して、無効なフィールドの横にインラインエラーメッセージが表示されることを検証
+  - fast-checkを使用して100回の反復テスト
+- **Property 23: 有効なフォームでの送信ボタン有効化**
+  - 任意のフォームにおいて、すべての必須フィールドが有効な値を持つ場合、送信ボタンが有効化されることを検証
+  - fast-checkを使用して100回の反復テスト
+- **Property 24: 無効なフォームでの送信ボタン無効化**
+  - 任意のフォームにおいて、いずれかの必須フィールドが無効または空の場合、送信ボタンが無効化されることを検証
+  - fast-checkを使用して100回の反復テスト
+- fast-checkのインポートを追加
+- テストは失敗する状態（Red）で作成完了
+  - 19件のテストが失敗（期待通り）
+  - 1件のテスト（openがfalseのときにモーダルが表示されない）がパス（スケルトン実装のため）
+- 次のタスク（7.8）で実装を行い、すべてのテストをパスさせる予定
+
+**対応要件:** 要件2, 要件3, 要件7, 要件8
+
+---
+
+**次のタスク: 7.8 MusicFormModal.vueの実装**
 
 **実装予定の機能:**
-- `MusicFormModal.vue`を新規作成
-- propsとemitsの型定義のみ
-- テンプレートは空のdiv
+- `src/components/MusicFormModal.vue`の完全な実装
+- VeeValidateとZodによるフォームバリデーションの実装
+- フォームフィールドの実装（title、artistId、musicType、specially、lyricsName、musicName、featuring、youtubeLink）
+- モーダル表示条件の実装
+- フォーム送信処理の実装
+- フォームリセット処理の実装
+- アーティスト新規追加トリガー機能の実装
+- すべてのUnit TestとProperty Testがパスすることを確認（Green）
 
 **参考:**
 - 設計書の「Components and Interfaces」セクションを参照
-- タスク一覧（`.kiro/specs/prsk-music-management-web/tasks.md`）のタスク7.5を参照
+- タスク一覧（`.kiro/specs/prsk-music-management-web/tasks.md`）のタスク7.8を参照
 
 ---
 
@@ -1480,6 +1580,7 @@
 - `src/components/ArtistFormModal.test.ts` - `ArtistFormModal` のProperty Test（Property 17, 28, 29, 30, 31, 32、9件のテストケース、Green状態）
 - `src/views/ArtistListPage.test.ts` - `ArtistListPage` のUnit Test（10件のテストケース、Green状態）
 - `src/components/MusicTable.test.ts` - `MusicTable` のUnit Test + Property Test（Property 1, Property 2, Property 3、13件のテストケース、Green状態）
+- `src/components/MusicFormModal.test.ts` - `MusicFormModal` のUnit Test（9件のテストケース、Red状態）
 
 ### コンポーネント（続き）
 - `src/components/MusicTable.vue`
@@ -1493,6 +1594,12 @@
   - ローディング状態の表示
   - 空データ時のメッセージ表示
   - Unit Test + Property Test完了（Property 1, 2, 3、13件のテストケース、Green状態）
+
+- `src/components/MusicFormModal.vue`
+  - `MusicFormModalProps` - propsの型定義（open、mode、initialData、artists）
+  - `MusicFormModalEmits` - emitsの型定義（close、submit、create-artist）
+  - テンプレートは空の`<div></div>`（スケルトン）
+  - 次のタスク（7.6）でUnit Testを作成予定
 
 ### ビュー（ページコンポーネント）
 - `src/views/ArtistListPage.vue`
@@ -1592,3 +1699,59 @@ pnpm typecheck
 
 それでも解決しない場合は、チームメンバーに相談してください。
 - `src/components/PaginationControl.test.ts` - `PaginationControl` のUnit Test + Property Test（Property 11, Property 13）
+
+
+---
+
+#### 7.8 MusicFormModal.vueの実装
+
+**実施内容:**
+- `src/components/MusicFormModal.vue`の完全な実装
+- VeeValidateとZodによるフォームバリデーションの実装
+  - Zodバリデーションスキーマの定義（title、artistId、musicType、specially、lyricsName、musicName、featuring、youtubeLink）
+  - 必須フィールドの検証（title、artistId、musicType、youtubeLink）
+  - URL形式の検証（youtubeLink）
+- フォームフィールドの実装
+  - title（必須）
+  - artistId（必須、ドロップダウン + 新規追加ボタン）
+  - musicType（必須、ドロップダウン: 0/1/2）
+  - specially（チェックボックス）
+  - lyricsName、musicName、featuring（任意）
+  - youtubeLink（必須、URL検証）
+- モーダル表示条件の実装（openプロパティで制御）
+- フォーム送信処理の実装
+  - `handleSubmit`でバリデーション成功時に`submit`イベント発火
+  - フォームデータの型変換（空文字列をnullに変換、トリム処理）
+- フォームリセット処理の実装
+  - モーダルを開く際に`resetForm`でフォームをリセット
+  - 編集モード時は`initialData`でフォームを初期化
+  - `watch`でモーダルの開閉を監視
+- アーティスト新規追加トリガー機能の実装
+  - 「新規追加」ボタンクリック時に`create-artist`イベント発火
+- イベントハンドリングの実装
+  - キャンセルボタンクリック時に`close`イベント発火
+  - 背景オーバーレイクリック時に`close`イベント発火
+  - Escapeキー押下時に`close`イベント発火
+- Escapeキーリスナーの管理
+  - `watch`でモーダルの開閉を監視
+  - 開いているときにkeydownリスナーを追加
+  - 閉じているときにリスナーを削除
+  - `onUnmounted`でクリーンアップ
+- UIガイドラインに従ったデザイン
+  - Primaryカラー（#33ccba）を保存ボタンに使用
+  - Secondaryカラー（#33aaee）を新規追加ボタンに使用
+  - グレー（gray-200）をボーダーに使用
+  - ホバー時に透明度80%を適用
+  - シンプルで控えめなモーダルデザイン
+  - 背景オーバーレイ（黒、透明度50%）
+  - レスポンシブ対応（max-w-2xl、max-h-[90vh]、overflow-y-auto）
+- コーディング規約への準拠
+  - UI表示テキストを`src/constants/text.ts`に追加
+  - `TEXT.musicForm`カテゴリを新規作成（createTitle、editTitle、各フィールドラベル、バリデーションメッセージ）
+  - リテラル文字列を直接記述せず、定数から参照
+- すべてのUnit TestとProperty Testがパス（Green）
+  - Unit Test: 9件すべてパス
+  - Property Test: 11件すべてパス（Property 5, 6, 7, 17, 18, 19, 20, 21, 22, 23, 24）
+- 型チェックもパス
+
+**対応要件:** 要件2, 要件3, 要件7, 要件8

@@ -159,6 +159,36 @@ export const TEXT = {
     noData: '楽曲が登録されていません',
     watchOnYoutube: 'YouTubeで見る',
   },
+
+  // 楽曲フォーム
+  musicForm: {
+    createTitle: '楽曲新規登録',
+    editTitle: '楽曲編集',
+    title: 'タイトル',
+    titlePlaceholder: '楽曲タイトルを入力',
+    titleRequired: 'タイトルは必須です',
+    artist: 'アーティスト',
+    artistPlaceholder: 'アーティストを選択',
+    artistRequired: 'アーティストを選択してください',
+    createArtist: '新規追加',
+    musicType: '楽曲タイプ',
+    musicTypePlaceholder: '楽曲タイプを選択',
+    musicTypeRequired: '楽曲タイプを選択してください',
+    specially: 'スペシャル',
+    lyricsName: '作詞',
+    lyricsNamePlaceholder: '作詞者名を入力（任意）',
+    musicName: '作曲',
+    musicNamePlaceholder: '作曲者名を入力（任意）',
+    featuring: 'フィーチャリング',
+    featuringPlaceholder: 'フィーチャリングアーティストを入力（任意）',
+    youtubeLink: 'YouTubeリンク',
+    youtubeLinkPlaceholder: 'YouTube URLを入力',
+    youtubeLinkRequired: 'YouTube URLは必須です',
+    youtubeLinkInvalid: '有効なURLを入力してください',
+    submit: '保存',
+    cancel: 'キャンセル',
+    close: '閉じる',
+  },
 } as const
 
 export type TextKey = typeof TEXT
