@@ -25,12 +25,24 @@ const artistToDelete = ref<number | null>(null)
 
 // 初期データ取得
 onMounted(async () => {
-  await fetchArtists(1)
+  try {
+    await fetchArtists(1)
+  } catch (error: unknown) {
+    const errorMessage =
+      error instanceof ApiErrorResponse ? getApiErrorMessage(error) : TEXT.apiError.default
+    showError(errorMessage)
+  }
 })
 
 // ページ変更ハンドラー
 const handlePageChange = async (page: number) => {
-  await fetchArtists(page)
+  try {
+    await fetchArtists(page)
+  } catch (error: unknown) {
+    const errorMessage =
+      error instanceof ApiErrorResponse ? getApiErrorMessage(error) : TEXT.apiError.default
+    showError(errorMessage)
+  }
 }
 
 // 新規登録ボタンクリック

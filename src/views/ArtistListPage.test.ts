@@ -1,14 +1,14 @@
 import { mount } from '@vue/test-utils'
 import { HttpResponse, http } from 'msw'
 import { setupServer } from 'msw/node'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
 import type { Artist, PaginatedResponse } from '@/types'
 import ArtistListPage from './ArtistListPage.vue'
 
 // MSWサーバーのセットアップ
 const server = setupServer()
 
-beforeEach(() => {
+beforeAll(() => {
   server.listen({ onUnhandledRequest: 'error' })
 })
 

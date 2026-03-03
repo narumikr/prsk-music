@@ -1326,25 +1326,14 @@
 - `src/components/Layout.test.ts` - `Layout` のUnit Test（7件のテストケース、Vue Routerセットアップ含む）
 - `src/components/ArtistTable.test.ts` - `ArtistTable` のProperty Test（Property 25, Property 26、2件のテストケース、Green状態）
 - `src/components/ArtistFormModal.test.ts` - `ArtistFormModal` のProperty Test（Property 17, 28, 29, 30, 31, 32、9件のテストケース、Green状態）
-- `src/views/ArtistListPage.test.ts` - `ArtistListPage` のUnit Test（10件のテストケース、Red状態）
-- `src/composables/useMusicList.test.ts` - `useMusicList` のProperty Test
-- `src/composables/useArtistList.test.ts` - `useArtistList` のProperty Test
-- `src/composables/useNotification.test.ts` - `useNotification` のProperty Test
-- `src/components/LoadingSpinner.test.ts` - `LoadingSpinner` のProperty Test（Property 16）
-- `src/components/PaginationControl.test.ts` - `PaginationControl` のUnit Test + Property Test（Property 11, Property 13）
-- `src/components/ConfirmDialog.test.ts` - `ConfirmDialog` のUnit Test（11件のテストケース）
-- `src/components/YouTubeModal.test.ts` - `YouTubeModal` のUnit Test（12件のテストケース）
-- `src/components/Navigation.test.ts` - `Navigation` のProperty Test（Property 35, Property 36、3件のテストケース）
-- `src/components/Layout.test.ts` - `Layout` のUnit Test（7件のテストケース、Vue Routerセットアップ含む）
-- `src/components/ArtistTable.test.ts` - `ArtistTable` のProperty Test（Property 25, Property 26、2件のテストケース、Green状態）
-- `src/components/ArtistFormModal.test.ts` - `ArtistFormModal` のProperty Test（Property 17, 28, 29, 30, 31, 32、9件のテストケース、Green状態）
+- `src/views/ArtistListPage.test.ts` - `ArtistListPage` のUnit Test（10件のテストケース、Green状態）
 
 ### ビュー（ページコンポーネント）
 - `src/views/ArtistListPage.vue`
-  - アーティスト一覧ページのメインコンポーネント（スケルトン）
+  - アーティスト一覧ページのメインコンポーネント
   - `useArtistList`と`useNotification`のComposablesを呼び出し
-  - テンプレートは空の`<div></div>`
-  - 次のタスク（6.8）でUnit Testを作成予定
+  - アーティスト一覧表示、新規登録、編集、削除、ページネーション機能を実装
+  - Unit Test完了（10件のテストケース、Green状態）
 
 ---
 
