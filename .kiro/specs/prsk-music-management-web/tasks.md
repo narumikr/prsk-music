@@ -239,29 +239,29 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - _Requirements: 要件13_
 
 - [ ] 6. アーティスト管理機能の実装
-  - [ ] 6.1 ArtistTable.vueのスケルトン作成
+  - [x] 6.1 ArtistTable.vueのスケルトン作成
     - propsとemitsの型定義のみ
     - テンプレートは空のdiv
     - _Requirements: 要件9_
   
-  - [ ] 6.2 ArtistTableのProperty Test作成
+  - [x] 6.2 ArtistTableのProperty Test作成
     - **Property 25: アーティストレコードの完全なフィールド表示**
     - **Property 26: アーティストレコードのアクションボタン表示**
     - テストは失敗する状態（Red）
     - **Validates: Requirements 要件9**
   
-  - [ ] 6.3 ArtistTable.vueの実装
+  - [x] 6.3 ArtistTable.vueの実装
     - アーティスト一覧テーブル表示の実装（id、artistName、unitName、content）
     - 編集・削除アクションボタンの実装
     - すべてのProperty Testがパスすることを確認（Green）
     - _Requirements: 要件9_
   
-  - [ ] 6.4 ArtistFormModal.vueのスケルトン作成
+  - [x] 6.4 ArtistFormModal.vueのスケルトン作成
     - propsとemitsの型定義のみ
     - テンプレートは空のdiv
     - _Requirements: 要件7, 要件10, 要件11_
   
-  - [ ] 6.5 ArtistFormModalのProperty Test作成
+  - [x] 6.5 ArtistFormModalのProperty Test作成
     - **Property 17: フォームフィールドのラベル表示**
     - **Property 28: アーティスト名フィールドの空文字検証**
     - **Property 29: アーティスト名の文字数検証**
@@ -271,7 +271,7 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - テストは失敗する状態（Red）
     - **Validates: Requirements 要件7, 要件10, 要件11**
   
-  - [ ] 6.6 ArtistFormModal.vueの実装
+  - [x] 6.6 ArtistFormModal.vueの実装
     - アーティスト登録・編集フォームの実装
     - フィールド: artistName（必須、1-50文字）、unitName（任意、1-25文字）、content（任意、1-20文字）
     - Zodバリデーションスキーマの実装
@@ -279,12 +279,12 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - すべてのProperty Testがパスすることを確認（Green）
     - _Requirements: 要件10, 要件11_
   
-  - [ ] 6.7 ArtistListPage.vueのスケルトン作成
+  - [x] 6.7 ArtistListPage.vueのスケルトン作成
     - テンプレートは空のdiv
     - useArtistListとuseNotificationの呼び出しのみ
     - _Requirements: 要件9, 要件10, 要件11, 要件12_
   
-  - [ ] 6.8 ArtistListPageのUnit Test作成
+  - [x] 6.8 ArtistListPageのUnit Test作成
     - アーティスト一覧ページアクセス時のテーブル表示
     - 新規登録ボタンクリック時のフォーム表示
     - 削除ボタンクリック時の確認ダイアログ表示
@@ -292,7 +292,7 @@ Vue 3、TypeScript、Tailwind CSSを使用して、プロセカ楽曲とアー�
     - テストは失敗する状態（Red）
     - _Requirements: 要件9, 要件10, 要件12_
   
-  - [ ] 6.9 ArtistListPage.vueの実装
+  - [x] 6.9 ArtistListPage.vueの実装
     - アーティスト一覧表示の実装
     - 新規登録ボタンの実装
     - ページネーションの実装

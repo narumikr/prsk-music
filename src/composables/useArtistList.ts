@@ -30,10 +30,10 @@ export function useArtistList(): UseArtistListReturn {
   const loading = ref(false)
   const error = ref<Error | null>(null)
   const pagination = ref<PaginationMeta>({
-    pageIndex: 1,
+    currentPage: 1,
     totalPages: 0,
     totalItems: 0,
-    limit: 20,
+    itemsPerPage: 20,
   })
 
   /**
@@ -45,7 +45,7 @@ export function useArtistList(): UseArtistListReturn {
     error.value = null
 
     try {
-      const response = await artistApiClient.getList(page, pagination.value.limit)
+      const response = await artistApiClient.getList(page, pagination.value.itemsPerPage)
       artists.value = response.items
       pagination.value = response.meta
     } catch (err) {
@@ -67,7 +67,7 @@ export function useArtistList(): UseArtistListReturn {
     try {
       await artistApiClient.create(data)
       // 作成後、現在のページを再取得
-      await fetchArtists(pagination.value.pageIndex)
+      await fetchArtists(pagination.value.currentPage)
     } catch (err) {
       error.value = err instanceof Error ? err : new Error('Unknown error')
       throw error.value
@@ -88,7 +88,7 @@ export function useArtistList(): UseArtistListReturn {
     try {
       await artistApiClient.update(id, data)
       // 更新後、現在のページを再取得
-      await fetchArtists(pagination.value.pageIndex)
+      await fetchArtists(pagination.value.currentPage)
     } catch (err) {
       error.value = err instanceof Error ? err : new Error('Unknown error')
       throw error.value
@@ -108,7 +108,7 @@ export function useArtistList(): UseArtistListReturn {
     try {
       await artistApiClient.delete(id)
       // 削除後、現在のページを再取得
-      await fetchArtists(pagination.value.pageIndex)
+      await fetchArtists(pagination.value.currentPage)
     } catch (err) {
       error.value = err instanceof Error ? err : new Error('Unknown error')
       throw error.value
