@@ -113,9 +113,6 @@ const handleArtistFormSubmit = async (data: ArtistFormData) => {
     showSuccess(TEXT.artistListPage.createSuccess)
     artistFormOpen.value = false
 
-    // アーティスト一覧を再取得
-    await fetchArtists(1)
-
     // 新規追加されたアーティストを特定（最後に追加されたアーティスト）
     if (artists.value.length > 0) {
       // 最後のアーティストを自動選択

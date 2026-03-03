@@ -45,8 +45,8 @@ const musicFormSchema = toTypedSchema(
     featuring: z.string().nullable(),
     youtubeLink: z
       .string()
-      .url({ message: TEXT.musicForm.youtubeLinkInvalid })
       .min(1, { message: TEXT.musicForm.youtubeLinkRequired })
+      .url({ message: TEXT.musicForm.youtubeLinkInvalid })
       .refine((val) => val.trim().length > 0, {
         message: TEXT.musicForm.youtubeLinkRequired,
       }),
@@ -292,7 +292,7 @@ onUnmounted(() => {
                 'flex-1 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition duration-150 ease-in-out',
                 errors.artistId ? 'border-red-500' : 'border-gray-200',
               ]"
-              data-testid="artistId-select"
+              data-testid="artist-select"
               :validateOnBlur="true"
               :validateOnChange="true"
               :validateOnInput="false"

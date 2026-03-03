@@ -133,7 +133,7 @@ describe('MusicListPage - Property Tests', () => {
           // Arrange - モックデータの準備
           const mockMusics = [createMockMusic(1)]
           const mockArtists = artistIds.map((id) => createMockArtist(id))
-          const editMusic = mode === 'edit' ? createMockMusic(1) : undefined
+          const _editMusic = mode === 'edit' ? createMockMusic(1) : undefined
 
           server.use(
             http.get('/api/v1/prsk-music', () => {
