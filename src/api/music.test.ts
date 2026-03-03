@@ -204,7 +204,7 @@ describe('MusicApiClient - Property Tests', () => {
               capturedLimit = url.searchParams.get('limit')
               return HttpResponse.json({
                 items: [],
-                meta: { totalItems: 0, totalPages: 1, pageIndex: page, limit },
+                meta: { totalItems: 0, totalPages: 1, currentPage: page, itemsPerPage: limit },
               })
             })
           )
