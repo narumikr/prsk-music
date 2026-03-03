@@ -19,25 +19,13 @@
 ## 🐧 作業概要 ⭐
 
 <!-- 作業内容を簡単に -->
+- 
 
 ## 🎼 追加/変更/修正内容 🎨
 
 <!-- 箇条書きでいいので、あとで見返してわかる内容を -->
 
 - 
-
-## 🎤 確認事項 🎪
-
-- [ ] branch名はどんな作業を行ったかわかる命名にしたか(e.g., feat/hello-sekai-api)
-- [ ] レビュワーを設定したか
-- [ ] AIによるレビューを実施した際に、以下の確認をしたか
-  - [ ] 指摘事項の妥当性の確認
-  - [ ] 根拠の確認・調査
-  - [ ] 指摘事項の修正
-- [ ] 機密情報(APIKey,パスワード等)をコミットしていないか
-- [ ] 不要なコメント・デバッグコードは削除したか
-- [ ] Breaking changeがないか
-- [ ] ドキュメントの更新を行ったか
 
 ## 🍜 やっていないこと 💧
 
@@ -53,11 +41,27 @@
 
 ## 🎀 レビュワーへの注意点・相談内容・懸念点 🌸
 
--
+- 
 
 ## 🎵 備考 💚 Y(_ﾟ□ﾟ_) < (あれば)
 
 <!-- 何かあれば備忘のためにも -->
 
-![PR-Foorter](https://capsule-render.vercel.app/api?type=slice&height=39&color=0:33ccba,100:33aaee&section=footer&reversal=false)
+- 
+
+### 🎤 確認事項 🎪
+
+- branch名はどんな作業を行ったかわかる命名にしたか(e.g., feat/hello-sekai-api)
+-  AIによるレビューを実施した際に、以下の確認をしたか
+   - 指摘事項の妥当性の確認
+   - 根拠の確認・調査
+   - 指摘事項の修正
+- 機密情報(APIKey,パスワード等)をコミットしていないか
+- 不要なコメント・デバッグコードは削除したか
+- Breaking changeがないか
+- 仕様の変更があった際には以下を実施したか
+  - ドキュメントのメンテナンスを行ったか
+  - テストのメンテナンスを行ったか
+
+![PR-Footer](https://capsule-render.vercel.app/api?type=slice&height=39&color=0:33ccba,100:33aaee&section=footer&reversal=false)
 <!-- prettier-ignore-end -->
