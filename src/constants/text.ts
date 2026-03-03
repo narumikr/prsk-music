@@ -189,6 +189,15 @@ export const TEXT = {
     cancel: 'キャンセル',
     close: '閉じる',
   },
+
+  // 楽曲リストページ
+  musicListPage: {
+    deleteConfirmTitle: '楽曲削除',
+    deleteConfirmMessage: 'この楽曲を削除してもよろしいですか？',
+    createSuccess: '楽曲を登録しました',
+    updateSuccess: '楽曲を更新しました',
+    deleteSuccess: '楽曲を削除しました',
+  },
 } as const
 
 export type TextKey = typeof TEXT

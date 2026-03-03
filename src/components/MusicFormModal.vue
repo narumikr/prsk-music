@@ -11,6 +11,7 @@ interface MusicFormModalProps {
   mode: 'create' | 'edit'
   initialData?: PrskMusic
   artists: Artist[]
+  newlyCreatedArtistId?: number | null
 }
 
 interface MusicFormModalEmits {
@@ -31,10 +32,13 @@ const musicFormSchema = toTypedSchema(
       .refine((val) => val.trim().length > 0, {
         message: TEXT.musicForm.titleRequired,
       }),
-    artistId: z.number().min(1, { message: TEXT.musicForm.artistRequired }),
-    musicType: z.union([z.literal(0), z.literal(1), z.literal(2)], {
-      errorMap: () => ({ message: TEXT.musicForm.musicTypeRequired }),
-    }),
+    artistId: z.coerce.number().min(1, { message: TEXT.musicForm.artistRequired }),
+    musicType: z.coerce
+      .number()
+      .refine((val) => [0, 1, 2].includes(val), {
+        message: TEXT.musicForm.musicTypeRequired,
+      })
+      .transform((val) => val as 0 | 1 | 2),
     specially: z.boolean().nullable(),
     lyricsName: z.string().nullable(),
     musicName: z.string().nullable(),
@@ -170,6 +174,16 @@ watch(
   { immediate: true }
 )
 
+// 新規作成されたアーティストIDを監視して自動選択
+watch(
+  () => props.newlyCreatedArtistId,
+  (newArtistId) => {
+    if (newArtistId !== null && newArtistId !== undefined) {
+      setFieldValue('artistId', newArtistId)
+    }
+  }
+)
+
 // コンポーネントのアンマウント時にリスナーをクリーンアップ
 onUnmounted(() => {
   window.removeEventListener('keydown', handleEscapeKey)
@@ -278,7 +292,7 @@ onUnmounted(() => {
                 'flex-1 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition duration-150 ease-in-out',
                 errors.artistId ? 'border-red-500' : 'border-gray-200',
               ]"
-              data-testid="artist-select"
+              data-testid="artistId-select"
               :validateOnBlur="true"
               :validateOnChange="true"
               :validateOnInput="false"
@@ -316,20 +330,20 @@ onUnmounted(() => {
             {{ TEXT.musicForm.musicType }}
             <span class="text-red-500">*</span>
           </label>
-          <Field
-            id="musicType"
-            name="musicType"
-            as="select"
-            :class="[
-              'w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition duration-150 ease-in-out',
-              errors.musicType ? 'border-red-500' : 'border-gray-200',
-            ]"
-            data-testid="musicType-select"
-            :validateOnBlur="true"
-            :validateOnChange="true"
-            :validateOnInput="false"
-            :validateOnModelUpdate="true"
-          >
+            <Field
+              id="musicType"
+              name="musicType"
+              as="select"
+              :class="[
+                'w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition duration-150 ease-in-out',
+                errors.musicType ? 'border-red-500' : 'border-gray-200',
+              ]"
+              data-testid="musicType-select"
+              :validateOnBlur="true"
+              :validateOnChange="true"
+              :validateOnInput="false"
+              :validateOnModelUpdate="true"
+            >
             <option value="0">{{ TEXT.musicType.original }}</option>
             <option value="1">{{ TEXT.musicType.mv3d }}</option>
             <option value="2">{{ TEXT.musicType.mv2d }}</option>
