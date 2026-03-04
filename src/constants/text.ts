@@ -141,6 +141,63 @@ export const TEXT = {
     updateSuccess: 'アーティストを更新しました',
     deleteSuccess: 'アーティストを削除しました',
   },
+
+  // 楽曲テーブル
+  musicTable: {
+    id: 'ID',
+    title: 'タイトル',
+    artistName: 'アーティスト名',
+    unitName: 'ユニット名',
+    content: 'コンテンツ',
+    musicType: '楽曲タイプ',
+    specially: 'スペシャル',
+    lyricsName: '作詞',
+    musicName: '作曲',
+    featuring: 'フィーチャリング',
+    youtubeLink: 'YouTube',
+    actions: 'アクション',
+    noData: '楽曲が登録されていません',
+    watchOnYoutube: 'YouTubeで見る',
+  },
+
+  // 楽曲フォーム
+  musicForm: {
+    createTitle: '楽曲新規登録',
+    editTitle: '楽曲編集',
+    title: 'タイトル',
+    titlePlaceholder: '楽曲タイトルを入力',
+    titleRequired: 'タイトルは必須です',
+    artist: 'アーティスト',
+    artistPlaceholder: 'アーティストを選択',
+    artistRequired: 'アーティストを選択してください',
+    createArtist: '新規追加',
+    musicType: '楽曲タイプ',
+    musicTypePlaceholder: '楽曲タイプを選択',
+    musicTypeRequired: '楽曲タイプを選択してください',
+    specially: 'スペシャル',
+    lyricsName: '作詞',
+    lyricsNamePlaceholder: '作詞者名を入力（任意）',
+    musicName: '作曲',
+    musicNamePlaceholder: '作曲者名を入力（任意）',
+    featuring: 'フィーチャリング',
+    featuringPlaceholder: 'フィーチャリングアーティストを入力（任意）',
+    youtubeLink: 'YouTubeリンク',
+    youtubeLinkPlaceholder: 'YouTube URLを入力',
+    youtubeLinkRequired: 'YouTube URLは必須です',
+    youtubeLinkInvalid: '有効なURLを入力してください',
+    submit: '保存',
+    cancel: 'キャンセル',
+    close: '閉じる',
+  },
+
+  // 楽曲リストページ
+  musicListPage: {
+    deleteConfirmTitle: '楽曲削除',
+    deleteConfirmMessage: 'この楽曲を削除してもよろしいですか？',
+    createSuccess: '楽曲を登録しました',
+    updateSuccess: '楽曲を更新しました',
+    deleteSuccess: '楽曲を削除しました',
+  },
 } as const
 
 export type TextKey = typeof TEXT

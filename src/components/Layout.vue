@@ -12,7 +12,7 @@ const currentPath = computed(() => route.path)
     <header data-testid="layout-header" class="bg-white">
       <Navigation :current-path="currentPath" />
     </header>
-    <main class="mx-auto max-w-screen-lg px-4 py-6">
+    <main class="mx-auto max-w-5xl px-4 py-6">
       <div data-testid="layout-content">
         <RouterView />
       </div>

@@ -16,7 +16,7 @@ const isActive = (path: string) => {
 
 <template>
   <nav data-testid="navigation" class="border-b border-gray-200 bg-white">
-    <div class="mx-auto max-w-screen-lg px-4">
+    <div class="mx-auto max-w-5xl px-4">
       <div class="flex space-x-8">
         <!-- 楽曲管理リンク -->
         <RouterLink
