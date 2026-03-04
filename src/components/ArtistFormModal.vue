@@ -160,7 +160,7 @@ onUnmounted(() => {
       </div>
 
       <!-- フォーム -->
-      <form @submit.prevent="onSubmit" class="px-6 py-4">
+      <form @submit.prevent="onSubmit" class="px-6 py-4" data-testid="artist-form">
         <!-- アーティスト名フィールド -->
         <div class="mb-4">
           <label for="artistName" class="block text-sm font-medium text-gray-700 mb-1" data-testid="artistName-label">

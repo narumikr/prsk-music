@@ -12,7 +12,7 @@ export interface UseArtistListReturn {
   error: Ref<Error | null>
   pagination: Ref<PaginationMeta>
   fetchArtists: (page: number) => Promise<void>
-  createArtist: (data: ArtistFormData) => Promise<void>
+  createArtist: (data: ArtistFormData) => Promise<Artist>
   updateArtist: (id: number, data: ArtistFormData) => Promise<void>
   deleteArtist: (id: number) => Promise<void>
 }
@@ -60,14 +60,15 @@ export function useArtistList(): UseArtistListReturn {
    * アーティストを作成
    * @param data アーティストフォームデータ
    */
-  const createArtist = async (data: ArtistFormData): Promise<void> => {
+  const createArtist = async (data: ArtistFormData): Promise<Artist> => {
     loading.value = true
     error.value = null
 
     try {
-      await artistApiClient.create(data)
+      const created = await artistApiClient.create(data)
       // 作成後、現在のページを再取得
       await fetchArtists(pagination.value.currentPage)
+      return created
     } catch (err) {
       error.value = err instanceof Error ? err : new Error('Unknown error')
       throw error.value
