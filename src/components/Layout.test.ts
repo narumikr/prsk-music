@@ -208,6 +208,6 @@ describe('Layout - Unit Tests', () => {
 
     // コンテナに最大幅が設定されていることを確認
     const main = wrapper.find('main')
-    expect(main.classes()).toContain('max-w-screen-lg')
+    expect(main.classes()).toContain('max-w-5xl')
   })
 })

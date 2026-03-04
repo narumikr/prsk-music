@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
 import fc from 'fast-check'
 import { HttpResponse, http } from 'msw'
 import { setupServer } from 'msw/node'
@@ -133,8 +133,6 @@ describe('MusicListPage - Property Tests', () => {
           // Arrange - モックデータの準備
           const mockMusics = [createMockMusic(1)]
           const mockArtists = artistIds.map((id) => createMockArtist(id))
-          const _editMusic = mode === 'edit' ? createMockMusic(1) : undefined
-
           server.use(
             http.get('/api/v1/prsk-music', () => {
               return HttpResponse.json(createMockMusicResponse(mockMusics))
@@ -146,7 +144,7 @@ describe('MusicListPage - Property Tests', () => {
 
           const wrapper = mount(MusicListPage)
           await wrapper.vm.$nextTick()
-          await new Promise((resolve) => setTimeout(resolve, 100))
+          await flushPromises()
 
           // Act - 楽曲フォームを開く
           if (mode === 'create') {
@@ -221,7 +219,7 @@ describe('MusicListPage - Property Tests', () => {
 
           const wrapper = mount(MusicListPage)
           await wrapper.vm.$nextTick()
-          await new Promise((resolve) => setTimeout(resolve, 100))
+          await flushPromises()
 
           // 楽曲新規登録ボタンをクリック
           const createMusicButton = wrapper.find('[data-testid="create-music-button"]')
@@ -249,16 +247,20 @@ describe('MusicListPage - Property Tests', () => {
 
           // VeeValidateのバリデーションが完了するまで待機
           await wrapper.vm.$nextTick()
-          await new Promise((resolve) => setTimeout(resolve, 50))
+          await flushPromises()
 
           // アーティストフォームを送信
           const artistForm = wrapper.find('[data-testid="artist-form"]')
           await artistForm.trigger('submit')
           await wrapper.vm.$nextTick()
+          // VeeValidate の非同期バリデーション → MSW POST → fetchArtists → reactive watch →
+          // setFieldValue のマルチステップ非同期チェーンが全て完了するまで待機
+          // NOTE: flushPromises() は VeeValidate の内部バリデーション Promise を挟む
+          // form submit では十分でないため、setTimeout で待機する
           await new Promise((resolve) => setTimeout(resolve, 100))
 
           // Assert - 楽曲フォームのアーティスト選択で新規追加されたアーティストが自動選択されている
-          const artistSelect = wrapper.find('[data-testid="artistId-select"]')
+          const artistSelect = wrapper.find('[data-testid="artist-select"]')
           expect(artistSelect.exists()).toBe(true)
           expect((artistSelect.element as HTMLSelectElement).value).toBe(newArtistId.toString())
 

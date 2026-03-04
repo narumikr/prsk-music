@@ -1,7 +1,6 @@
 import { mount } from '@vue/test-utils'
 import fc from 'fast-check'
 import { describe, expect, it } from 'vitest'
-import { TEXT } from '@/constants/text'
 import type { Artist, PrskMusic } from '@/types'
 import MusicFormModal from './MusicFormModal.vue'
 

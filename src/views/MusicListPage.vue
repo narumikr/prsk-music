@@ -109,16 +109,12 @@ const handleCreateArtist = () => {
 // アーティストフォーム送信
 const handleArtistFormSubmit = async (data: ArtistFormData) => {
   try {
-    await createArtist(data)
+    const createdArtist = await createArtist(data)
     showSuccess(TEXT.artistListPage.createSuccess)
     artistFormOpen.value = false
 
-    // 新規追加されたアーティストを特定（最後に追加されたアーティスト）
-    if (artists.value.length > 0) {
-      // 最後のアーティストを自動選択
-      const lastArtist = artists.value[artists.value.length - 1]
-      newlyCreatedArtistId.value = lastArtist.id
-    }
+    // 作成APIの戻り値から新規追加アーティストのIDを確実に特定する
+    newlyCreatedArtistId.value = createdArtist.id
   } catch (error: unknown) {
     const errorMessage =
       error instanceof ApiErrorResponse ? getApiErrorMessage(error) : TEXT.apiError.default
@@ -175,7 +171,7 @@ const handleDeleteCancel = () => {
     <MusicTable
       :data="musics"
       :loading="loading"
-      data-testid="music-table"
+      data-testid="music-table-container"
       @edit="handleEdit"
       @delete="handleDelete"
     />

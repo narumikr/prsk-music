@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
 import { HttpResponse, http } from 'msw'
 import { setupServer } from 'msw/node'
 import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
@@ -107,7 +107,7 @@ describe('MusicListPage', () => {
     // Act
     const wrapper = mount(MusicListPage)
     await wrapper.vm.$nextTick()
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await flushPromises()
 
     // Assert
     expect(wrapper.find('[data-testid="music-table"]').exists()).toBe(true)
@@ -128,7 +128,7 @@ describe('MusicListPage', () => {
 
     const wrapper = mount(MusicListPage)
     await wrapper.vm.$nextTick()
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await flushPromises()
 
     // Act
     const createButton = wrapper.find('[data-testid="create-music-button"]')
@@ -154,7 +154,7 @@ describe('MusicListPage', () => {
 
     const wrapper = mount(MusicListPage)
     await wrapper.vm.$nextTick()
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await flushPromises()
 
     // Act
     const deleteButton = wrapper.find('[data-testid="delete-button-1"]')
@@ -187,7 +187,7 @@ describe('MusicListPage', () => {
 
     const wrapper = mount(MusicListPage)
     await wrapper.vm.$nextTick()
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await flushPromises()
 
     // 楽曲新規登録ボタンをクリック
     const createMusicButton = wrapper.find('[data-testid="create-music-button"]')
@@ -205,16 +205,20 @@ describe('MusicListPage', () => {
 
     // VeeValidateのバリデーションが完了するまで待機
     await wrapper.vm.$nextTick()
-    await new Promise((resolve) => setTimeout(resolve, 50))
+    await flushPromises()
 
     // アーティストフォームを送信
     const artistForm = wrapper.find('[data-testid="artist-form"]')
     await artistForm.trigger('submit')
     await wrapper.vm.$nextTick()
+    // VeeValidate の非同期バリデーション → MSW POST → fetchArtists → reactive watch →
+    // setFieldValue のマルチステップ非同期チェーンが全て完了するまで待機
+    // NOTE: flushPromises() は VeeValidate の内部バリデーション Promise を挟む
+    // form submit では十分でないため、setTimeout で待機する
     await new Promise((resolve) => setTimeout(resolve, 100))
 
     // Assert - 楽曲フォームのアーティスト選択で新規追加されたアーティストが選択されている
-    const artistSelect = wrapper.find('[data-testid="artistId-select"]')
+    const artistSelect = wrapper.find('[data-testid="artist-select"]')
     expect(artistSelect.element.value).toBe('2')
   })
 
@@ -239,7 +243,7 @@ describe('MusicListPage', () => {
 
     const wrapper = mount(MusicListPage)
     await wrapper.vm.$nextTick()
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await flushPromises()
 
     // Act
     const deleteButton = wrapper.find('[data-testid="delete-button-1"]')
@@ -249,7 +253,7 @@ describe('MusicListPage', () => {
     const confirmButton = wrapper.find('[data-testid="confirm-button"]')
     await confirmButton.trigger('click')
     await wrapper.vm.$nextTick()
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await flushPromises()
 
     // Assert
     expect(deleteRequestSent).toBe(true)
@@ -270,7 +274,7 @@ describe('MusicListPage', () => {
 
     const wrapper = mount(MusicListPage)
     await wrapper.vm.$nextTick()
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await flushPromises()
 
     // Act
     const editButton = wrapper.find('[data-testid="edit-button-1"]')
@@ -298,7 +302,7 @@ describe('MusicListPage', () => {
     // Act
     const wrapper = mount(MusicListPage)
     await wrapper.vm.$nextTick()
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await flushPromises()
 
     // Assert
     expect(wrapper.find('[data-testid="pagination"]').exists()).toBe(true)
@@ -340,7 +344,7 @@ describe('MusicListPage', () => {
 
     const wrapper = mount(MusicListPage)
     await wrapper.vm.$nextTick()
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await flushPromises()
 
     // 新規登録ボタンをクリックしてフォームを開く
     const createButton = wrapper.find('[data-testid="create-music-button"]')
@@ -371,7 +375,7 @@ describe('MusicListPage', () => {
 
     const wrapper = mount(MusicListPage)
     await wrapper.vm.$nextTick()
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await flushPromises()
 
     // 削除ボタンをクリックして確認ダイアログを開く
     const deleteButton = wrapper.find('[data-testid="delete-button-1"]')
@@ -410,7 +414,7 @@ describe('MusicListPage', () => {
 
     const wrapper = mount(MusicListPage)
     await wrapper.vm.$nextTick()
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await flushPromises()
 
     // 新規登録ボタンをクリック
     const createButton = wrapper.find('[data-testid="create-music-button"]')
@@ -424,7 +428,7 @@ describe('MusicListPage', () => {
     const titleInput = wrapper.find('[data-testid="title-input"]')
     await titleInput.setValue('テスト楽曲')
 
-    const artistSelect = wrapper.find('[data-testid="artistId-select"]')
+    const artistSelect = wrapper.find('[data-testid="artist-select"]')
     await artistSelect.setValue('1')
 
     const musicTypeSelect = wrapper.find('[data-testid="musicType-select"]')
@@ -435,12 +439,16 @@ describe('MusicListPage', () => {
 
     // VeeValidateのバリデーションが完了するまで待機
     await wrapper.vm.$nextTick()
-    await new Promise((resolve) => setTimeout(resolve, 50))
+    await flushPromises()
 
     // Act - フォームを直接submit
     const form = wrapper.find('form')
     await form.trigger('submit')
     await wrapper.vm.$nextTick()
+    // VeeValidate の非同期バリデーション → MSW POST → fetchMusics の
+    // マルチステップ非同期チェーンが全て完了するまで待機
+    // NOTE: flushPromises() は VeeValidate の内部バリデーション Promise を挟む
+    // form submit では十分でないため、setTimeout で待機する
     await new Promise((resolve) => setTimeout(resolve, 100))
 
     // Assert - POSTリクエストが送信され、一覧が再取得される
