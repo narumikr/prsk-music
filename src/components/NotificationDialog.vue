@@ -81,7 +81,6 @@ const bgColor = computed(() => {
       return 'bg-gray-50'
   }
 })
-
 </script>
 
 <template>
