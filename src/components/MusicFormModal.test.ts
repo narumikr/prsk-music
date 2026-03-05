@@ -335,7 +335,7 @@ describe('MusicFormModal - Property Tests', () => {
           title: fc.constantFrom('', '   '), // 空文字または空白のみ
           youtubeLink: fc.constantFrom('invalid-url', 'not a url', 'http://'), // 無効なURL
         }),
-        (invalidData) => {
+        () => {
           const artists = [createMockArtist()]
           const wrapper = mount(MusicFormModal, {
             props: {
@@ -505,7 +505,7 @@ describe('MusicFormModal - Property Tests', () => {
     fc.assert(
       fc.property(
         fc.string().filter((s) => s.trim() === ''), // 空白のみの文字列
-        (emptyTitle) => {
+        () => {
           const artists = [createMockArtist()]
           const wrapper = mount(MusicFormModal, {
             props: {
@@ -545,7 +545,7 @@ describe('MusicFormModal - Property Tests', () => {
             return true // 無効なURL
           }
         }),
-        (invalidUrl) => {
+        () => {
           const artists = [createMockArtist()]
           const wrapper = mount(MusicFormModal, {
             props: {
@@ -653,7 +653,7 @@ describe('MusicFormModal - Property Tests', () => {
           title: fc.constantFrom('', '   '), // 空文字または空白のみ
           youtubeLink: fc.constantFrom('invalid-url', 'not a url'), // 無効なURL
         }),
-        (invalidData) => {
+        () => {
           const artists = [createMockArtist()]
           const wrapper = mount(MusicFormModal, {
             props: {
@@ -731,7 +731,7 @@ describe('MusicFormModal - Property Tests', () => {
           musicType: fc.constantFrom(0, 1, 2),
           youtubeLink: fc.constantFrom('invalid-url', ''), // 無効なURLまたは空文字
         }),
-        (invalidData) => {
+        () => {
           const artists = [createMockArtist()]
           const wrapper = mount(MusicFormModal, {
             props: {
