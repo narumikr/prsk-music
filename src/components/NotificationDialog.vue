@@ -28,24 +28,16 @@ const emit = defineEmits<{
 }>()
 
 /**
- * タイマーID
- */
-let autoCloseTimer: ReturnType<typeof setTimeout> | null = null
-
-/**
- * visibleプロパティの変更を監視し、自動クローズタイマーを管理
+ * visible/message/typeの変更を監視し、自動クローズタイマーを管理
+ * onCleanupでタイマーをクリアすることで、visible=false時やmessage更新時・unmount時に
+ * 不要なタイマーが残らないようにする
  */
 watch(
-  () => props.visible,
-  (newValue) => {
-    if (newValue) {
-      if (autoCloseTimer) {
-        clearTimeout(autoCloseTimer)
-      }
-      autoCloseTimer = setTimeout(() => {
-        emit('close')
-      }, 3000)
-    }
+  () => [props.visible, props.message, props.type] as const,
+  ([visible], _, onCleanup) => {
+    if (!visible) return
+    const timer = setTimeout(() => emit('close'), 3000)
+    onCleanup(() => clearTimeout(timer))
   },
   { immediate: true }
 )
@@ -65,6 +57,12 @@ const borderColor = computed(() => {
       return 'border-gray-200'
   }
 })
+
+/**
+ * タイプ別のARIA role
+ * error は assertive な通知 (role="alert")、それ以外は polite な通知 (role="status")
+ */
+const ariaRole = computed(() => (props.type === 'error' ? 'alert' : 'status'))
 
 /**
  * タイプ別の背景カラー
@@ -95,6 +93,9 @@ const bgColor = computed(() => {
     <div
       v-if="props.visible"
       data-testid="notification-dialog"
+      :role="ariaRole"
+      :aria-live="ariaRole === 'alert' ? 'assertive' : 'polite'"
+      aria-atomic="true"
       :class="[
         'fixed top-4 right-4 z-50',
         'max-w-md w-full',
