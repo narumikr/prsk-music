@@ -22,16 +22,16 @@ test.describe('Playwright設定確認', () => {
     await page.goto('/musics')
     await waitForPageLoad(page)
 
-    // ページタイトルが表示されることを確認
-    await expect(page.getByText('楽曲管理')).toBeVisible()
+    // ページタイトルが表示されることを確認（h1タグで特定）
+    await expect(page.getByRole('heading', { name: '楽曲管理' })).toBeVisible()
   })
 
   test('アーティスト管理ページが表示される', async ({ page }) => {
     await page.goto('/artists')
     await waitForPageLoad(page)
 
-    // ページタイトルが表示されることを確認
-    await expect(page.getByText('アーティスト管理')).toBeVisible()
+    // ページタイトルが表示されることを確認（h1タグで特定）
+    await expect(page.getByRole('heading', { name: 'アーティスト管理' })).toBeVisible()
   })
 
   test('ナビゲーションメニューが表示される', async ({ page }) => {

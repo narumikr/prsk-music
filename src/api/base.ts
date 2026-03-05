@@ -7,6 +7,7 @@ import { TEXT } from '@/constants/text'
 export class BaseApiClient {
   private baseUrl = '/api/v1'
   private authToken: string | null = null
+  private apiKey: string | null = null
 
   /**
    * 認証トークンの設定（将来の認証対応）
@@ -16,11 +17,23 @@ export class BaseApiClient {
   }
 
   /**
+   * APIキーの設定
+   */
+  setApiKey(key: string | null): void {
+    this.apiKey = key
+  }
+
+  /**
    * 共通のHTTPリクエストメソッド
    */
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
+    }
+
+    // APIキーがあれば追加
+    if (this.apiKey) {
+      headers['app.api-key'] = this.apiKey
     }
 
     if (this.authToken) {
@@ -152,3 +165,9 @@ export function getApiErrorMessage(error: ApiErrorResponse): string {
  * シングルトンインスタンス
  */
 export const apiClient = new BaseApiClient()
+
+// 環境変数からAPIキーを設定
+const apiKey = import.meta.env.VITE_API_KEY
+if (apiKey) {
+  apiClient.setApiKey(apiKey)
+}

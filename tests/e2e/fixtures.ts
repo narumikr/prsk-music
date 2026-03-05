@@ -7,9 +7,7 @@ import { test as base } from '@playwright/test'
  */
 
 // カスタムフィクスチャの型定義
-type CustomFixtures = {
-  // 将来的に追加するカスタムフィクスチャ
-}
+type CustomFixtures = Record<string, never>
 
 // カスタムフィクスチャを含むtestオブジェクトをエクスポート
 export const test = base.extend<CustomFixtures>({
