@@ -9,8 +9,8 @@ export default defineConfig({
   // テストディレクトリ
   testDir: './tests/e2e',
 
-  // 並列実行を有効化
-  fullyParallel: true,
+  // テストファイル間のみ並列実行を許可（DB状態の競合を防ぐため）
+  fullyParallel: false,
 
   // CI環境では.only()を禁止
   forbidOnly: !!process.env.CI,

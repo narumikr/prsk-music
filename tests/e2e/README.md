@@ -35,7 +35,7 @@ pnpm exec playwright test --ui
 ### 特定のテストファイルのみ実行
 
 ```bash
-pnpm exec playwright test tests/e2e/music.spec.ts
+pnpm exec playwright test tests/e2e/music-management.spec.ts
 ```
 
 ### デバッグモードで実行

@@ -165,9 +165,3 @@ export function getApiErrorMessage(error: ApiErrorResponse): string {
  * シングルトンインスタンス
  */
 export const apiClient = new BaseApiClient()
-
-// 環境変数からAPIキーを設定
-const apiKey = import.meta.env.VITE_API_KEY
-if (apiKey) {
-  apiClient.setApiKey(apiKey)
-}
