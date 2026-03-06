@@ -33,7 +33,7 @@ export class BaseApiClient {
 
     // APIキーがあれば追加
     if (this.apiKey) {
-      headers['app.api-key'] = this.apiKey
+      headers['x-api-key'] = this.apiKey
     }
 
     if (this.authToken) {
