@@ -248,9 +248,13 @@ describe('MusicTable Property Tests', () => {
           featuring: fc.option(fc.string({ minLength: 1, maxLength: 50 }), { nil: null }),
           youtubeLink: fc.webUrl(),
           auditInfo: fc.record({
-            createdAt: fc.date().map((d) => d.toISOString()),
+            createdAt: fc
+              .integer({ min: 1577836800000, max: 1924905600000 }) // 2020-01-01 to 2030-12-31 in milliseconds
+              .map((timestamp) => new Date(timestamp).toISOString()),
             createdBy: fc.string({ minLength: 1, maxLength: 50 }),
-            updatedAt: fc.date().map((d) => d.toISOString()),
+            updatedAt: fc
+              .integer({ min: 1577836800000, max: 1924905600000 }) // 2020-01-01 to 2030-12-31 in milliseconds
+              .map((timestamp) => new Date(timestamp).toISOString()),
             updatedBy: fc.string({ minLength: 1, maxLength: 50 }),
           }),
         }),
