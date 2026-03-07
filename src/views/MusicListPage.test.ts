@@ -219,7 +219,7 @@ describe('MusicListPage', () => {
 
     // Assert - 楽曲フォームのアーティスト選択で新規追加されたアーティストが選択されている
     const artistSelect = wrapper.find('[data-testid="artist-select"]')
-    expect(artistSelect.element.value).toBe('2')
+    expect((artistSelect.element as HTMLSelectElement).value).toBe('2')
   })
 
   it('削除を確認したときにDELETEリクエストが送信される', async () => {
