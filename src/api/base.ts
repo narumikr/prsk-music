@@ -5,7 +5,7 @@ import { TEXT } from '@/constants/text'
  * 共通のHTTPリクエストメソッドを提供するAPIクライアント
  */
 export class BaseApiClient {
-  private baseUrl = '/api/v1'
+  private baseUrl = import.meta.env.VITE_API_BASE_URL || '/api/v1'
   private authToken: string | null = null
   private apiKey: string | null = null
 
@@ -40,7 +40,7 @@ export class BaseApiClient {
       headers.Authorization = `Bearer ${this.authToken}`
     }
 
-    const response = await fetch(`${this.baseUrl}${endpoint}`, {
+    const response = await fetch(`${this.baseUrl}/api/v1${endpoint}`, {
       ...options,
       headers: {
         ...headers,
