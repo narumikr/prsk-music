@@ -4,6 +4,9 @@ import { describe, expect, it } from 'vitest'
 import type { MusicType, PrskMusic } from '@/types'
 import MusicTable from './MusicTable.vue'
 
+const MIN_TIMESTAMP = 1577836800000
+const MAX_TIMESTAMP = 1924905600000
+
 // ============================================================================
 // Test Helper Functions
 // ============================================================================
@@ -248,9 +251,13 @@ describe('MusicTable Property Tests', () => {
           featuring: fc.option(fc.string({ minLength: 1, maxLength: 50 }), { nil: null }),
           youtubeLink: fc.webUrl(),
           auditInfo: fc.record({
-            createdAt: fc.date().map((d) => d.toISOString()),
+            createdAt: fc
+              .integer({ min: MIN_TIMESTAMP, max: MAX_TIMESTAMP }) // 2020-01-01 to 2030-12-31 in milliseconds
+              .map((timestamp) => new Date(timestamp).toISOString()),
             createdBy: fc.string({ minLength: 1, maxLength: 50 }),
-            updatedAt: fc.date().map((d) => d.toISOString()),
+            updatedAt: fc
+              .integer({ min: MIN_TIMESTAMP, max: MAX_TIMESTAMP }) // 2020-01-01 to 2030-12-31 in milliseconds
+              .map((timestamp) => new Date(timestamp).toISOString()),
             updatedBy: fc.string({ minLength: 1, maxLength: 50 }),
           }),
         }),
