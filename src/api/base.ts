@@ -5,7 +5,7 @@ import { TEXT } from '@/constants/text'
  * 共通のHTTPリクエストメソッドを提供するAPIクライアント
  */
 export class BaseApiClient {
-  private baseUrl = import.meta.env.VITE_API_BASE_URL || '/api/v1'
+  private baseUrl = import.meta.env.VITE_API_BASE_URL || ''
   private authToken: string | null = null
   private apiKey: string | null = null
 
