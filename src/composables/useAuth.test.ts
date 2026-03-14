@@ -151,7 +151,9 @@ describe('useAuth', () => {
       vi.stubEnv('VITE_AUTH_TOKEN', '')
 
       const { signIn, error, isAuthenticated } = useAuth()
-      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {
+        // noop
+      })
 
       await signIn('any-password')
 
