@@ -15,8 +15,10 @@
       },
       "disabled": true,
       "autoApprove": [
-        "issue_read"
-      ]
+        "issue_read",
+        "issue_write"
+      ],
+      "disabledTools": []
     }
   }
 }
