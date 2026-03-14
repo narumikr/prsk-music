@@ -28,7 +28,7 @@ export interface UseAuthReturn {
  * Requirements: 2.1, 2.2, 3.1, 3.2, 3.3, 4.2, 6.1, 6.2
  */
 export function useAuth(): UseAuthReturn {
-  const AUTH_TOKEN = import.meta.env.VITE_AUTH_TOKEN as string | undefined
+  const AUTH_TOKEN = import.meta.env.VITE_AUTH_TOKEN || undefined
 
   /**
    * localStorageの認証トークンと環境変数のトークンを比較して認証状態を確認する
@@ -60,6 +60,8 @@ export function useAuth(): UseAuthReturn {
         localStorage.setItem(AUTH_STORAGE_KEY, password)
         isAuthenticated.value = true
       } else {
+        localStorage.removeItem(AUTH_STORAGE_KEY)
+        isAuthenticated.value = false
         error.value = TEXT.auth.authFailed
       }
     } finally {

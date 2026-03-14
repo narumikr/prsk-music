@@ -1,4 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { TEXT } from '@/constants/text'
 import { useAuth } from './useAuth'
 
 const TEST_TOKEN = 'test-secret-token-12345'
@@ -33,7 +34,7 @@ describe('useAuth', () => {
       await signIn('wrong-password')
 
       expect(isAuthenticated.value).toBe(false)
-      expect(error.value).toBe('認証に失敗しました')
+      expect(error.value).toBe(TEXT.auth.authFailed)
       expect(localStorage.getItem(AUTH_STORAGE_KEY)).toBeNull()
     })
 
@@ -43,7 +44,7 @@ describe('useAuth', () => {
       await signIn('')
 
       expect(isAuthenticated.value).toBe(false)
-      expect(error.value).toBe('認証に失敗しました')
+      expect(error.value).toBe(TEXT.auth.authFailed)
     })
 
     it('signIn完了後にisLoadingがfalseになる', async () => {
@@ -58,7 +59,7 @@ describe('useAuth', () => {
       const { signIn, error } = useAuth()
 
       await signIn('wrong-password')
-      expect(error.value).toBe('認証に失敗しました')
+      expect(error.value).toBe(TEXT.auth.authFailed)
 
       await signIn(TEST_TOKEN)
       expect(error.value).toBeNull()
@@ -92,7 +93,7 @@ describe('useAuth', () => {
       const { signIn, signOut, error } = useAuth()
 
       await signIn('wrong-password')
-      expect(error.value).toBe('認証に失敗しました')
+      expect(error.value).toBe(TEXT.auth.authFailed)
 
       signOut()
 
@@ -158,7 +159,7 @@ describe('useAuth', () => {
       await signIn('any-password')
 
       expect(isAuthenticated.value).toBe(false)
-      expect(error.value).toBe('認証に失敗しました')
+      expect(error.value).toBe(TEXT.auth.authFailed)
       expect(consoleSpy).toHaveBeenCalledWith('VITE_AUTH_TOKEN environment variable is not set')
 
       consoleSpy.mockRestore()

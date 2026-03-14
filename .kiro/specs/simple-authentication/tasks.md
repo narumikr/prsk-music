@@ -11,7 +11,7 @@
   - サインインページ、フォーム、エラーメッセージのテキストを定義
   - _Requirements: 8.3, 8.5_
 
-- [-] 2. useAuth Composableの実装
+- [x] 2. useAuth Composableの実装
   - [x] 2.1 useAuth Composableの基本実装
     - `src/composables/useAuth.ts`を作成
     - 環境変数から認証トークンを取得する機能
