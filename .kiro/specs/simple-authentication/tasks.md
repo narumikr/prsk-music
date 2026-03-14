@@ -39,8 +39,8 @@
     - **Property 5: サインアウト時のセッション削除**
     - **Validates: Requirements 4.2**
 
-- [ ] 3. SignInFormコンポーネントの実装
-  - [ ] 3.1 SignInFormコンポーネントの基本実装
+- [x] 3. SignInFormコンポーネントの実装
+  - [x] 3.1 SignInFormコンポーネントの基本実装
     - `src/components/SignInForm.vue`を作成
     - パスワード入力フィールド（type="password"）
     - サインインボタン
@@ -50,7 +50,7 @@
     - UIガイドラインに準拠したスタイリング
     - _Requirements: 1.2, 1.3, 2.5, 7.1, 8.1, 8.2, 8.3, 8.4, 8.5_
   
-  - [ ]* 3.2 SignInFormコンポーネントの単体テスト
+  - [x] 3.2 SignInFormコンポーネントの単体テスト
     - `src/components/SignInForm.test.ts`を作成
     - パスワード入力フィールドの存在確認
     - サインインボタンの存在確認
@@ -61,8 +61,8 @@
     - エラーメッセージの表示
     - _Requirements: 1.2, 1.3, 2.5, 7.1, 8.3, 8.4, 8.5_
 
-- [ ] 4. SignInPageの実装
-  - [ ] 4.1 SignInPageコンポーネントの基本実装
+- [x] 4. SignInPageの実装
+  - [x] 4.1 SignInPageコンポーネントの基本実装
     - `src/views/SignInPage.vue`を作成
     - SignInFormコンポーネントの配置
     - useAuth Composableの使用
@@ -71,7 +71,7 @@
     - レスポンシブレイアウト
     - _Requirements: 1.1, 1.4, 1.5, 2.3, 2.4_
   
-  - [ ]* 4.2 SignInPageコンポーネントの単体テスト
+  - [x] 4.2 SignInPageコンポーネントの単体テスト
     - `src/views/SignInPage.test.ts`を作成
     - SignInFormコンポーネントのレンダリング
     - 認証成功時のリダイレクト処理
