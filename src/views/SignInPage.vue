@@ -12,11 +12,15 @@ const handleSubmit = async (password: string) => {
   await signIn(password)
 }
 
-watch(isAuthenticated, (authenticated) => {
-  if (authenticated) {
-    router.push('/musics')
-  }
-}, { immediate: true })
+watch(
+  isAuthenticated,
+  (authenticated) => {
+    if (authenticated) {
+      router.push('/musics')
+    }
+  },
+  { immediate: true }
+)
 </script>
 
 <template>
