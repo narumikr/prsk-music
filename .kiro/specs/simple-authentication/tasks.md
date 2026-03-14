@@ -6,13 +6,13 @@
 
 ## タスク
 
-- [ ] 1. テキスト定数の追加
+- [x] 1. テキスト定数の追加
   - `src/constants/text.ts`に認証関連のテキストを追加
   - サインインページ、フォーム、エラーメッセージのテキストを定義
   - _Requirements: 8.3, 8.5_
 
-- [ ] 2. useAuth Composableの実装
-  - [ ] 2.1 useAuth Composableの基本実装
+- [-] 2. useAuth Composableの実装
+  - [x] 2.1 useAuth Composableの基本実装
     - `src/composables/useAuth.ts`を作成
     - 環境変数から認証トークンを取得する機能
     - localStorageへの認証トークンの保存・削除機能
@@ -20,7 +20,7 @@
     - signIn, signOut, checkAuthメソッドの実装
     - _Requirements: 2.1, 2.2, 3.1, 3.2, 3.3, 4.2, 6.1, 6.2_
   
-  - [ ]* 2.2 useAuth Composableの単体テスト
+  - [x] 2.2 useAuth Composableの単体テスト
     - `src/composables/useAuth.test.ts`を作成
     - サインイン成功・失敗のテスト
     - サインアウトのテスト
@@ -28,7 +28,7 @@
     - 環境変数未設定時のエラーハンドリングテスト
     - _Requirements: 2.1, 2.2, 2.4, 2.5, 4.2, 6.2_
   
-  - [ ]* 2.3 useAuth Composableのプロパティテスト
+  - [x] 2.3 useAuth Composableのプロパティテスト
     - `src/composables/useAuth.property.test.ts`を作成
     - **Property 2: 認証トークン比較の正確性**
     - **Validates: Requirements 2.1**

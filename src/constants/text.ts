@@ -190,6 +190,16 @@ export const TEXT = {
     close: '閉じる',
   },
 
+  // 認証
+  auth: {
+    signInTitle: 'サインイン',
+    passwordLabel: 'パスワード',
+    passwordPlaceholder: 'パスワードを入力',
+    signInButton: 'サインイン',
+    signOutButton: 'サインアウト',
+    authFailed: '認証に失敗しました',
+  },
+
   // 楽曲リストページ
   musicListPage: {
     deleteConfirmTitle: '楽曲削除',
