@@ -16,7 +16,7 @@ watch(isAuthenticated, (authenticated) => {
   if (authenticated) {
     router.push('/musics')
   }
-})
+}, { immediate: true })
 </script>
 
 <template>

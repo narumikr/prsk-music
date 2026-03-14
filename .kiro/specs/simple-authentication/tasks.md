@@ -39,7 +39,7 @@
     - **Property 5: サインアウト時のセッション削除**
     - **Validates: Requirements 4.2**
 
-- [ ] 3. SignInFormコンポーネントの実装
+- [x] 3. SignInFormコンポーネントの実装
   - [x] 3.1 SignInFormコンポーネントの基本実装
     - `src/components/SignInForm.vue`を作成
     - パスワード入力フィールド（type="password"）
@@ -61,7 +61,7 @@
     - エラーメッセージの表示
     - _Requirements: 1.2, 1.3, 2.5, 7.1, 8.3, 8.4, 8.5_
 
-- [ ] 4. SignInPageの実装
+- [x] 4. SignInPageの実装
   - [x] 4.1 SignInPageコンポーネントの基本実装
     - `src/views/SignInPage.vue`を作成
     - SignInFormコンポーネントの配置

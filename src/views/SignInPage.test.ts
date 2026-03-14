@@ -59,6 +59,14 @@ describe('SignInPage', () => {
       expect(mockPush).toHaveBeenCalledWith('/musics')
     })
 
+    it('mount時に既に認証済みの場合は即座に/musicsへリダイレクトする', async () => {
+      mockIsAuthenticated.value = true
+      mount(SignInPage)
+      await flushPromises()
+
+      expect(mockPush).toHaveBeenCalledWith('/musics')
+    })
+
     it('認証が成功していない場合はリダイレクトしない', async () => {
       mount(SignInPage)
 

@@ -43,6 +43,7 @@ const handleSubmit = () => {
         id="password"
         v-model="password"
         type="password"
+        autocomplete="current-password"
         :placeholder="TEXT.auth.passwordPlaceholder"
         :disabled="isLoading"
         class="w-full rounded border border-gray-200 px-3 py-2 text-base text-gray-900 transition duration-150 ease-in-out placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
