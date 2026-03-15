@@ -1,8 +1,20 @@
-import { mount } from '@vue/test-utils'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { flushPromises, mount } from '@vue/test-utils'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { ref } from 'vue'
 import { createMemoryHistory, createRouter, type Router } from 'vue-router'
+import { TEXT } from '@/constants/text'
 import Layout from './Layout.vue'
 import Navigation from './Navigation.vue'
+
+const mockSignOut = vi.fn()
+const mockIsAuthenticated = ref(false)
+
+vi.mock('@/composables/useAuth', () => ({
+  useAuth: () => ({
+    isAuthenticated: mockIsAuthenticated,
+    signOut: mockSignOut,
+  }),
+}))
 
 function createTestRouter() {
   return createRouter({
@@ -11,6 +23,7 @@ function createTestRouter() {
       { path: '/', redirect: '/musics' },
       { path: '/musics', component: { template: '<div>Musics</div>' } },
       { path: '/artists', component: { template: '<div>Artists</div>' } },
+      { path: '/signin', component: { template: '<div>SignIn</div>' } },
     ],
   })
 }
@@ -23,6 +36,8 @@ describe('Layout - Unit Tests', () => {
   let router: Router
 
   beforeEach(() => {
+    vi.clearAllMocks()
+    mockIsAuthenticated.value = false
     router = createTestRouter()
   })
 
@@ -209,5 +224,73 @@ describe('Layout - Unit Tests', () => {
     // コンテナに最大幅が設定されていることを確認
     const main = wrapper.find('main')
     expect(main.classes()).toContain('max-w-5xl')
+  })
+
+  /**
+   * 認証済み時のサインアウトボタン表示テスト
+   *
+   * Validates: Requirements 4.1
+   */
+  it('認証済み時にサインアウトボタンが表示される', async () => {
+    mockIsAuthenticated.value = true
+    await router.push('/musics')
+    await router.isReady()
+
+    const wrapper = mount(Layout, {
+      global: {
+        plugins: [router],
+        stubs: { Navigation: true, RouterView: true },
+      },
+    })
+
+    const button = wrapper.find('[data-testid="sign-out-button"]')
+    expect(button.exists()).toBe(true)
+    expect(button.text()).toBe(TEXT.auth.signOutButton)
+  })
+
+  /**
+   * 未認証時のサインアウトボタン非表示テスト
+   *
+   * Validates: Requirements 4.1
+   */
+  it('未認証時にサインアウトボタンが表示されない', async () => {
+    mockIsAuthenticated.value = false
+    await router.push('/musics')
+    await router.isReady()
+
+    const wrapper = mount(Layout, {
+      global: {
+        plugins: [router],
+        stubs: { Navigation: true, RouterView: true },
+      },
+    })
+
+    const button = wrapper.find('[data-testid="sign-out-button"]')
+    expect(button.exists()).toBe(false)
+  })
+
+  /**
+   * サインアウトボタンクリック時の動作テスト
+   *
+   * Validates: Requirements 4.1
+   */
+  it('サインアウトボタンクリック時にsignOutが呼ばれサインインページへ遷移する', async () => {
+    mockIsAuthenticated.value = true
+    await router.push('/musics')
+    await router.isReady()
+
+    const wrapper = mount(Layout, {
+      global: {
+        plugins: [router],
+        stubs: { Navigation: true, RouterView: true },
+      },
+    })
+
+    const button = wrapper.find('[data-testid="sign-out-button"]')
+    await button.trigger('click')
+    await flushPromises()
+
+    expect(mockSignOut).toHaveBeenCalledOnce()
+    expect(router.currentRoute.value.path).toBe('/signin')
   })
 })

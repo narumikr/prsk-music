@@ -1,5 +1,7 @@
 export type { UseArtistListReturn } from './useArtistList'
 export { useArtistList } from './useArtistList'
+export type { UseAuthReturn } from './useAuth'
+export { useAuth } from './useAuth'
 export type { UseMusicListReturn } from './useMusicList'
 export { useMusicList } from './useMusicList'
 export type { UseNotificationReturn } from './useNotification'
