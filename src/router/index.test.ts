@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-// useAuth をモック
-const mockCheckAuth = vi.fn<() => boolean>()
+// useAuth をモック（vi.hoisted でモジュール読み込み前に初期化）
+const mockCheckAuth = vi.hoisted(() => vi.fn<() => boolean>())
 
 vi.mock('@/composables/useAuth', () => ({
   useAuth: () => ({

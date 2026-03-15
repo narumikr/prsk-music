@@ -1,7 +1,8 @@
 import fc from 'fast-check'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-const mockCheckAuth = vi.fn<() => boolean>()
+// vi.hoisted でモジュール読み込み前に初期化
+const mockCheckAuth = vi.hoisted(() => vi.fn<() => boolean>())
 
 vi.mock('@/composables/useAuth', () => ({
   useAuth: () => ({

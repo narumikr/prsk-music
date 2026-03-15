@@ -41,11 +41,12 @@ const router = createRouter({
  * 認証済み時はサインインページへのアクセスを楽曲一覧ページにリダイレクト
  * Requirements: 3.4, 5.1, 5.2, 5.3, 5.4
  */
+const { checkAuth } = useAuth()
+
 router.beforeEach((to) => {
-  const { checkAuth } = useAuth()
   const isAuthenticated = checkAuth()
 
-  if (!to.meta.requiresAuth) {
+  if (to.meta.requiresAuth === false) {
     if (isAuthenticated) {
       return '/musics'
     }
