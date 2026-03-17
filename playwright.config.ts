@@ -1,4 +1,8 @@
+import { config } from 'dotenv'
 import { defineConfig, devices } from '@playwright/test'
+
+// .env.local を読み込み、テストコードから process.env.VITE_AUTH_TOKEN を参照できるようにする
+config({ path: '.env.local' })
 
 /**
  * Playwright E2Eテスト設定

@@ -121,8 +121,8 @@ test.describe('サインインフロー', () => {
       await page.getByRole('button', { name: 'サインイン' }).click()
       await page.waitForURL('**/musics')
 
-      // 新しいページコンテキストで楽曲一覧ページにアクセス
-      // （localStorageは同一オリジンで共有される）
+      // 同じコンテキストのまま楽曲一覧ページに再アクセス
+      // （localStorageにトークンが残っているため認証済みとして扱われる）
       await page.goto('/musics')
       await waitForPageLoad(page)
 
