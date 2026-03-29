@@ -1,5 +1,5 @@
-#.github/workflows/prsk-labeling.yml
-name: PR prsk labeling
+#.github/workflows/prsk-cheering.yml
+name: PR prsk cheering
 
 on:
   pull_request:
@@ -8,13 +8,12 @@ on:
 permissions:
   issues: write
   pull-requests: write
-  contents: read
 
 jobs:
-  add-character-label:
+  set-prsk-label-and-comments:
     runs-on: ubuntu-latest
     steps:
-      - name: Set prsk label
-        uses: Narumikr/link-sekai-actions/prsk-pr-labeling@main
+      - name: Set prsk label and comments
+        uses: narumikr/link-sekai-actions/prsk-cheering@main
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
