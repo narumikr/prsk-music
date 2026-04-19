@@ -64,8 +64,8 @@ importers:
         specifier: ^4.5.3
         version: 4.5.3
       happy-dom:
-        specifier: ^20.7.0
-        version: 20.7.0
+        specifier: ^20.9.0
+        version: 20.9.0
       msw:
         specifier: ^2.12.14
         version: 2.12.14(@types/node@25.6.0)(typescript@5.9.3)
@@ -86,7 +86,7 @@ importers:
         version: 8.0.3(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@types/node@25.6.0)(jiti@2.6.1)(yaml@2.8.2)
       vitest:
         specifier: ^4.0.18
-        version: 4.0.18(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@types/node@25.6.0)(@vitest/ui@4.0.18)(happy-dom@20.7.0)(jiti@2.6.1)(msw@2.12.14(@types/node@25.6.0)(typescript@5.9.3))(yaml@2.8.2)
+        version: 4.0.18(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@types/node@25.6.0)(@vitest/ui@4.0.18)(happy-dom@20.9.0)(jiti@2.6.1)(msw@2.12.14(@types/node@25.6.0)(typescript@5.9.3))(yaml@2.8.2)
       vue-tsc:
         specifier: ^3.1.5
         version: 3.2.5(typescript@5.9.3)
@@ -873,8 +873,8 @@ packages:
     resolution: {integrity: sha512-5bJ+nf/UCpAjHM8i06fl7eLyVC9iuNAjm9qzkiu2ZGhM0VscSvS6WDPfAwkdkBuoXGM9FJSbKl6wylMwP9Ktig==}
     engines: {node: ^12.22.0 || ^14.16.0 || ^16.0.0 || >=17.0.0}
 
-  happy-dom@20.7.0:
-    resolution: {integrity: sha512-hR/uLYQdngTyEfxnOoa+e6KTcfBFyc1hgFj/Cc144A5JJUuHFYqIEBDcD4FeGqUeKLRZqJ9eN9u7/GDjYEgS1g==}
+  happy-dom@20.9.0:
+    resolution: {integrity: sha512-GZZ9mKe8r646NUAf/zemnGbjYh4Bt8/MqASJY+pSm5ZDtc3YQox+4gsLI7yi1hba6o+eCsGxpHn5+iEVn31/FQ==}
     engines: {node: '>=20.0.0'}
 
   has-flag@4.0.0:
@@ -1556,8 +1556,8 @@ packages:
     resolution: {integrity: sha512-si7QWI6zUMq56bESFvagtmzMdGOtoxfR+Sez11Mobfc7tm+VkUckk9bW2UeffTGVUbOksxmSw0AA2gs8g71NCQ==}
     engines: {node: '>=12'}
 
-  ws@8.19.0:
-    resolution: {integrity: sha512-blAT2mjOEIi0ZzruJfIhb3nps74PRWTCz1IjglWEEpQl5XS/UNama6u2/rjFkDDouqr4L67ry+1aGIALViWjDg==}
+  ws@8.20.0:
+    resolution: {integrity: sha512-sAt8BhgNbzCtgGbt2OxmpuryO63ZoDk/sqaB/znQm94T4fCEsy/yV+7CdC1kJhOU9lboAEU7R3kquuycDoibVA==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -1945,7 +1945,7 @@ snapshots:
       obug: 2.1.1
       std-env: 4.0.0
       tinyrainbow: 3.0.3
-      vitest: 4.0.18(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@types/node@25.6.0)(@vitest/ui@4.0.18)(happy-dom@20.7.0)(jiti@2.6.1)(msw@2.12.14(@types/node@25.6.0)(typescript@5.9.3))(yaml@2.8.2)
+      vitest: 4.0.18(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@types/node@25.6.0)(@vitest/ui@4.0.18)(happy-dom@20.9.0)(jiti@2.6.1)(msw@2.12.14(@types/node@25.6.0)(typescript@5.9.3))(yaml@2.8.2)
 
   '@vitest/expect@4.0.18':
     dependencies:
@@ -1995,7 +1995,7 @@ snapshots:
       sirv: 3.0.2
       tinyglobby: 0.2.15
       tinyrainbow: 3.0.3
-      vitest: 4.0.18(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@types/node@25.6.0)(@vitest/ui@4.0.18)(happy-dom@20.7.0)(jiti@2.6.1)(msw@2.12.14(@types/node@25.6.0)(typescript@5.9.3))(yaml@2.8.2)
+      vitest: 4.0.18(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@types/node@25.6.0)(@vitest/ui@4.0.18)(happy-dom@20.9.0)(jiti@2.6.1)(msw@2.12.14(@types/node@25.6.0)(typescript@5.9.3))(yaml@2.8.2)
 
   '@vitest/utils@4.0.18':
     dependencies:
@@ -2336,14 +2336,14 @@ snapshots:
 
   graphql@16.13.2: {}
 
-  happy-dom@20.7.0:
+  happy-dom@20.9.0:
     dependencies:
       '@types/node': 25.6.0
       '@types/whatwg-mimetype': 3.0.2
       '@types/ws': 8.18.1
       entities: 7.0.1
       whatwg-mimetype: 3.0.0
-      ws: 8.19.0
+      ws: 8.20.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -2827,7 +2827,7 @@ snapshots:
       - '@emnapi/core'
       - '@emnapi/runtime'
 
-  vitest@4.0.18(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@types/node@25.6.0)(@vitest/ui@4.0.18)(happy-dom@20.7.0)(jiti@2.6.1)(msw@2.12.14(@types/node@25.6.0)(typescript@5.9.3))(yaml@2.8.2):
+  vitest@4.0.18(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@types/node@25.6.0)(@vitest/ui@4.0.18)(happy-dom@20.9.0)(jiti@2.6.1)(msw@2.12.14(@types/node@25.6.0)(typescript@5.9.3))(yaml@2.8.2):
     dependencies:
       '@vitest/expect': 4.0.18
       '@vitest/mocker': 4.0.18(msw@2.12.14(@types/node@25.6.0)(typescript@5.9.3))(vite@8.0.3(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@types/node@25.6.0)(jiti@2.6.1)(yaml@2.8.2))
@@ -2852,7 +2852,7 @@ snapshots:
     optionalDependencies:
       '@types/node': 25.6.0
       '@vitest/ui': 4.0.18(vitest@4.0.18)
-      happy-dom: 20.7.0
+      happy-dom: 20.9.0
     transitivePeerDependencies:
       - '@emnapi/core'
       - '@emnapi/runtime'
@@ -2943,7 +2943,7 @@ snapshots:
       string-width: 5.1.2
       strip-ansi: 7.2.0
 
-  ws@8.19.0: {}
+  ws@8.20.0: {}
 
   y18n@5.0.8: {}
 
