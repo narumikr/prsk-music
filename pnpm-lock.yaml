@@ -40,8 +40,8 @@ importers:
         specifier: ^25.6.0
         version: 25.6.0
       '@vitejs/plugin-vue':
-        specifier: ^6.0.2
-        version: 6.0.4(vite@8.0.3(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@types/node@25.6.0)(jiti@2.6.1)(yaml@2.8.2))(vue@3.5.30(typescript@5.9.3))
+        specifier: ^6.0.6
+        version: 6.0.6(vite@8.0.3(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@types/node@25.6.0)(jiti@2.6.1)(yaml@2.8.2))(vue@3.5.30(typescript@5.9.3))
       '@vitest/coverage-v8':
         specifier: ^4.1.0
         version: 4.1.0(vitest@4.0.18)
@@ -373,8 +373,8 @@ packages:
   '@rolldown/pluginutils@1.0.0-rc.12':
     resolution: {integrity: sha512-HHMwmarRKvoFsJorqYlFeFRzXZqCt2ETQlEDOb9aqssrnVBB1/+xgTGtuTrIk5vzLNX1MjMtTf7W9z3tsSbrxw==}
 
-  '@rolldown/pluginutils@1.0.0-rc.2':
-    resolution: {integrity: sha512-izyXV/v+cHiRfozX62W9htOAvwMo4/bXKDrQ+vom1L1qRuexPock/7VZDAhnpHCLNejd3NJ6hiab+tO0D44Rgw==}
+  '@rolldown/pluginutils@1.0.0-rc.13':
+    resolution: {integrity: sha512-3ngTAv6F/Py35BsYbeeLeecvhMKdsKm4AoOETVhAA+Qc8nrA2I0kF7oa93mE9qnIurngOSpMnQ0x2nQY2FPviA==}
 
   '@standard-schema/spec@1.1.0':
     resolution: {integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==}
@@ -496,8 +496,8 @@ packages:
     peerDependencies:
       zod: ^3.24.0
 
-  '@vitejs/plugin-vue@6.0.4':
-    resolution: {integrity: sha512-uM5iXipgYIn13UUQCZNdWkYk+sysBeA97d5mHsAoAt1u/wpN3+zxOmsVJWosuzX+IMGRzeYUNytztrYznboIkQ==}
+  '@vitejs/plugin-vue@6.0.6':
+    resolution: {integrity: sha512-u9HHgfrq3AjXlysn0eINFnWQOJQLO9WN6VprZ8FXl7A2bYisv3Hui9Ij+7QZ41F/WYWarHjwBbXtD7dKg3uxbg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       vite: ^8.0.0-beta.13
@@ -1820,7 +1820,7 @@ snapshots:
 
   '@rolldown/pluginutils@1.0.0-rc.12': {}
 
-  '@rolldown/pluginutils@1.0.0-rc.2': {}
+  '@rolldown/pluginutils@1.0.0-rc.13': {}
 
   '@standard-schema/spec@1.1.0': {}
 
@@ -1927,9 +1927,9 @@ snapshots:
     transitivePeerDependencies:
       - vue
 
-  '@vitejs/plugin-vue@6.0.4(vite@8.0.3(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@types/node@25.6.0)(jiti@2.6.1)(yaml@2.8.2))(vue@3.5.30(typescript@5.9.3))':
+  '@vitejs/plugin-vue@6.0.6(vite@8.0.3(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@types/node@25.6.0)(jiti@2.6.1)(yaml@2.8.2))(vue@3.5.30(typescript@5.9.3))':
     dependencies:
-      '@rolldown/pluginutils': 1.0.0-rc.2
+      '@rolldown/pluginutils': 1.0.0-rc.13
       vite: 8.0.3(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@types/node@25.6.0)(jiti@2.6.1)(yaml@2.8.2)
       vue: 3.5.30(typescript@5.9.3)
 
