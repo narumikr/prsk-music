@@ -1,64 +1,26 @@
-# プロセカ楽曲・アーティスト管理Webページ
+<img src="https://capsule-render.vercel.app/api?type=waving&height=250&color=0:4455dd,100:88dd44&text=Hello%20SEKAI&fontAlign=45&fontAlignY=40&fontSize=50&animation=fadeIn&desc=Shared%20default%20GitHub%20assets&descAlign=65&descAlignY=55&fontColor=f5f5f7&descSize=-1&reversal=true&section=header&textBg=false" />
+
+# **_Management prsk Music_**
+
+![welcome comment](https://readme-typing-svg.herokuapp.com?color=%2333ccba&width=500&lines=Hello+there!!+Thanks+for+stopping+by+🎵;Welcome+to+my+SEKAI+💫;)
+
+FastAPIのプロジェクト開始テンプレートリポジトリ
+
+#### **_Tech Stack_**
+
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=fff)](#)
+[![Vue.js](https://img.shields.io/badge/Vue.js-4FC08D?logo=vuedotjs&logoColor=fff)](#)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-%2338B2AC.svg?logo=tailwind-css&logoColor=white)](#)
+[![Vitest](https://img.shields.io/badge/Vitest-6E9F18?logo=vitest&logoColor=fff)](#)
 
 プロジェクトセカイ（プロセカ）の楽曲マスタデータとアーティストマスタデータを管理するWebアプリケーション。
 
-## 技術スタック
+> [!warning]
+> 
+> [バックエンドAPI](https://github.com/narumikr/prsk-backend-SToRY)の動作確認のために作成した簡易的なWebページ
+> 一通り確認は済ませたので、運用することも実現的ではあるが、時間とコスト面で断念。
 
-- **フロントエンド**: Vue 3 + TypeScript
-- **ビルドツール**: Vite
-- **スタイリング**: Tailwind CSS
-- **ルーティング**: Vue Router
-- **フォーム管理**: VeeValidate + Zod
-- **テスト**: Vitest + Playwright + fast-check
-
-## セットアップ
-
-```bash
-# 依存関係のインストール
-pnpm install
-
-# 開発サーバーの起動
-pnpm run dev
-
-# ビルド
-pnpm run build
-
-# プレビュー
-pnpm run preview
-```
-
-## テスト
-
-```bash
-# Unit/Property Tests
-pnpm run test
-
-# テストUI
-pnpm run test:ui
-
-# カバレッジ
-pnpm run test:coverage
-
-# E2Eテスト
-pnpm run test:e2e
-```
-
-## ディレクトリ構造
-
-```
-src/
-├── api/          # APIクライアント
-├── assets/       # 静的アセット
-├── components/   # Vueコンポーネント
-├── composables/  # Composition API hooks
-├── types/        # TypeScript型定義
-├── views/        # ページコンポーネント
-├── App.vue       # ルートコンポーネント
-├── main.ts       # エントリーポイント
-└── style.css     # グローバルスタイル
-```
-
-## 機能
+### 🍀 **_Features_** 🍀![MOREMORE-JUMP-divider](https://capsule-render.vercel.app/api?type=rect&height=2&color=0:88dd44,100:f5f5f7)
 
 - 楽曲の閲覧・登録・編集・削除
 - アーティストの閲覧・登録・編集・削除
@@ -66,16 +28,3 @@ src/
 - ページネーション対応
 - YouTube動画のモーダル表示
 - エラーハンドリング
-
-## API
-
-バックエンドAPIは `http://localhost:8080/api/v1` で動作することを想定しています。
-
-- `GET /prsk-music` - 楽曲一覧取得
-- `POST /prsk-music` - 楽曲登録
-- `PUT /prsk-music/{id}` - 楽曲更新
-- `DELETE /prsk-music/{id}` - 楽曲削除
-- `GET /artists` - アーティスト一覧取得
-- `POST /artists` - アーティスト登録
-- `PUT /artists/{id}` - アーティスト更新
-- `DELETE /artists/{id}` - アーティスト削除
